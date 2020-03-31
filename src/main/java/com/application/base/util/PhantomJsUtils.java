@@ -65,6 +65,10 @@ public class PhantomJsUtils {
 			String cmd = phantomJsPath+" " + convetJsPath + " -infile " + dataPath + " -outfile " + imgPath;
 			Process process = Runtime.getRuntime().exec(cmd);
 			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream(),"UTF-8"));
+			String line = "";
+			while ((line = input.readLine()) != null) {
+				//TODO something.
+			}
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -162,6 +166,7 @@ public class PhantomJsUtils {
 	public static void htmlToPdf(String pdfPath, String fileName, String htmlstr) {
 		FileOutputStream os = null;
 		try {
+			Thread.sleep(2000);
 			//注意这里为啥要写这个，主要是替换成这样的字体，如果不设置中文有可能显示不出来。
 			//htmlstr = htmlstr.replaceAll("\"", "'").replaceAll("<style>", "<style>body{font-family:SimSun;font-size:14px;}");
 			ITextRenderer renderer = new ITextRenderer();

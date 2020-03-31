@@ -278,7 +278,6 @@
             line-height: 28px;
             text-align: left;
             font-size: 14px;
-            background: url("${impagePath}/body.jpg") no-repeat left 5px;
             }
         .signature{
             font-size: 14px;
@@ -288,12 +287,12 @@
             float: right;
             }
         .title{
-            background:url('${impagePath}/one-top-bf.jpg') left -20px no-repeat;
+            background:url('${impagePath}one-top-bf.jpg') left -20px no-repeat;
             width:100%;
             background-size: 100% 100%;
             }
         /*.title1{*/
-        /*	background:url('${impagePath}/contenginfo_01-bf.jpg') left -20px no-repeat;*/
+        /*	background:url('${impagePath}contenginfo_01-bf.jpg') left -20px no-repeat;*/
         /*	width:100%;*/
         /*	background-size: 100% 100%;*/
         /*}*/
@@ -308,8 +307,8 @@
 <body style="font-family: SimSun; margin: 0px; padding: 0px;" >
 <div class="page" style="margin: 0px; padding: 0px;">
     <!-- 报告封面开始 -->
-    <div style="background: url('${impagePath}/one-bown.jpg') bottom no-repeat;width:100%;background-size: 100%;">
-        <div class="first-page" style="width:100%;background: url('${impagePath}/one-top-bf.jpg') left top no-repeat;">
+    <div style="background: url('${impagePath}one-bown.jpg') bottom no-repeat;width:100%;background-size: 100%;">
+        <div class="first-page" style="width:100%;background: url('${impagePath}one-top-bf.jpg') left top no-repeat;">
             <div class="info"></div>
             <div style="background:#7C962D;float: left; font-size: 16px; padding:5px 15px; color:#ffffff;border-radius:8px;margin-top:320px;margin-left:200px;">${reportVerson}</div>
             <div class="office">企业信用报告</div>
@@ -329,7 +328,7 @@
     <div style="page-break-after: always;">
         <!-- 报告说明开始 -->
         <div>
-            <img src="${impagePath}/contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
+            <img src="${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
         </div>
         <div class="shuoming">
             <div class="shuoming_title"><strong>报告说明</strong></div>
@@ -351,7 +350,7 @@
     <!-- 信用特征_信用报告摘要 -->
 
     <div>
-        <img src="${impagePath}/contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
+        <img src="${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
     </div>
     <!-- 栏目大标题开始 -->
     <h1 class="title_big">企业信用特征</h1>
@@ -465,7 +464,7 @@
 
     <!-- 企业基本信息_基本信息 -->
     <div>
-        <img src="${impagePath}/contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
+        <img src="${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
     </div>
     <!-- 栏目大标题开始 -->
     <h1 class="title_big">企业基本信息</h1>
