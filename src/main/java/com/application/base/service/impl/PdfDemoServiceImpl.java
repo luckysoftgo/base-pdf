@@ -113,6 +113,7 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 		String outputFile = pdfRealPath+"pdf"+ System.getProperty("file.separator") +"watermark"+ System.getProperty("file.separator")+ pdfFileName;
 		if (CommonUtils.isNotBlank(sign) && CommonUtils.isBlank(encrypt)){
 			String watermark = pdfPropsConfig.getWaterMark();
+			outputFile = pdfRealPath+"pdf"+ System.getProperty("file.separator")+ pdfFileName;
 			return PdfOperUtils.waterMark(inputFile,outputFile,watermark,null,null);
 		}else if (CommonUtils.isNotBlank(encrypt) && CommonUtils.isBlank(sign)){
 			Map<String,Object> baseInfo = (Map<String, Object>) map.get("baseInfo");
