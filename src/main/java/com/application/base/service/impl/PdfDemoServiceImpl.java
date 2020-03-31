@@ -106,11 +106,12 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 	 */
 	private boolean dealAfter(String pdfRealPath,String pdfFileName, Map<String, Object> map, String sign, String encrypt) {
 		String inputFile= pdfRealPath + System.getProperty("file.separator") + pdfFileName;
-		String outputFile = pdfRealPath+"pdf"+ System.getProperty("file.separator") +"watermark"+ System.getProperty("file.separator")+ pdfFileName;
-		File file = new File(pdfRealPath+"pdf"+ System.getProperty("file.separator") +"watermark");
-		if (!file.exists()){
-			file.mkdirs();
+		String outputFile = pdfRealPath+ System.getProperty("file.separator") +"watermark";
+		File dir=new File(outputFile);
+		if (!dir.exists()){
+			dir.mkdirs();
 		}
+		outputFile = outputFile+System.getProperty("file.separator")+ pdfFileName;
 		if (CommonUtils.isNotBlank(sign) && CommonUtils.isBlank(encrypt)){
 			String watermark = pdfPropsConfig.getWaterMark();
 			boolean result =PdfOperUtils.waterMark(inputFile,outputFile,watermark,null,null);
