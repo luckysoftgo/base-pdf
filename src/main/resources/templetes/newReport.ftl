@@ -278,7 +278,7 @@
             line-height: 28px;
             text-align: left;
             font-size: 14px;
-            background: url("${impagePath}/contentinfo_li.jpg") no-repeat left 5px;
+            background: url("${impagePath}/body.jpg") no-repeat left 5px;
             }
         .signature{
             font-size: 14px;
@@ -320,7 +320,7 @@
         </div>
         <div class="fengmian">
             <div class="table_bottom" >
-                <b>版权所有:</b><span>陕西西部资信股份有限公司</span>
+                <b>版权所有:</b><span>小猫钓鱼有限公司</span>
             </div>
         </div>
     </div>
@@ -334,16 +334,16 @@
         <div class="shuoming">
             <div class="shuoming_title"><strong>报告说明</strong></div>
             <div class="shuoming_content">
-                <p>本报告由陕西西部资信股份有限公司出具，依据截止报告时间企业征信系统内记录的数据库信息生成。</p>
+                <p>本报告由小猫钓鱼有限公司出具，依据截止报告时间企业征信系统内记录的数据库信息生成。</p>
                 <p>本机构承诺：除部分基本信息由信息主体提交外，其他信息均依据《征信业管理条例》采集、整理、保存，并在汇总、加工、整合、展示的全过程中保持客观中立地位。</p>
-                <p>本报告是陕西西部资信股份有限公司依据合理的技术规范做出的独立判断，未因受信息主体和其他任何组织或个人的影响而改变。</p>
+                <p>本报告是小猫钓鱼有限公司依据合理的技术规范做出的独立判断，未因受信息主体和其他任何组织或个人的影响而改变。</p>
                 <p>如无特别说明，本报告中的金额类数据项单位均为万元。</p>
                 <p>本报告未经授权，任何机构和个人不得复制、转载、出售、发布；如引用、刊发，须注明出处，且不得歪曲和篡改。</p>
                 <p>本报告仅向信息主体提供，不得作为金融机构的授信依据，请妥善保管。因保管不当造成信息泄露的，我公司不承担相关责任。</p>
                 <p>信息主体有权对本报告中的内容提出异议。</p>
-                <p>陕西西部资信股份有限公司是在中国人民银行备案的合法企业征信机构，备案信息请登录:<br />http://xian.pbc.gov.cn/xian/129420/2730984/index.html 进行查询，业务咨询电话：<br />029-87607660。</p>
+                <p>小猫钓鱼有限公司是在地球村备案的,备案信息请登录:<br />http://www.baidu.com 进行查询，业务咨询电话：<br />010-10086129</p>
             </div>
-            <div class="signature">征信机构(签章):陕西西部资信股份有限公司</div>
+            <div class="signature">征信机构(签章):小猫钓鱼有限公司</div>
         </div>
         <!-- 报告说明结束 -->
     </div>
