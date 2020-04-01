@@ -34,7 +34,7 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	PdfPropsConfig pdfPropsConfig;
+	private PdfPropsConfig pdfPropsConfig;
 	
 	@Override
 	public boolean createHtml(FreeMarkerConfigurer freemarkerConfig, Map<String, Object> map) {
@@ -128,25 +128,23 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 		}else if (CommonUtils.isNotBlank(sign) && CommonUtils.isNotBlank(encrypt)){
 			String watermark = pdfPropsConfig.getWaterMark();
 			boolean result = PdfOperUtils.waterMark(inputFile,outputFile,watermark,null,null);
-			if (!result){
-				return result;
-			}
-			File existFile=new File(inputFile);
-			if (existFile.exists()){
-				existFile.delete();
-			}
-			PdfOperUtils.copyFile(outputFile,inputFile);
-			Map<String,Object> baseInfo = (Map<String, Object>) map.get("baseInfo");
-			if (!baseInfo.isEmpty()){
-				String userPass = Objects.toString(baseInfo.get("creditCode"));
-				if (CommonUtils.isNotBlank(userPass)){
-					return PdfOperUtils.readOnly(inputFile,userPass,userPass);
+			if (result){
+				File existFile=new File(inputFile);
+				if (existFile.exists()){
+					existFile.delete();
 				}
-			}else{
-				logger.info("没有取得认证信息,无法进行加密!");
-				return false;
+				PdfOperUtils.copyFile(outputFile,inputFile);
+				Map<String,Object> baseInfo = (Map<String, Object>) map.get("baseInfo");
+				if (!baseInfo.isEmpty()){
+					String userPass = Objects.toString(baseInfo.get("creditCode"));
+					if (CommonUtils.isNotBlank(userPass)){
+						return PdfOperUtils.readOnly(inputFile,userPass,userPass);
+					}
+				}else{
+					logger.info("没有取得认证信息,无法进行加密!");
+					return false;
+				}
 			}
-			
 		}
 		return false;
 	}
@@ -320,7 +318,7 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 				"                        return "+creditscore+"\n" +
 				"                    },\n" +
 				"                    offsetCenter: [0, '60%'],\n" +
-				"                    fontSize: 16,\n" +
+				"                    fontSize: '16',\n" +
 				"                    fontWeight: 700\n" +
 				"                },\n" +
 				"                splitLine: {\n" +
@@ -424,7 +422,7 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 				"                           color:'red',\n" +
 				"                           position:'insideLeft',\n" +
 				"                           fontWeight:'bold',\n" +
-				"                           fontSize:30\n" +
+				"                           fontSize:'30'\n" +
 				"                        },\n" +
 				"                        areaStyle: {\n" +
 				"                            type: \"default\",\n" +
@@ -456,7 +454,7 @@ public class PdfDemoServiceImpl implements PdfDemoService {
 	 */
 	private String getDataPath(){
 		PdfPropsConfig.DataPath dataPath = pdfPropsConfig.getDataPath();
-		String realPath ="";
+		String realPath = null;
 		if (CommonUtils.isLinux()){
 			realPath = dataPath.getLinux();
 		}else{
