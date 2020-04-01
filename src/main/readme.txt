@@ -18,6 +18,9 @@ https://www.cnblogs.com/ZeroMZ/p/11481813.html
 6.验证 echarts 的 options 地方
 https://www.echartsjs.com/examples/zh/editor.html?c=line-simple
 
+7.水印处理.
+https://www.cnblogs.com/qlqwjy/p/9326468.html
+
 
 
 
