@@ -19,7 +19,15 @@ public class PdfPropsConfig {
 	/**
 	 * 数据路径.
 	 */
-	private DataPath dataPath=new DataPath();
+	private String dataPath;
+	/**
+	 * phantomjs的路径.
+	 */
+	private String phantomjsPath;
+	/**
+	 * convertjs的路径.
+	 */
+	private String convetJsPath;
 	/**
 	 * 水印字.
 	 */
@@ -33,12 +41,28 @@ public class PdfPropsConfig {
 		this.imgUrl = imgUrl;
 	}
 	
-	public DataPath getDataPath() {
+	public String getDataPath() {
 		return dataPath;
 	}
 	
-	public void setDataPath(DataPath dataPath) {
+	public void setDataPath(String dataPath) {
 		this.dataPath = dataPath;
+	}
+	
+	public String getPhantomjsPath() {
+		return phantomjsPath;
+	}
+	
+	public void setPhantomjsPath(String phantomjsPath) {
+		this.phantomjsPath = phantomjsPath;
+	}
+	
+	public String getConvetJsPath() {
+		return convetJsPath;
+	}
+	
+	public void setConvetJsPath(String convetJsPath) {
+		this.convetJsPath = convetJsPath;
 	}
 	
 	public String getWaterMark() {
@@ -47,35 +71,5 @@ public class PdfPropsConfig {
 	
 	public void setWaterMark(String waterMark) {
 		this.waterMark = waterMark;
-	}
-	
-	/**
-	 * 内部关系.
-	 */
-	public class DataPath{
-		/**
-		 * 文件路径.
-		 */
-		private String window;
-		/**
-		 * 文件路径.
-		 */
-		private String linux;
-		
-		public String getWindow() {
-			return window;
-		}
-		
-		public void setWindow(String window) {
-			this.window = window;
-		}
-		
-		public String getLinux() {
-			return linux;
-		}
-		
-		public void setLinux(String linux) {
-			this.linux = linux;
-		}
 	}
 }

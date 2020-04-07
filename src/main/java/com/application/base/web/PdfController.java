@@ -1,8 +1,10 @@
 package com.application.base.web;
 
+import com.alibaba.fastjson.JSON;
 import com.application.base.config.PdfPropsConfig;
 import com.application.base.service.PdfDemoService;
-import com.application.base.util.CommonUtils;
+import com.application.base.util.toolpdf.CommonUtils;
+import freemarker.template.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,23 +46,44 @@ public class PdfController {
 	 */
 	@RequestMapping(value = "/createPdf", method = RequestMethod.GET)
 	public void createPdf(HttpServletRequest request, HttpServletResponse response){
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			//是否签名水印.
 			String sign = Objects.toString(request.getParameter("sign"),"");
 			//是否加密只读.
 			String encrypt = Objects.toString(request.getParameter("encrypt"),"");
-			Map<String,Object> params = pdfDemoService.getPdfMap();
-			params.put("reportName","newReport.ftl");
-			params.put("radarImg",pdfDemoService.createRadarImg(params));
-			params.put("scoreImg",pdfDemoService.createScoreImg(params));
-			boolean result = pdfDemoService.createHtml(freeMarkerConfigurer,params);
-			if (result){
-				result=pdfDemoService.changeHtmlToPdf(params,sign,encrypt);
+			//是否印章.
+			String seal = Objects.toString(request.getParameter("seal"),"");
+			
+			Map<String,Object> dataMap = pdfDemoService.getPdfMap(pdfPropsConfig.getImgUrl());
+			Integer[] infoArray = {87,78,99,66};
+			String creditAbility = JSON.toJSONString(infoArray);
+			String dataPath = pdfPropsConfig.getDataPath();
+			String radarImg= pdfDemoService.createRadarImg(pdfPropsConfig.getPhantomjsPath(),pdfPropsConfig.getConvetJsPath(),dataPath,"9161013aaa003296T",creditAbility);
+			String scoreImg= pdfDemoService.createScoreImg(pdfPropsConfig.getPhantomjsPath(),pdfPropsConfig.getConvetJsPath(),dataPath,"9161013aaa003296T",78);
+			dataMap.put("radarImg",radarImg);
+			dataMap.put("scoreImg",scoreImg);
+			dataMap.put("creditscore",78);
+			dataMap.put("creditability",creditAbility);
+			dataMap.put("creditTag","信用良好");
+			Configuration configuration = freeMarkerConfigurer.getConfiguration();
+			try {
+				//指定freemarker的模板地址.
+				//configuration.setDirectoryForTemplateLoading(new File("D:/phantomjs211/data/phantomjs/templetes"));
+				//本类中的模板地址.
+				configuration.setClassForTemplateLoading(PdfController.class.getClass(), "/templetes");
+			}catch (Exception e){
 			}
+			pdfDemoService.createHtml(dataPath,"小猫钓鱼营销策划有限公司","pathReport.ftl","9161013aaa003296T",configuration,dataMap);
+			//server.convertHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T","A","资信云","B",null,null);
+			//server.convertHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T","A","资信云",null,"C","小猫钓鱼营销策划有限公司");
+			//server.convertHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T",null,null,"B","C","小猫钓鱼营销策划有限公司");
+			boolean result = pdfDemoService.changeHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T",sign,pdfPropsConfig.getWaterMark(),encrypt,seal,"小猫钓鱼营销策划有限公司");
+			System.out.println("完成操作");
 			if (result){
 				resultMap.put("status", "200");
-				resultMap.put("data",params);
+				resultMap.put("data",dataMap);
 				resultMap.put("msg", "处理成功");
 			}else {
 				resultMap.put("status", "10001");
@@ -88,12 +111,7 @@ public class PdfController {
 			companyName = companyName.replaceAll("<em>", "").replaceAll("</em>", "");
 			String pdfName = companyName + ".pdf";
 			if (CommonUtils.isBlank(pdfFilePath)){
-				PdfPropsConfig.DataPath dataPath = pdfPropsConfig.getDataPath();
-				if(CommonUtils.isLinux()){
-					pdfFilePath=dataPath.getLinux()+System.getProperty("file.separator")+pdfName;
-				}else{
-					pdfFilePath=dataPath.getWindow()+System.getProperty("file.separator")+pdfName;
-				}
+				pdfFilePath = pdfFilePath+System.getProperty("file.separator")+pdfName;
 			}
 			String header = request.getHeader("User-Agent").toUpperCase();
 			if (header.contains("MSIE") || header.contains("TRIDENT") || header.contains("EDGE")) {

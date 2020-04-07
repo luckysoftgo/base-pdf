@@ -1,4 +1,4 @@
-package com.application.base.util;
+package com.application.base.util.toolpdf;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,26 +15,6 @@ import java.io.OutputStream;
  * @DESC: OperateUtil类设计
  **/
 public class OperateUtils {
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		/*
-		//1. 图片添加水印
-		mark("C:/Users/liqiang/Desktop/图片/kdmt.jpg", "C:/Users/liqiang/Desktop/图片/kdmt1.jpg",Color.red, "圖片來源:XXX");
-		
-		//2. 給图片添加图片
-		String srcImgPath = "C:/Users/liqiang/Desktop/图片/kdmt.jpg";
-		String iconPath = "C:/Users/liqiang/Desktop/图片/qlq.jpeg";
-		String targerPath = "C:/Users/liqiang/Desktop/图片/qlq1.jpeg";
-		String targerPath2 = "C:/Users/liqiang/Desktop/图片/qlq2.jpeg";
-		// 给图片添加水印
-		markImageByIcon(iconPath, srcImgPath, targerPath);
-		// 给图片添加水印,水印旋转-45
-		markImageByIcon(iconPath, srcImgPath, targerPath2, -45);
-		*/
-	}
 	
 	/*************************************************************************1--图片添加水印******************************************************************/
 	

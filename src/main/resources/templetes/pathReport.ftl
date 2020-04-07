@@ -3,7 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>${companyName}</title>
-    <script src="https://cdn.bootcss.com/echarts/3.5.2/echarts.min.js"></script>
     <style type="text/css">
         /*body,div,p{font-family: "Microsoft YaHei", "SimHei", "Arial"}*/
         p{margin: 0;padding: 0;}
@@ -287,12 +286,12 @@
             float: right;
             }
         .title{
-            background:url('${impagePath}one-top-bf.jpg') left -20px no-repeat;
+            background:url('file:///${impagePath}one-top-bf.jpg') left -20px no-repeat;
             width:100%;
             background-size: 100% 100%;
             }
         /*.title1{*/
-        /*	background:url('${impagePath}contenginfo_01-bf.jpg') left -20px no-repeat;*/
+        /*	background:url('file:///${impagePath}contenginfo_01-bf.jpg') left -20px no-repeat;*/
         /*	width:100%;*/
         /*	background-size: 100% 100%;*/
         /*}*/
@@ -307,8 +306,8 @@
 <body style="font-family: SimSun; margin: 0px; padding: 0px;" >
 <div class="page" style="margin: 0px; padding: 0px;">
     <!-- 报告封面开始 -->
-    <div style="background: url('${impagePath}one-bown.jpg') bottom no-repeat;width:100%;background-size: 100%;">
-        <div class="first-page" style="width:100%;background: url('${impagePath}one-top-bf.jpg') left top no-repeat;">
+    <div style="background: url('file:///${impagePath}one-bown.jpg') bottom no-repeat;width:100%;background-size: 100%;">
+        <div class="first-page" style="width:100%;background: url('file:///${impagePath}one-top-bf.jpg') left top no-repeat;">
             <div class="info"></div>
             <div style="background:#7C962D;float: left; font-size: 16px; padding:5px 15px; color:#ffffff;border-radius:8px;margin-top:320px;margin-left:200px;">${reportVerson}</div>
             <div class="office">企业信用报告</div>
@@ -328,7 +327,7 @@
     <div style="page-break-after: always;">
         <!-- 报告说明开始 -->
         <div>
-            <img src="${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
+            <img src="file:///${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
         </div>
         <div class="shuoming">
             <div class="shuoming_title"><strong>报告说明</strong></div>
@@ -350,7 +349,7 @@
     <!-- 信用特征_信用报告摘要 -->
 
     <div>
-        <img src="${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
+        <img src="file:///${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
     </div>
     <!-- 栏目大标题开始 -->
     <h1 class="title_big">企业信用特征</h1>
@@ -464,7 +463,7 @@
 
     <!-- 企业基本信息_基本信息 -->
     <div>
-        <img src="${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
+        <img src="file:///${impagePath}contenginfo_01-bf.jpg" style="width: 100%;height: 60px;padding: 0;margin:0;"></img>
     </div>
     <!-- 栏目大标题开始 -->
     <h1 class="title_big">企业基本信息</h1>
@@ -557,351 +556,4 @@
 
 </body>
 
-<script>
-    var creditscore = ${creditscore};
-    var creditablity = ${creditability};
-    var scoreTag = '${creditTag}';
-    //仪表盘
-    var myChart3 = echarts.init(document.getElementById('erweima'));
-    option3 = {
-        series: [{
-            name: '工业企业信用',
-            type: 'gauge',
-            radius: '60%',
-            min: 30,
-            max: 150,
-            splitNumber: 12, //刻度数量
-            startAngle: 210,
-            endAngle: -30,
-            axisLine: {
-                lineStyle: {
-                    color: [
-                        [0.083, '#d60e03'],
-                        [0.167, '#f20e02'],
-                        [0.25, '#fa2f00'],
-                        [0.333, '#ec671c'],
-                        [0.417, '#fa5800'],
-                        [0.5, '#fa8700'],
-                        [0.583, '#ffbb00'],
-                        [0.667, '#fae000'],
-                        [0.75, '#fbe360'],
-                        [0.833, '#b4d43e'],
-                        [0.917, '#69d728'],
-                        [1, '#4db90d'],
-                    ],
-                    width: 8
-                }
-            },
-            splitLine: {
-                show: true,
-            },
-            axisTick: {
-                show: false
-            },
-            pointer: {
-                show: true,
-                length: '70%',
-                width: 5,
-            },
-            title: {
-                show: false
-            },
-            axisLabel: {
-                show: true,
-                fontSize: 8
-            },
-            detail: {
-                formatter: function () {
-                    return scoreTag
-                },
-                offsetCenter: [0, '75%'],
-                fontSize: 12,
-                fontWeight: 700
-            },
-            data: [{
-                // name: "信用评价等级",
-                value: creditscore
-            }]
-        },
-            {
-                name: '信用等级',
-                title: {
-                    color: "#444",
-                    fontSize: 16,
-                    offsetCenter: [0, '-55%']
-                },
-                type: 'gauge',
-                radius: '50%',
-                min: 30,
-                max: 150,
-                splitNumber: 12, //刻度数量
-                startAngle: 210,
-                endAngle: -30,
-                axisLine: {
-                    show: false,
-                    lineStyle: {
-                        color: [
-                            [0.083, '#d60e03'],
-                            [0.167, '#f20e02'],
-                            [0.25, '#fa2f00'],
-                            [0.333, '#ec671c'],
-                            [0.417, '#fa5800'],
-                            [0.5, '#fa8700'],
-                            [0.583, '#ffbb00'],
-                            [0.667, '#fae000'],
-                            [0.75, '#fbe360'],
-                            [0.833, '#b4d43e'],
-                            [0.917, '#69d728'],
-                            [1, '#4db90d'],
-                        ],
-                        width: 3
-                    }
-                },
-                detail: {
-                    formatter: function () {
-                        return creditscore
-                    },
-                    offsetCenter: [0, '60%'],
-                    fontSize: 12,
-                    fontWeight: 700
-                },
-                splitLine: {
-                    show: false,
-                },
-                axisLabel: {
-                    show: false
-                },
-                pointer: {
-                    show: false
-                },
-                data: [{
-                    // name: "信用评价等级",
-                    value: creditscore
-                }]
-            }
-        ]
-    };
-    myChart3.setOption(option3);
-
-    //仪表盘
-    var myChart2 = echarts.init(document.getElementById('creditscore'));
-    option2 = {
-        series: [{
-            name: '工业企业信用',
-            type: 'gauge',
-            radius: '60%',
-            min: 30,
-            max: 150,
-            splitNumber: 12, //刻度数量
-            startAngle: 210,
-            endAngle: -30,
-            axisLine: {
-                lineStyle: {
-                    color: [
-                        [0.083, '#d60e03'],
-                        [0.167, '#f20e02'],
-                        [0.25, '#fa2f00'],
-                        [0.333, '#ec671c'],
-                        [0.417, '#fa5800'],
-                        [0.5, '#fa8700'],
-                        [0.583, '#ffbb00'],
-                        [0.667, '#fae000'],
-                        [0.75, '#fbe360'],
-                        [0.833, '#b4d43e'],
-                        [0.917, '#69d728'],
-                        [1, '#4db90d'],
-                    ],
-                    width: 8
-                }
-            },
-            splitLine: {
-                show: true,
-            },
-            axisTick: {
-                show: false
-            },
-            pointer: {
-                show: true,
-                length: '70%',
-                width: 5,
-            },
-            title: {
-                show: false
-            },
-            axisLabel: {
-                show: true,
-                fontSize: 7
-            },
-            detail: {
-                formatter: function () {
-                    return scoreTag
-                },
-                offsetCenter: [0, '75%'],
-                fontSize: 12,
-                fontWeight: 700
-            },
-            data: [{
-                // name: "信用评价等级",
-                value: creditscore
-            }]
-        },
-            {
-                name: '信用等级',
-                title: {
-                    color: "#444",
-                    fontSize: 16,
-                    offsetCenter: [0, '-55%']
-                },
-                type: 'gauge',
-                radius: '50%',
-                min: 30,
-                max: 150,
-                splitNumber: 12, //刻度数量
-                startAngle: 210,
-                endAngle: -30,
-                axisLine: {
-                    show: false,
-                    lineStyle: {
-                        color: [
-                            [0.083, '#d60e03'],
-                            [0.167, '#f20e02'],
-                            [0.25, '#fa2f00'],
-                            [0.333, '#ec671c'],
-                            [0.417, '#fa5800'],
-                            [0.5, '#fa8700'],
-                            [0.583, '#ffbb00'],
-                            [0.667, '#fae000'],
-                            [0.75, '#fbe360'],
-                            [0.833, '#b4d43e'],
-                            [0.917, '#69d728'],
-                            [1, '#4db90d'],
-                        ],
-                        width: 3
-                    }
-                },
-                detail: {
-                    formatter: function () {
-                        return creditscore
-                    },
-                    offsetCenter: [0, '60%'],
-                    fontSize: 12,
-                    fontWeight: 700
-                },
-                splitLine: {
-                    show: false,
-                },
-                axisLabel: {
-                    show: false
-                },
-                pointer: {
-                    show: false
-                },
-                data: [{
-                    // name: "信用评价等级",
-                    value: creditscore
-                }]
-            }
-        ]
-    };
-    myChart2.setOption(option2);
-
-    //雷达图
-    var myChart1 = echarts.init(document.getElementById('creditability'));
-    option1 = {
-        // backgroundColor: "#fff",
-        color: "#333",
-        tooltip: {
-            trigger: "item"
-        },
-        radar: [
-            {
-                indicator: [
-                    {
-                        text: "基本素质",
-                        max: 100
-                    },
-                    {
-                        text: "行政能力",
-                        max: 100
-                    },
-                    {
-                        text: "产品潜力",
-                        max: 100
-                    },
-                    {
-                        text: "金融活动",
-                        max: 100
-                    }
-                ],
-                center: ["50%", "50%"],
-                radius: 60,
-                startAngle: 90,
-                splitNumber: 5,
-                shape: "circle",
-                name: {
-                    show: true,
-                    formatter: "{value}",
-                    textStyle: {
-                        color: "#999"
-                    }
-                },
-                nameGap: 5,
-                splitArea: {
-                    areaStyle: {
-                        color: [
-                            "rgba(114, 172, 209, 0.2)",
-                            "rgba(114, 172, 209, 0.4)",
-                            "rgba(114, 172, 209, 0.6)",
-                            "rgba(114, 172, 209, 0.8)",
-                            "rgba(114, 172, 209, 1)"
-                        ],
-                        shadowColor: "rgba(0, 0, 0, 0.3)",
-                        shadowBlur: 10
-                    }
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: "rgba(255, 255, 255, 0.5)"
-                    }
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: "rgba(255, 255, 255, 0.5)"
-                    }
-                }
-            }
-        ],
-        series: [
-            {
-                type: "radar",
-                itemStyle:{
-                    normal: {
-                        label:{
-                            show:true,
-                            color:'red',
-                            position:'insideLeft',
-                            fontWeight:'bold',
-                            fontSize:50
-                        },
-                        areaStyle: {
-                            type: "default",
-                        },
-                        color: "rgba(255, 255, 255, 0.5)",
-                        borderColor: "rgba(0,0,0,0.5)",
-                        shadowColor: "rgba(0,0,0,0.5)"
-                    }
-                },
-                data: [
-                    {
-                        value: creditablity,
-                        name: "信用能力",
-                        symbol: "circle",
-                        symbolSize: 5,
-                    }
-                ]
-            }
-        ]
-    };
-    myChart1.setOption(option1);
-</script>
 </html>

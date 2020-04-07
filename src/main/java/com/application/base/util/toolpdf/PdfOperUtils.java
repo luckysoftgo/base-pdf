@@ -1,6 +1,9 @@
-package com.application.base.util;
+package com.application.base.util.toolpdf;
 
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.log.Logger;
+import com.itextpdf.text.log.LoggerFactory;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfGState;
@@ -8,14 +11,13 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.lowagie.text.pdf.PdfWriter;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * @author : 孤狼
@@ -24,7 +26,7 @@ import java.io.FileOutputStream;
  **/
 public class PdfOperUtils {
 	
-	static Logger logger = LoggerFactory.getLogger(PdfOperUtils.class.getName());
+	private static Logger logger = LoggerFactory.getLogger(PdfOperUtils.class.getName());
 	
 	/**
 	 * 文件只读设置.
@@ -34,10 +36,12 @@ public class PdfOperUtils {
 	 * @param :值为:PdfWriter.HideToolbar; PdfWriter.HideMenubar; PdfWriter.HideWindowUI
 	 */
 	public static boolean readOnly(String pdfPath,String userPass,String ownerPass){
+		com.lowagie.text.pdf.PdfReader reader = null;
+		com.lowagie.text.pdf.PdfStamper stamper = null;
 		try {
 			//已加密的文件
-			com.lowagie.text.pdf.PdfReader reader = new com.lowagie.text.pdf.PdfReader(new FileInputStream(pdfPath));
-			com.lowagie.text.pdf.PdfStamper stamper = new com.lowagie.text.pdf.PdfStamper(reader, new FileOutputStream(pdfPath));
+			reader = new com.lowagie.text.pdf.PdfReader(new FileInputStream(pdfPath));
+			stamper = new com.lowagie.text.pdf.PdfStamper(reader, new FileOutputStream(pdfPath));
 			byte[] userPassword = userPass.getBytes();
 			byte[] ownerPassword = ownerPass.getBytes();
 			//允许程序集
@@ -60,13 +64,31 @@ public class PdfOperUtils {
 			stamper.setEncryption(userPassword, ownerPassword, PdfWriter.DO_NOT_ENCRYPT_METADATA, false);
 			//是否隐藏工具条,菜单,windowUI.
 			stamper.setViewerPreferences(PdfWriter.HideToolbar|PdfWriter.HideMenubar);
-			stamper.close();
-			reader.close();
 			return true;
 		} catch(Exception e) {
-			logger.error("设置文件属性失败了,失败信息是:{}",e.toString());
+			e.printStackTrace();
+			logger.error("设置文件属性失败了,失败信息是:"+e.toString());
 			return false;
+		}finally {
+			try {
+				if (stamper!=null){
+					stamper.close();
+				}
+				if (reader!=null){
+					reader.close();
+				}
+			}catch (Exception e){}
 		}
+	}
+	
+	/**
+	 * 设置水印,铺满pdf.
+	 * @param inputFile:pdf 源位置
+	 * @param outputFile:pdf 输出位置
+	 * @param sign:pdf 签名内容
+	 */
+	public static boolean waterMark(String inputFile,String outputFile,String sign) {
+		return waterMark(inputFile,outputFile,sign,null,null);
 	}
 	
 	/**
@@ -135,15 +157,73 @@ public class PdfOperUtils {
 			}
 			//说三遍
 			//一定不要忘记关闭流
+			stamper.flush();
 			stamper.close();
 			reader.close();
 			return true;
 		} catch (Exception e) {
-			logger.error("给pdf添加水印失败了,失败信息是:{}",e.toString());
+			logger.error("给pdf添加水印失败了,失败信息是:"+e.toString());
 			copyFile(inputFile,outputFile);
 			return false;
 		}
 	}
+	
+	/**
+	 * 给pdf添加印章:
+	 * @param sealImgPath:印章地址
+	 * @param sourcePdfPath:源pdf地址
+	 * @param targetPdfPath:目的pdf地址
+	 * @param allPage: 是否所有页面都写
+	 * @return
+	 */
+	public static boolean sealToPdf(String sealImgPath,String sourcePdfPath,String targetPdfPath,boolean allPage){
+		OutputStream ouput = null;
+		PdfReader reader = null;
+		PdfStamper stamp = null;
+		try {
+			ouput = new FileOutputStream(new File(targetPdfPath));
+			//要加水印的原pdf文件路径
+			reader = new PdfReader(sourcePdfPath);
+			//加了水印后要输出的路径
+			stamp = new PdfStamper(reader,ouput);
+			// 插入水印
+			Image img = Image.getInstance(sealImgPath);
+			//原pdf文件的总页数
+			int pageSize = reader.getNumberOfPages();
+			//印章位置
+			img.setAbsolutePosition(400, 80);
+			//印章大小
+			img.scalePercent(50);
+			if (allPage){
+				for (int i = 1; i <= pageSize; i++) {
+					//背景被覆盖
+					//PdfContentByte under = stamp.getUnderContent(i);
+					//文字被覆盖
+					PdfContentByte under = stamp.getOverContent(i);
+					//添加电子印章
+					under.addImage(img);
+				}
+			}else {
+				//只给最后一页添加印章.
+				PdfContentByte under = stamp.getOverContent(pageSize);
+				under.addImage(img);
+			}
+			// 关闭
+			stamp.flush();
+			stamp.close();
+			//关闭
+			reader.close();
+			//关闭
+			ouput.flush();
+			ouput.close();
+			return true;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 	
 	/**
 	 * 拷贝文件.
