@@ -24,7 +24,7 @@ https://www.echartsjs.com/examples/zh/editor.html?c=line-simple
 https://www.cnblogs.com/qlqwjy/p/9326468.html
 
 
-8.这只是个测试的demo，详细设计还要看具体需求!
+8.这只是个测试的demo,详细设计还要看具体需求!
 
 
 
