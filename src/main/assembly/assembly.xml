@@ -1,0 +1,43 @@
+<assembly>
+    <id>release</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+		
+        <!-- 把项目启动脚本，打包进tar.gz文件的根目录 -->
+        <fileSet>
+            <directory>${project.basedir}/bin</directory>
+            <outputDirectory>./bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+		
+        <!-- 把项目资源文件，打包进tar.gz文件的config目录 -->
+        <fileSet>
+            <directory>${project.build.directory}/config</directory>
+            <outputDirectory>${file.separator}config</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+		
+        <!-- 把项目依赖的jar文件，打包进tar.gz文件的lib目录 -->
+        <fileSet>
+            <directory>${project.build.directory}/lib</directory>
+            <outputDirectory>${file.separator}lib</outputDirectory>
+            <!-- 打包需要包含的文件 -->
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+		
+        <!-- 把项目自己编译出来的jar文件，打包进tar.gz文件的根目录 -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>${file.separator}</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+		
+    </fileSets>
+</assembly>

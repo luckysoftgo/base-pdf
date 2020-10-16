@@ -23,6 +23,10 @@ public class PdfPropsConfig {
 	 */
 	private String dataPath;
 	/**
+	 * 字体的路径.
+	 */
+	private String fontPath;
+	/**
 	 * phantomjs的路径.
 	 */
 	private String phantomjsPath;
@@ -34,5 +38,16 @@ public class PdfPropsConfig {
 	 * 水印字.
 	 */
 	private String waterMark;
-	
+	/**
+	 * 天眼查的token
+	 */
+	private String tycToken;
+	/**
+	 * 基础调用地址
+	 */
+	private String tycBasicUrl;
+	/**
+	 * 选择数据源
+	 */
+	private String dataSource;
 }

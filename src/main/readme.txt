@@ -8,7 +8,9 @@ http://npm.taobao.org/dist/phantomjs/
 https://gitee.com/saintlee/echartsconvert
 
 4.phantomjs api
-https://phantomjs.org/api/.
+https://phantomjs.org/api/
+key:
+    4c00c062-3a13-4b3e-9e35-7ddce7f207b5
 
 5.样例.
 https://blog.csdn.net/weixin_45313590/article/details/97161626
@@ -20,6 +22,7 @@ https://www.echartsjs.com/examples/zh/editor.html?c=line-simple
 
 7.水印处理.
 https://www.cnblogs.com/qlqwjy/p/9326468.html
+
 
 
 

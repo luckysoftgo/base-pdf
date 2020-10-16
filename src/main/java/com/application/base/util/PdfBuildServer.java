@@ -5,6 +5,7 @@ import com.application.base.util.toolpdf.PdfOperUtils;
 import com.application.base.util.toolpdf.PhantomJsUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,7 +20,9 @@ import java.util.Map;
  * @NAME: PdfBuildServer
  * @DESC: PdfBuildServer
  **/
+@Slf4j
 public class PdfBuildServer {
+	
 	
 	/**
 	 * 默认生成报告的数据
@@ -29,9 +32,10 @@ public class PdfBuildServer {
 	public Map<String, Object> getDefaultMap(String imagePath) {
 		Map<String,Object> params = new HashMap<>();
 		params.put("companyName","小猫钓鱼营销策划有限公司");
-		params.put("impagePath",imagePath);
+		params.put("imagePath",imagePath);
 		params.put("reportVerson","测试版");
 		params.put("reportNo","CREDIT2020");
+		
 		Map<String,Object> baseInfo = new HashMap<>();
 		baseInfo.put("regStatus", "在业");
 		baseInfo.put("estiblishTime", "2013-10-23");
@@ -54,6 +58,7 @@ public class PdfBuildServer {
 		baseInfo.put("orgNumber", "081131800");
 		baseInfo.put("email", "100010@qq.com");
 		params.put("baseInfo",baseInfo);
+		
 		Map<String,Object> outline = new HashMap<>();
 		outline.put("name","小猫钓鱼营销策划有限公司");
 		//信用二维码.
@@ -346,7 +351,6 @@ public class PdfBuildServer {
 		return PhantomJsUtil.generateImgEChart(phantomJsPath,convetJsPath,scorePath,options,creditCode,type);
 	}
 	
-	
 	/**
 	 * 生成html文件.
 	 * @param dataPath: html 文件地址.
@@ -435,14 +439,59 @@ public class PdfBuildServer {
 			file.mkdirs();
 		}
 		boolean result = htmlToPdf(fontLocal, dataPath, companyName, creditCode);
+		log.info("将html转换为PDF,结果为：" + result);
 		String pdfFileName = companyName+".pdf";
 		if (result){
-			result = dealAfterOperate(dataPath,pdfFileName,creditCode,sign,watermark,encrypt,null,null);
+			result = dealAfterOperate(dataPath,pdfFileName,creditCode,sign,watermark,encrypt);
 		}
 		return result;
 	}
 	
-	
+	/**
+	 * 处理后续事宜.
+	 * @param pdfRealPath:生成文件的地址.
+	 * @param pdfFileName:公司名称.
+	 * @param creditCode:同意社会信用代码.
+	 * @param sign:是否水印
+	 * @param watermark:水印内容
+	 * @param encrypt:是否加密.
+	 */
+	private boolean dealAfterOperate(String pdfRealPath, String pdfFileName, String creditCode, String sign, String watermark, String encrypt) {
+		boolean result = true;
+		String inputFile= pdfRealPath+pdfFileName;
+		//水印地址...
+		String outputMarkFile = pdfRealPath+CommonUtils.getSplit()+"watermark";
+		File mark=new File(outputMarkFile);
+		if (!mark.exists()){
+			mark.mkdirs();
+		}
+		outputMarkFile = outputMarkFile+CommonUtils.getSplit()+pdfFileName;
+		//印章地址...
+		String outputSealPath = pdfRealPath+CommonUtils.getSplit()+"seal";
+		File seal=new File(outputSealPath);
+		if (!seal.exists()){
+			seal.mkdirs();
+		}
+		//只是水印.
+		if (CommonUtils.isNotBlank(sign) && CommonUtils.isBlank(encrypt)){
+			result = PdfOperUtils.waterMark(inputFile,outputMarkFile,watermark,null,null);
+			PdfOperUtils.copyFile(outputMarkFile,inputFile);
+		}
+		//只是加密.
+		else if (CommonUtils.isNotBlank(encrypt) && CommonUtils.isBlank(sign)){
+			String userPass = creditCode;
+			result = PdfOperUtils.readOnly(inputFile,userPass,userPass);
+		}
+		
+		//水印加加密
+		else if (CommonUtils.isNotBlank(sign) && CommonUtils.isNotBlank(encrypt)){
+			PdfOperUtils.waterMark(inputFile,outputMarkFile,watermark,null,null);
+			PdfOperUtils.copyFile(outputMarkFile,inputFile);
+			String userPass = creditCode;
+			result = PdfOperUtils.readOnly(inputFile,userPass,userPass);
+		}
+		return result;
+	}
 	
 	/**
 	 * 将 html 转换为 pdf
@@ -469,6 +518,7 @@ public class PdfBuildServer {
 		}
 		return result;
 	}
+	
 	
 	/**
 	 * 处理后续事宜.

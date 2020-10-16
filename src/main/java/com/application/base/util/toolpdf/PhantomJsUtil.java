@@ -2,6 +2,7 @@ package com.application.base.util.toolpdf;
 
 import com.itextpdf.text.log.Logger;
 import com.itextpdf.text.log.LoggerFactory;
+import com.itextpdf.text.pdf.BaseFont;
 import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import sun.misc.BASE64Encoder;
@@ -18,7 +19,7 @@ import java.io.OutputStreamWriter;
 /**
  * @author : 孤狼
  * @NAME: PhantomJsUtil
- * @DESC: PhantomJsUtil类设计
+ * @DESC: PhantomJsUtil 类设计
  **/
 public class PhantomJsUtil {
 	
@@ -79,6 +80,41 @@ public class PhantomJsUtil {
 	}
 	
 	/**
+	 * 通过html获得图片.
+	 * @param phantomjs: linux phantomjs; windows:phantomjs.exe
+	 * @param imageJs: 生成图片的js的内容编写.
+	 * @param htmlPath: html的绝对路径.
+	 * @param filePath: 图片的绝对路径.
+	 * @return
+	 */
+	public static String generateImg(String phantomjs,String imageJs,String htmlPath,String filePath) {
+		Process process = null;
+		try {
+			String cmd = phantomjs+" " + imageJs + " " + htmlPath + " " + filePath;
+			process = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		InputStream inputStream = process.getInputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+		String line = "";
+		try {
+			while ((line = reader.readLine()) != null) {
+				//TODO something.
+			}
+			if (process != null) {
+				process.destroy();
+			}
+			inputStream.close();
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("渲染成功...");
+		return null;
+	}
+	
+	/**
 	 * 生成图片的操作.
 	 * @param phantomJsPath: phantomjsd 的安装地址,绝对路径.
 	 * @param convetJsPath: echerts-sconvert.js 的地址,绝对路径.
@@ -103,6 +139,9 @@ public class PhantomJsUtil {
 			String line = "";
 			while ((line = reader.readLine()) != null) {
 				//TODO something.
+			}
+			if (process != null) {
+				process.destroy();
 			}
 		} catch (IOException e) {
 			logger.error("使用PhamtomJs生成图片失败,失败信息是:"+e.toString());
@@ -247,31 +286,35 @@ public class PhantomJsUtil {
 			//htmlstr = htmlstr.replaceAll("\"", "'").replaceAll("<style>", "<style>body{font-family:SimSun;font-size:14px;}");
 			renderer = new ITextRenderer();
 			ITextFontResolver fontResolver = renderer.getFontResolver();
-			fontResolver.addFont(fontLocal, "Identity-H", false);
+			fontResolver.addFont(fontLocal, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 			File file = new File(pdfPath);
 			fos = new FileOutputStream(file);
 			renderer.setDocumentFromString(htmlStr);
 			renderer.layout();
 			renderer.createPDF(fos);
 			fontResolver.flushCache();
-			System.out.println("文件转换成功,PDF总页数:" + renderer.getRootBox().getLayer().getPages().size());
+			logger.info("文件转换成功,PDF总页数:" + renderer.getRootBox().getLayer().getPages().size());
 			return true;
 		} catch (Exception e) {
-			logger.error("从Html转换成Pdf的操作失败了,失败信息是:"+e.toString());
+			e.printStackTrace();
+			logger.error("从Html转换成Pdf的操作失败了,失败信息是:", e);
 			return false;
 		}finally {
 			try {
 				if (renderer!=null){
 					renderer.finishPDF();
+					renderer.layout();
 				}
 				if (fos!=null){
 					fos.flush();
 					fos.close();
 				}
-			}catch (Exception e){}
+			}catch (Exception e){
+			    logger.error("将html转换成pdf失败", e);
+            }
 		}
 	}
-	
+
 	/**
 	 * 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
 	 * @param imgPath
@@ -287,5 +330,5 @@ public class PhantomJsUtil {
 			return null;
 		}
 	}
-	
+
 }

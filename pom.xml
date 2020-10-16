@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.6.RELEASE</version>
+		<version>2.2.2.RELEASE</version>
 		<relativePath/>
 	</parent>
 	<!--properties-->
@@ -23,7 +23,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
 		<maven.test.skip>true</maven.test.skip>
-		<spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+		<spring-boot.version>2.2.2.RELEASE</spring-boot.version>
 		
 		<downloadSources>true</downloadSources>
 	</properties>
@@ -36,6 +36,15 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -53,10 +62,31 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>5.1.8.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		
 		<!-- itext pdf -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
@@ -68,10 +98,24 @@
 			<artifactId>xmlworker</artifactId>
 			<version>5.5.12</version>
 		</dependency>
-		<dependency>
+		
+		<!--<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>core-renderer</artifactId>
 			<version>R8</version>
+		</dependency>-->
+		<dependency>
+			<groupId>com.westcredit</groupId>
+			<artifactId>core-renderer</artifactId>
+			<version>R8</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/libs/core-renderer-R8.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -101,12 +145,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.60</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
+			<version>1.2.74</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -114,25 +153,148 @@
 			<version>1.18.8</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.48</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+		
 	</dependencies>
 	
+	
+	<!-- 形成带第三方jar包的可执行jar包，jar包目录结构如下 application.properties lib META-INF mybatis
+	org -->
+	<profiles>
+		<profile>
+			<!-- 开发环境 -->
+			<id>dev</id>
+			<properties>
+				<environment>dev</environment><!-- 节点名字environment是自己随意取的 -->
+			</properties>
+		</profile>
+		<profile>
+			<!-- 测试环境 -->
+			<id>test</id>
+			<properties>
+				<environment>test</environment>
+			</properties>
+		</profile>
+		<profile>
+			<!-- 生产环境 -->
+			<id>prod</id>
+			<properties>
+				<environment>prod</environment>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault><!-- 默认激活该profile节点-->
+			</activation>
+		</profile>
+	</profiles>
 	<build>
-		<finalName>base-pdf</finalName>
+		<resources>
+			<!-- 控制资源文件的拷贝 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.yml</include>
+					<include>**/*.xml</include>
+					<include>**/*.ftl</include>
+				</includes>
+				<filtering>false</filtering>
+				<!-- 本地启动注释掉下面一行，打包部署到生产环境则放开下面一行
+				<targetPath>${project.build.directory}/config</targetPath>
+				-->
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.yml</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			<!-- 设置编译版本 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>${maven.compiler.encoding}</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.application.base.PdfApplication</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>config/</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- 拷贝依赖的jar包 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-lib</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<!-- 打包后的包名是否包含assembly的id名 -->
+					<appendAssemblyId>false</appendAssemblyId>
+					<!-- 指定最后tar或者zip包的名字 -->
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<!-- tar或者zip包的输出目录 -->
+					<!-- ../ 是指当前项目的根目录 -->
+					<outputDirectory>${project.build.directory}/</outputDirectory>
+					<descriptors>
+						<!-- 引用的assembly配置文件，可以用多个，即可以同时打包多个格式的包 -->
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<!-- phase加入package后，则在执行maven package时就可以调用maven-assembly-plugin插件定义的打包方式 -->
+					<execution>
+						<!--名字任意 -->
+						<id>make-assembly</id>
+						<!-- 绑定到package生命周期阶段上 -->
+						<phase>package</phase>
+						<goals>
+							<!-- 只运行一次 -->
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-		
 	</build>
+
 </project>

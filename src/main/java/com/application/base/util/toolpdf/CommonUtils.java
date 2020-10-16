@@ -1,11 +1,18 @@
 package com.application.base.util.toolpdf;
 
+import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -142,5 +149,44 @@ public class CommonUtils {
 		if (!file.exists()){
 			file.mkdirs();
 		}
+	}
+	
+	/**
+	 * 非空验证统一方法
+	 * @param args
+	 */
+	public static String nullValidation(Map<String, Object> params, String... args) {
+		StringBuffer buffer = new StringBuffer("");
+		for(String key : args){
+			String value = Objects.toString(params.get(key),"");
+			if(StringUtils.isEmpty(value)) {
+				buffer.append("必输字段:"+key+"的值为空!,");
+			}
+		}
+		return buffer.toString();
+	}
+	
+	/**
+	 * 获得 request 请求的参数
+	 * @param request
+	 * @return
+	 */
+	public static Map<String, Object> getRequestParams(HttpServletRequest request) {
+		Map<String, Object> paramsMap = new HashMap<>();
+		Enumeration<?> parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String name = Objects.toString(parameterNames.nextElement());
+			try {
+				String value = null;
+				String[] values = request.getParameterValues(name);
+				if (values != null && values.length == 1) {
+					value = values[0];
+					paramsMap.put(name, value.trim());
+				}
+			} catch (Exception e) {
+				System.out.println("获取页面参数时异常,参数名称【{"+name+"}】异常信息【{"+e.toString()+"}】");
+			}
+		}
+		return paramsMap;
 	}
 }

@@ -1,4 +1,5 @@
 Application Version: ${base-pdf.version}
+
 Spring Boot Version: ${spring-boot.version}
 ////////////////////////////////////////////////////////////////////
 //                          _ooOoo_                               //

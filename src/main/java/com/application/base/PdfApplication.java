@@ -14,5 +14,4 @@ public class PdfApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PdfApplication.class, args);
 	}
-
 }

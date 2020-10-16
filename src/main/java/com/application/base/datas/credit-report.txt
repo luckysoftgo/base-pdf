@@ -1,0 +1,532 @@
+string:
+{"reportVersion":"基础版","baseInfo":{"actualCapital":"-","regStatus":"-","estiblishTime":"2014-12-30","regCapital":"10","regInstitute":"孤狼县工商行政管理局","companyName":"孤狼县满肚麻辣香锅","taxNumber":"92610822MA707NAX4Q","businessScope":"中餐类制售（不含凉菜、生食海产品、裱花蛋糕）（有效期至：2017.12.29）（依法须经批准的项目，经相关部门批准后方可开展经营活动）","industry":"正餐服务","regLocation":"陕西省我市孤狼县兴茂国际","RYGM":"-","EMAIL":"-","QYWZ":"-","legalPersonName":"曾建平","LZDH":"-","regNumber":"612723610033224","approvedTime":"2014-12-30","companyOrgType":"个体","orgNumber":"-","NSRZZ":"-","CBRS":"-"},"creditCode":"92610822MA707NAX4Q","imagePath":"","companyName":"孤狼县满肚麻辣香锅","blankSpace":"-","reportDatas":{"企业登记信息":[{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"企业登记信息","tagId":"e07cb622dc4a434dbfc3f00b0e2b8ef4","tagName":"出资人及出资信息","instance":{"data":[{"CZZB":"-","GDMC":"-","DJRQ":"-","RJCZ":"-"}],"metadata":{"GDMC":"出资人名称","CZZB":"出资比例","RJCZ":"认缴出资（万元）","DJRQ":"出资时间"}}},"labelName":"企业登记信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"企业登记信息","tagId":"6266af9b382b4d6dae184389afb8f8a4","tagName":"分支机构信息","instance":{"data":[{"FZJG":"-","FDDBRXM":"-","CLRQ":"-","JYZT":"-"}],"metadata":{"FZJG":"企业名称","FDDBRXM":"负责人","CLRQ":"成立日期","JYZT":"经营状态"}}},"labelName":"企业登记信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"企业登记信息","tagId":"b6754c69d6f84c78b0d4fb1c97ffb5f6","tagName":"对外投资","instance":{"data":[{"XY010101":"-","XY023703":"-","XY010105":"-","JYZT":"-","CZBL":"-"}],"metadata":{"XY010101":"被投资企业名称","XY010105":"法定代表人（姓名）","CZBL":"出资比例","XY023703":"成立日期","JYZT":"经营状态"}}},"labelName":"企业登记信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"企业登记信息","tagId":"f905c58a07cd4ffe9b674d049b231b01","tagName":"变更记录","instance":{"data":[{"XY010101":"-","XY010804":"-","XY010803":"-","XY010802":"-"}],"metadata":{"XY010101":"变更项目","XY010803":"变更前内容","XY010804":"变更后内容","XY010802":"变更日期"}}},"labelName":"企业登记信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"企业登记信息","tagId":"633811d0d2fc4ecd9c924f1b2f776f01","tagName":"资质信息","instance":{"data":[{"ZSBH":"-","RDRQ":"-","ZZMC":"-","ZZJZQ":"-","RDJGQC":"-"}],"metadata":{"ZZMC":"证书名称","ZSBH":"证书编号","RDRQ":"签发日期","ZZJZQ":"有效期限","RDJGQC":"发证机关"}}},"labelName":"企业登记信息"}],"法人高管信息":[{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"法人高管信息","tagId":"537e98f6acf94557994c7556b1a846d2","tagName":"主要管理人员信息","instance":{"data":[{"XY011002":"-","XY010105":"-"}],"metadata":{"XY010105":"姓名","XY011002":"职位"}}},"labelName":"法人高管信息"}],"行政监管信息":[{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"709de3ea22444116856e2bba796c2c4c","tagName":"监管信息","instance":{"data":[{"CCRQ":"-","CCFS":"-","CCJG":"-","SSJG":"-"}],"metadata":{"CCRQ":"日期","CCFS":"类型","CCJG":"结果","SSJG":"检查实施机关"}}},"labelName":"行政监管信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"3169e3c81d6f476ca81fb537748ccafe","tagName":"经营异常信息","instance":{"data":[{"XY023102":"2015-07-09","XY023101":"个体工商户未按照《个体工商户年度报告办法》规定报送年度报告","XY023105":"孤狼县工商行政管理局","XY023104":"-","XY023103":"-"}],"metadata":{"XY023102":"列入日期","XY023101":"列入经营异常名录原因","XY023105":"列入决定机关","XY023104":"移出日期","XY023103":"移出经营异常名录原因"}}},"labelName":"行政监管信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"ea9fa1cac64b41da86ea5d640e55e746","tagName":"行政许可信息","instance":{"data":[{"XK_YXQZ":"-","XK_XKWS":"-","XKJG":"-","GSJZQ":"-","XK_XKZS":"-","XKNR":"-"}],"metadata":{"XK_XKWS":"许可文书编号","XK_XKZS":"许可文件名称","XK_YXQZ":"起始日期","GSJZQ":"许可截止日期","XKJG":"许可机关","XKNR":"许可内容"}}},"labelName":"行政监管信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"2112afd0ff4740269c031b9a3f2065bd","tagName":"行政处罚信息","instance":{"data":[{"CFJDSWH":"-","CFLBY":"-","CFSY":"-","CFJGMC":"-","CFSXQ":"-"}],"metadata":{"CFSXQ":"处罚日期","CFJDSWH":"决定书文号","CFLBY":"处罚类别","CFSY":"处罚事由","CFJGMC":"处罚机构"}}},"labelName":"行政监管信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"8664ae2c43da4f629dd5c25ea5ddedaa","tagName":"行政奖励信息","instance":{"data":[{"SYJG":"-","RDWSH":"-","JLMC":"-","JLSYRQ":"-","JLXS":"-"}],"metadata":{"JLSYRQ":"奖励日期","JLXS":"奖励事项","RDWSH":"证书编号","JLMC":"荣誉事项内容","SYJG":"奖励机关"}}},"labelName":"行政监管信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"393967310f644946a5340a414c4a9536","tagName":"守信激励","instance":{"data":[{"RDRQ":"-","RYMC":"-","RDJGQC":"-"}],"metadata":{"RDRQ":"发布年度","RYMC":"类型","RDJGQC":"发布单位"}}},"labelName":"行政监管信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"行政监管信息","tagId":"c979e566c6d648d4b1347a06eead912d","tagName":"失信惩戒","instance":{"data":[{"LRRQ":"-","RDJG":"-","LRSY":"-"}],"metadata":{"LRRQ":"发布年度","LRSY":"违法事实","RDJG":"发布单位"}}},"labelName":"行政监管信息"}],"司法信息":[{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"司法信息","tagId":"","tagName":"立案信息","instance":{"data":[{"BG":"-","AH":"-","AJZT":"-","YG":"-","LASJ":"-"}],"metadata":{"LASJ":"立案时间","AH":"案号","AJZT":"案件状态","BG":"被告人/被告/被上诉人/被申请人","YG":"公诉人/原告/上诉人/申请人"}}},"labelName":"司法信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"司法信息","tagId":"","tagName":"开庭公告","instance":{"data":[{"BG":"-","AH":"-","AY":"-","KTRQ":"-","YG":"-","KTFY":"-"}],"metadata":{"KTRQ":"开庭日期","AH":"案号","AY":"案由","BG":"被告人/被告/被上诉人/被申请人","YG":"公诉人/原告/上诉人/申请人","KTFY":"开庭法院"}}},"labelName":"司法信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"司法信息","tagId":"","tagName":"法律诉讼信息","instance":{"data":[{"AJMC":"-","AJSF":"-","FY":"-","AH":"-","AY":"-","KTRQ":"-"}],"metadata":{"KTRQ":"开庭日期","AJMC":"案件名称","AH":"案号","AY":"案由","AJSF":"案件身份","FY":"法院"}}},"labelName":"司法信息"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"司法信息","tagId":"","tagName":"被执行人信息","instance":{"data":[{"AH":"-","ZXBD":"-","ZXFY":"-","LASJ":"-"}],"metadata":{"LASJ":"立案时间","ZXBD":"执行标的","AH":"案号","ZXFY":"执行法院"}}},"labelName":"司法信息"}],"认定名录":[{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"认定名录","tagId":"f4bf7e94279b460580b7cf2868950c66","tagName":"招投标信息","instance":{"data":[{"SPSJ":"-","XMMC":"-","CGR":"-"}],"metadata":{"SPSJ":"发布时间","XMMC":"项目名称","CGR":"采购人"}}},"labelName":"认定名录"}],"知识产权":[{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"知识产权","tagId":"","tagName":"专利信息","instance":{"data":[{"FLZT":"-","ZLMC":"-","SQGBH":"-","SQH":"-","SQRQ":"-","LX":"-","SQGBR":"-"}],"metadata":{"ZLMC":"专利名称","LX":"类型","SQGBH":"申请公布号","SQH":"申请号","SQGBR":"申请公布日","FLZT":"法律状态","SQRQ":"申请日期"}}},"labelName":"知识产权"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"知识产权","tagId":"","tagName":"商标信息","instance":{"data":[{"SBMC":"-","LB":"-","ZT":"-","SQRQ":"-","SBTP":"-","ZCH":"-"}],"metadata":{"SQRQ":"申请日期","SBTP":"商标图片","SBMC":"商标名称","ZCH":"注册号","LB":"类别","ZT":"状态"}}},"labelName":"知识产权"},{"instanceData":{"companyId":"92610822MA707NAX4Q","labelName":"知识产权","tagId":"","tagName":"著作权信息","instance":{"data":[{"DJH":"-","FLHMC":"-","BBH":"-","RJQC":"-","DJPZRQ":"-"}],"metadata":{"DJPZRQ":"登记批准日期","RJQC":"软件全称","DJH":"登记号","FLHMC":"分类号名称","BBH":"版本号"}}},"labelName":"知识产权"}]},"reportNo":"CREDIT2020BASE","templeteReportName":"newReport.ftl"}
+
+json:
+{
+	"reportVersion": "基础版",
+	"baseInfo": {
+		"actualCapital": "-",
+		"regStatus": "-",
+		"estiblishTime": "2014-12-30",
+		"regCapital": "10",
+		"regInstitute": "孤狼县工商行政管理局",
+		"companyName": "孤狼县满肚麻辣香锅",
+		"taxNumber": "92610822MA707NAX4Q",
+		"businessScope": "中餐类制售（不含凉菜、生食海产品、裱花蛋糕）（有效期至：2017.12.29）（依法须经批准的项目，经相关部门批准后方可开展经营活动）",
+		"industry": "正餐服务",
+		"regLocation": "陕西省我市孤狼县兴茂国际",
+		"RYGM": "-",
+		"EMAIL": "-",
+		"QYWZ": "-",
+		"legalPersonName": "曾建平",
+		"LZDH": "-",
+		"regNumber": "61272361003qacd4",
+		"approvedTime": "2014-12-30",
+		"companyOrgType": "个体",
+		"orgNumber": "-",
+		"NSRZZ": "-",
+		"CBRS": "-"
+	},
+	"creditCode": "92610822MA707NAX4Q",
+	"imagePath": "",
+	"companyName": "孤狼县满肚麻辣香锅",
+	"blankSpace": "-",
+	"reportDatas": {
+		"企业登记信息": [{
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "企业登记信息",
+				"tagId": "e07cb622dc4a434dbfc3f00b0e2b8ef4",
+				"tagName": "出资人及出资信息",
+				"instance": {
+					"data": [{
+						"CZZB": "-",
+						"GDMC": "-",
+						"DJRQ": "-",
+						"RJCZ": "-"
+					}],
+					"metadata": {
+						"GDMC": "出资人名称",
+						"CZZB": "出资比例",
+						"RJCZ": "认缴出资（万元）",
+						"DJRQ": "出资时间"
+					}
+				}
+			},
+			"labelName": "企业登记信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "企业登记信息",
+				"tagId": "6266af9b382b4d6dae184389afb8f8a4",
+				"tagName": "分支机构信息",
+				"instance": {
+					"data": [{
+						"FZJG": "-",
+						"FDDBRXM": "-",
+						"CLRQ": "-",
+						"JYZT": "-"
+					}],
+					"metadata": {
+						"FZJG": "企业名称",
+						"FDDBRXM": "负责人",
+						"CLRQ": "成立日期",
+						"JYZT": "经营状态"
+					}
+				}
+			},
+			"labelName": "企业登记信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "企业登记信息",
+				"tagId": "b6754c69d6f84c78b0d4fb1c97ffb5f6",
+				"tagName": "对外投资",
+				"instance": {
+					"data": [{
+						"XY010101": "-",
+						"XY023703": "-",
+						"XY010105": "-",
+						"JYZT": "-",
+						"CZBL": "-"
+					}],
+					"metadata": {
+						"XY010101": "被投资企业名称",
+						"XY010105": "法定代表人（姓名）",
+						"CZBL": "出资比例",
+						"XY023703": "成立日期",
+						"JYZT": "经营状态"
+					}
+				}
+			},
+			"labelName": "企业登记信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "企业登记信息",
+				"tagId": "f905c58a07cd4ffe9b674d049b231b01",
+				"tagName": "变更记录",
+				"instance": {
+					"data": [{
+						"XY010101": "-",
+						"XY010804": "-",
+						"XY010803": "-",
+						"XY010802": "-"
+					}],
+					"metadata": {
+						"XY010101": "变更项目",
+						"XY010803": "变更前内容",
+						"XY010804": "变更后内容",
+						"XY010802": "变更日期"
+					}
+				}
+			},
+			"labelName": "企业登记信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "企业登记信息",
+				"tagId": "633811d0d2fc4ecd9c924f1b2f776f01",
+				"tagName": "资质信息",
+				"instance": {
+					"data": [{
+						"ZSBH": "-",
+						"RDRQ": "-",
+						"ZZMC": "-",
+						"ZZJZQ": "-",
+						"RDJGQC": "-"
+					}],
+					"metadata": {
+						"ZZMC": "证书名称",
+						"ZSBH": "证书编号",
+						"RDRQ": "签发日期",
+						"ZZJZQ": "有效期限",
+						"RDJGQC": "发证机关"
+					}
+				}
+			},
+			"labelName": "企业登记信息"
+		}],
+		"法人高管信息": [{
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "法人高管信息",
+				"tagId": "537e98f6acf94557994c7556b1a846d2",
+				"tagName": "主要管理人员信息",
+				"instance": {
+					"data": [{
+						"XY011002": "-",
+						"XY010105": "-"
+					}],
+					"metadata": {
+						"XY010105": "姓名",
+						"XY011002": "职位"
+					}
+				}
+			},
+			"labelName": "法人高管信息"
+		}],
+		"行政监管信息": [{
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "709de3ea22444116856e2bba796c2c4c",
+				"tagName": "监管信息",
+				"instance": {
+					"data": [{
+						"CCRQ": "-",
+						"CCFS": "-",
+						"CCJG": "-",
+						"SSJG": "-"
+					}],
+					"metadata": {
+						"CCRQ": "日期",
+						"CCFS": "类型",
+						"CCJG": "结果",
+						"SSJG": "检查实施机关"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "3169e3c81d6f476ca81fb537748ccafe",
+				"tagName": "经营异常信息",
+				"instance": {
+					"data": [{
+						"XY023102": "2015-07-09",
+						"XY023101": "个体工商户未按照《个体工商户年度报告办法》规定报送年度报告",
+						"XY023105": "孤狼县工商行政管理局",
+						"XY023104": "-",
+						"XY023103": "-"
+					}],
+					"metadata": {
+						"XY023102": "列入日期",
+						"XY023101": "列入经营异常名录原因",
+						"XY023105": "列入决定机关",
+						"XY023104": "移出日期",
+						"XY023103": "移出经营异常名录原因"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "ea9fa1cac64b41da86ea5d640e55e746",
+				"tagName": "行政许可信息",
+				"instance": {
+					"data": [{
+						"XK_YXQZ": "-",
+						"XK_XKWS": "-",
+						"XKJG": "-",
+						"GSJZQ": "-",
+						"XK_XKZS": "-",
+						"XKNR": "-"
+					}],
+					"metadata": {
+						"XK_XKWS": "许可文书编号",
+						"XK_XKZS": "许可文件名称",
+						"XK_YXQZ": "起始日期",
+						"GSJZQ": "许可截止日期",
+						"XKJG": "许可机关",
+						"XKNR": "许可内容"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "2112afd0ff4740269c031b9a3f2065bd",
+				"tagName": "行政处罚信息",
+				"instance": {
+					"data": [{
+						"CFJDSWH": "-",
+						"CFLBY": "-",
+						"CFSY": "-",
+						"CFJGMC": "-",
+						"CFSXQ": "-"
+					}],
+					"metadata": {
+						"CFSXQ": "处罚日期",
+						"CFJDSWH": "决定书文号",
+						"CFLBY": "处罚类别",
+						"CFSY": "处罚事由",
+						"CFJGMC": "处罚机构"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "8664ae2c43da4f629dd5c25ea5ddedaa",
+				"tagName": "行政奖励信息",
+				"instance": {
+					"data": [{
+						"SYJG": "-",
+						"RDWSH": "-",
+						"JLMC": "-",
+						"JLSYRQ": "-",
+						"JLXS": "-"
+					}],
+					"metadata": {
+						"JLSYRQ": "奖励日期",
+						"JLXS": "奖励事项",
+						"RDWSH": "证书编号",
+						"JLMC": "荣誉事项内容",
+						"SYJG": "奖励机关"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "393967310f644946a5340a414c4a9536",
+				"tagName": "守信激励",
+				"instance": {
+					"data": [{
+						"RDRQ": "-",
+						"RYMC": "-",
+						"RDJGQC": "-"
+					}],
+					"metadata": {
+						"RDRQ": "发布年度",
+						"RYMC": "类型",
+						"RDJGQC": "发布单位"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "行政监管信息",
+				"tagId": "c979e566c6d648d4b1347a06eead912d",
+				"tagName": "失信惩戒",
+				"instance": {
+					"data": [{
+						"LRRQ": "-",
+						"RDJG": "-",
+						"LRSY": "-"
+					}],
+					"metadata": {
+						"LRRQ": "发布年度",
+						"LRSY": "违法事实",
+						"RDJG": "发布单位"
+					}
+				}
+			},
+			"labelName": "行政监管信息"
+		}],
+		"司法信息": [{
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "司法信息",
+				"tagId": "",
+				"tagName": "立案信息",
+				"instance": {
+					"data": [{
+						"BG": "-",
+						"AH": "-",
+						"AJZT": "-",
+						"YG": "-",
+						"LASJ": "-"
+					}],
+					"metadata": {
+						"LASJ": "立案时间",
+						"AH": "案号",
+						"AJZT": "案件状态",
+						"BG": "被告人/被告/被上诉人/被申请人",
+						"YG": "公诉人/原告/上诉人/申请人"
+					}
+				}
+			},
+			"labelName": "司法信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "司法信息",
+				"tagId": "",
+				"tagName": "开庭公告",
+				"instance": {
+					"data": [{
+						"BG": "-",
+						"AH": "-",
+						"AY": "-",
+						"KTRQ": "-",
+						"YG": "-",
+						"KTFY": "-"
+					}],
+					"metadata": {
+						"KTRQ": "开庭日期",
+						"AH": "案号",
+						"AY": "案由",
+						"BG": "被告人/被告/被上诉人/被申请人",
+						"YG": "公诉人/原告/上诉人/申请人",
+						"KTFY": "开庭法院"
+					}
+				}
+			},
+			"labelName": "司法信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "司法信息",
+				"tagId": "",
+				"tagName": "法律诉讼信息",
+				"instance": {
+					"data": [{
+						"AJMC": "-",
+						"AJSF": "-",
+						"FY": "-",
+						"AH": "-",
+						"AY": "-",
+						"KTRQ": "-"
+					}],
+					"metadata": {
+						"KTRQ": "开庭日期",
+						"AJMC": "案件名称",
+						"AH": "案号",
+						"AY": "案由",
+						"AJSF": "案件身份",
+						"FY": "法院"
+					}
+				}
+			},
+			"labelName": "司法信息"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "司法信息",
+				"tagId": "",
+				"tagName": "被执行人信息",
+				"instance": {
+					"data": [{
+						"AH": "-",
+						"ZXBD": "-",
+						"ZXFY": "-",
+						"LASJ": "-"
+					}],
+					"metadata": {
+						"LASJ": "立案时间",
+						"ZXBD": "执行标的",
+						"AH": "案号",
+						"ZXFY": "执行法院"
+					}
+				}
+			},
+			"labelName": "司法信息"
+		}],
+		"认定名录": [{
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "认定名录",
+				"tagId": "f4bf7e94279b460580b7cf2868950c66",
+				"tagName": "招投标信息",
+				"instance": {
+					"data": [{
+						"SPSJ": "-",
+						"XMMC": "-",
+						"CGR": "-"
+					}],
+					"metadata": {
+						"SPSJ": "发布时间",
+						"XMMC": "项目名称",
+						"CGR": "采购人"
+					}
+				}
+			},
+			"labelName": "认定名录"
+		}],
+		"知识产权": [{
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "知识产权",
+				"tagId": "",
+				"tagName": "专利信息",
+				"instance": {
+					"data": [{
+						"FLZT": "-",
+						"ZLMC": "-",
+						"SQGBH": "-",
+						"SQH": "-",
+						"SQRQ": "-",
+						"LX": "-",
+						"SQGBR": "-"
+					}],
+					"metadata": {
+						"ZLMC": "专利名称",
+						"LX": "类型",
+						"SQGBH": "申请公布号",
+						"SQH": "申请号",
+						"SQGBR": "申请公布日",
+						"FLZT": "法律状态",
+						"SQRQ": "申请日期"
+					}
+				}
+			},
+			"labelName": "知识产权"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "知识产权",
+				"tagId": "",
+				"tagName": "商标信息",
+				"instance": {
+					"data": [{
+						"SBMC": "-",
+						"LB": "-",
+						"ZT": "-",
+						"SQRQ": "-",
+						"SBTP": "-",
+						"ZCH": "-"
+					}],
+					"metadata": {
+						"SQRQ": "申请日期",
+						"SBTP": "商标图片",
+						"SBMC": "商标名称",
+						"ZCH": "注册号",
+						"LB": "类别",
+						"ZT": "状态"
+					}
+				}
+			},
+			"labelName": "知识产权"
+		}, {
+			"instanceData": {
+				"companyId": "92610822MA707NAX4Q",
+				"labelName": "知识产权",
+				"tagId": "",
+				"tagName": "著作权信息",
+				"instance": {
+					"data": [{
+						"DJH": "-",
+						"FLHMC": "-",
+						"BBH": "-",
+						"RJQC": "-",
+						"DJPZRQ": "-"
+					}],
+					"metadata": {
+						"DJPZRQ": "登记批准日期",
+						"RJQC": "软件全称",
+						"DJH": "登记号",
+						"FLHMC": "分类号名称",
+						"BBH": "版本号"
+					}
+				}
+			},
+			"labelName": "知识产权"
+		}]
+	},
+	"reportNo": "CREDIT2020BASE",
+	"templeteReportName": "newReport.ftl"
+}
