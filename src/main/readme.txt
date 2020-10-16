@@ -9,8 +9,7 @@ https://gitee.com/saintlee/echartsconvert
 
 4.phantomjs api
 https://phantomjs.org/api/
-key:
-    4c00c062-3a13-4b3e-9e35-7ddce7f207b5
+4c00c062-3a13-4b3e-9e35-7ddce7f207b5
 
 5.样例.
 https://blog.csdn.net/weixin_45313590/article/details/97161626
