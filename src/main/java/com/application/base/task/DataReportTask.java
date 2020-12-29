@@ -51,7 +51,7 @@ public class DataReportTask {
 	@Scheduled(cron = "${pdf.taskCron}")
 	private void execute() {
 		log.info("总的生成报告任务开始执行!");
-		execCreditReport();
+		//execCreditReport();
 		//execCrAuthReport();
 		log.info("总的生成报告任务执行结束!");
 	}
@@ -64,7 +64,7 @@ public class DataReportTask {
 	public void execCrAuthReport() {
 		//在天威认证中的key
 		String value = Objects.toString(redisTemplate.opsForList().rightPop(Constants.CRAUTH_REPORT_KEY), "");
-		value ="1258721492083531777@33@92610822MA707NAX4Q@府谷县满肚麻辣香锅@D:/phantomjs211/data/crauth/";
+		value = "1258721492083531777@33@92610822MA707NAX4Q@府谷县满肚麻辣香锅@E:/home/pdf/resources/data/crauth/";
 		if (StringUtils.isNotEmpty(value)) {
 			String[] credits = value.split("@");
 			//按照目前的模板来操作.
@@ -160,14 +160,15 @@ public class DataReportTask {
 	 */
 	public void execCreditReport() {
 		//上线用.
-		String value  = ""; //Objects.toString(redisTemplate.opsForList().rightPop(Constants.CREDIT_REPORT_KEY), "");
-		value = "916100005637708187@陕西西部资信股份有限公司@D:/phantomjs211/data/credit/";
+		String value = ""; //Objects.toString(redisTemplate.opsForList().rightPop(Constants.CREDIT_REPORT_KEY), "");
+		value = "916100005637708187@陕西西部资信股份有限公司@E:/home/pdf/resources/data/credit/";
 		if (StringUtils.isNotEmpty(value)) {
 			String[] credits = value.split("@");
 			String reportType = Constants.REPORT_TYPE_CREDIT;
 			String creditCode = credits[0];
 			String companyName = credits[1];
-			String reportPath = pdfPropsConfig.getDataPath();;
+			String reportPath = pdfPropsConfig.getDataPath();
+			;
 			File file = new File(reportPath);
 			if (!file.exists()) {
 				file.mkdirs();

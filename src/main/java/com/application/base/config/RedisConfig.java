@@ -3,6 +3,7 @@ package com.application.base.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -16,6 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @DESC: RedisConfig类设计
  **/
 @Configuration
+
 public class RedisConfig {
 	
 	@Autowired(required=false)
@@ -23,6 +25,7 @@ public class RedisConfig {
 	
 	@Primary
 	@Bean("redisTemplate")
+	@Conditional(RedisCondition.class)
 	@ConditionalOnProperty(name = "spring.redis.host", matchIfMissing = true)
 	public RedisTemplate<String, Object> getSingleRedisTemplate( ) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();

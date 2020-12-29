@@ -66,26 +66,26 @@ public class PdfController {
 			dataMap.put("scoreImg",scoreImg);
 			dataMap.put("creditscore",78);
 			dataMap.put("creditability",creditAbility);
-			dataMap.put("creditTag","信用良好");
+			dataMap.put("creditTag", "信用良好");
 			Configuration configuration = freeMarkerConfigurer.getConfiguration();
 			try {
 				//指定freemarker的模板地址.
 				//configuration.setDirectoryForTemplateLoading(new File("D:/phantomjs211/data/phantomjs/templetes"));
 				//本类中的模板地址.
 				configuration.setClassForTemplateLoading(PdfController.class.getClass(), "/templetes");
-			}catch (Exception e){
+			} catch (Exception e) {
 			}
-			pdfDemoService.createHtml(dataPath,"小猫钓鱼营销策划有限公司","pathReport.ftl","9161013aaa003296T",configuration,dataMap);
-			//server.convertHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T","DataServer","资信云","B",null,null);
-			//server.convertHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T","DataServer","资信云",null,"C","小猫钓鱼营销策划有限公司");
-			//server.convertHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T",null,null,"B","C","小猫钓鱼营销策划有限公司");
-			boolean result = pdfDemoService.changeHtmlToPdf(dataPath+"fonts/SIMSUN.TTC",dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T",sign,pdfPropsConfig.getWaterMark(),encrypt,seal,"小猫钓鱼营销策划有限公司");
+			pdfDemoService.createHtml(dataPath, "小猫钓鱼营销策划有限公司", "pathReport.ftl", "9161013aaa003296T", configuration, dataMap);
+			//server.convertHtmlToPdf(pdfPropsConfig.getFontPath(),dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T","DataServer","资信云","B",null,null);
+			//server.convertHtmlToPdf(pdfPropsConfig.getFontPath(),dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T","DataServer","资信云",null,"C","小猫钓鱼营销策划有限公司");
+			//server.convertHtmlToPdf(pdfPropsConfig.getFontPath(),dataPath,"小猫钓鱼营销策划有限公司","9161013aaa003296T",null,null,"B","C","小猫钓鱼营销策划有限公司");
+			boolean result = pdfDemoService.changeHtmlToPdf(pdfPropsConfig.getFontPath(), dataPath, "小猫钓鱼营销策划有限公司", "9161013aaa003296T", sign, pdfPropsConfig.getWaterMark(), encrypt, seal, "小猫钓鱼营销策划有限公司");
 			System.out.println("完成操作");
-			if (result){
+			if (result) {
 				resultMap.put("status", "200");
-				resultMap.put("data",dataMap);
+				resultMap.put("data", dataMap);
 				resultMap.put("msg", "处理成功");
-			}else {
+			} else {
 				resultMap.put("status", "10001");
 				resultMap.put("msg", "处理失败");
 			}
