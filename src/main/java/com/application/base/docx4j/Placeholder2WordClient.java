@@ -17,6 +17,7 @@ import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.org.apache.poi.util.IOUtils;
 import org.docx4j.wml.*;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -25,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +38,7 @@ import java.util.Map;
  * @version: 1.0.0
  */
 @Slf4j
+@Component
 public class Placeholder2WordClient {
 	
 	/**
@@ -57,7 +58,7 @@ public class Placeholder2WordClient {
 		String name = sourcePath.substring(len, sourcePath.length()).split("\\.")[0];
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateFile);
 		File outFile = new File(templateFile.getParent() + "/out/", "tmp_" + name + ".xml");
-		Docx4J.save(wordMLPackage, outFile, Docx4J.FLAG_SAVE_FLAT_XML);
+		org.docx4j.Docx4J.save(wordMLPackage, outFile, Docx4J.FLAG_SAVE_FLAT_XML);
 		outFile.renameTo(new File(targetPath));
 		wordMLPackage.reset();
 	}
@@ -83,7 +84,7 @@ public class Placeholder2WordClient {
 		htmlSettings.setImageTargetUri(name + "_files");
 		htmlSettings.setWmlPackage(wordMLPackage);
 		File outFile = new File(folder, name);
-		Docx4J.toHTML(htmlSettings, new FileOutputStream(outFile), Docx4J.FLAG_NONE);
+		org.docx4j.Docx4J.toHTML(htmlSettings, new FileOutputStream(outFile), Docx4J.FLAG_NONE);
 		wordMLPackage.reset();
 	}
 	
@@ -141,7 +142,7 @@ public class Placeholder2WordClient {
 	 * @param tableIndex    : word 中表格的下标,从0开始: 0,1,2,3,4,5
 	 * @return
 	 */
-	public boolean convert2TableWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, LinkedList<Map<String, Object>> linkedList, Integer tableIndex) throws Exception {
+	public boolean convert2TableWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, ArrayList<Map<String, Object>> linkedList, Integer tableIndex) throws Exception {
 		if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 			throw new Exception("传入的文件路径为空!");
 		}
@@ -183,7 +184,7 @@ public class Placeholder2WordClient {
 	 * @param linkedList    :单个表单情况下的列表的数据
 	 * @return
 	 */
-	public boolean convert2TablesWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, LinkedList<DocxDataVO> linkedList) throws JAXBException {
+	public boolean convert2TablesWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, ArrayList<DocxDataVO> linkedList) throws JAXBException {
 		try {
 			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 				throw new Exception("传入的文件路径为空!");
@@ -193,15 +194,17 @@ public class Placeholder2WordClient {
 			}
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
 			for (int i = 0; i < linkedList.size(); i++) {
+				DocxDataVO dataVO = linkedList.get(i);
 				ClassFinder find = new ClassFinder(Tbl.class);
 				new TraversalUtil(wordMLPackage.getMainDocumentPart().getContent(), find);
 				//第文档中对应的第几个表.
-				Tbl table = (Tbl) find.results.get(i);
+				int tableIndex = dataVO.getTableIndex() == null ? i : dataVO.getTableIndex();
+				Tbl table = (Tbl) find.results.get(tableIndex);
 				//第二行约定为模板${}
 				Tr dynamicTr = (Tr) table.getContent().get(1);
 				//获取模板行的xml数据
 				String dynamicTrXml = XmlUtils.marshaltoString(dynamicTr);
-				LinkedList<Map<String, Object>> docxDataList = linkedList.get(i).getDocxDataList();
+				ArrayList<Map<String, Object>> docxDataList = linkedList.get(i).getDocxDataList();
 				for (Map<String, Object> dataMap : docxDataList) {
 					//填充模板行数据
 					Tr newTr = (Tr) XmlUtils.unmarshallFromTemplate(dynamicTrXml, dataMap);
@@ -347,6 +350,7 @@ public class Placeholder2WordClient {
 			wordMLPackage.reset();
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new JAXBException("生成文档失败!");
 		}
 	}

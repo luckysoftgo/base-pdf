@@ -1,6 +1,6 @@
 package com.application.base.docx4j.vo;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -27,17 +27,17 @@ public class DocxDataVO {
 	/**
 	 * 数据集合
 	 */
-	private LinkedList<Map<String, Object>> docxDataList;
+	private ArrayList<Map<String, Object>> docxDataList;
 	
 	public DocxDataVO() {
 	}
 	
-	public DocxDataVO(String moduleKey, LinkedList<Map<String, Object>> docxDataList) {
+	public DocxDataVO(String moduleKey, ArrayList<Map<String, Object>> docxDataList) {
 		this.moduleKey = moduleKey;
 		this.docxDataList = docxDataList;
 	}
 	
-	public DocxDataVO(Integer tableIndex, LinkedList<Map<String, Object>> docxDataList) {
+	public DocxDataVO(Integer tableIndex, ArrayList<Map<String, Object>> docxDataList) {
 		this.tableIndex = tableIndex;
 		this.docxDataList = docxDataList;
 	}
@@ -58,11 +58,11 @@ public class DocxDataVO {
 		this.moduleKey = moduleKey;
 	}
 	
-	public LinkedList<Map<String, Object>> getDocxDataList() {
+	public ArrayList<Map<String, Object>> getDocxDataList() {
 		return docxDataList;
 	}
 	
-	public void setDocxDataList(LinkedList<Map<String, Object>> docxDataList) {
+	public void setDocxDataList(ArrayList<Map<String, Object>> docxDataList) {
 		this.docxDataList = docxDataList;
 	}
 }

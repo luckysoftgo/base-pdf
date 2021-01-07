@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ import java.util.Objects;
  * @NAME: PdfController
  * @DESC: PdfController类设计
  **/
-@Controller
+@RestController
 @RequestMapping("/pdf")
 public class PdfController {
 	

@@ -1,22 +1,30 @@
 package com.application.base.test;
 
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSON;
 import com.application.base.docx4j.Placeholder2WordClient;
 import com.application.base.docx4j.vo.DocxDataVO;
 import com.application.base.docx4j.vo.DocxImgVO;
+import com.application.base.util.OfficeOperateUtil;
+import com.application.base.util.toolpdf.PhantomJsUtil;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author ：admin
  * @date ：2020-12-30
  * @description: 转换测试
- *
  * @modified By：
  * @version: 1.0.0
  */
 public class DocxTest {
+	
+	private static String phantomjsPath = "E://home//pdf//resources//phantomjs//window//phantomjs.exe";
+	private static String convetJsPath = "E://home//pdf//resources//phantomjs//echartsconvert//echarts-convert.js";
 	
 	private static Placeholder2WordClient client = new Placeholder2WordClient();
 	
@@ -36,7 +44,8 @@ public class DocxTest {
 		//test8();
 		//test9();
 		//test10();
-		test11();
+		//test11();
+		test12();
 		System.exit(1);
 	}
 	
@@ -53,6 +62,10 @@ public class DocxTest {
 		dataMap.put("age", "40");
 		dataMap.put("phone", "18888888888");
 		dataMap.put("workyears", "10");
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test1");
+		tmpMap.put("uniqueDataMap", dataMap);
+		System.out.println(JSON.toJSONString(tmpMap));
 		boolean result = client.convert2Word(filepath, dataMap, tofilepath);
 		if (result) {
 			System.out.println("success!");
@@ -110,7 +123,7 @@ public class DocxTest {
 		uniqueDataMap.put("basic", "基本信息");
 		uniqueDataMap.put("education", "教育信息");
 		uniqueDataMap.put("experience", "工作经历");
-		LinkedList<Map<String, Object>> linkedList = new LinkedList<>();
+		ArrayList<Map<String, Object>> linkedList = new ArrayList<>();
 		Map<String, Object> dataMap1 = new LinkedHashMap<>();
 		dataMap1.put("work.begin", "2010.04");
 		dataMap1.put("work.end", "2015.06");
@@ -129,6 +142,13 @@ public class DocxTest {
 		dataMap3.put("work.company", "中国航天科工集团");
 		dataMap3.put("work.postion", "高级软件工程师");
 		linkedList.add(dataMap3);
+		
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test3");
+		tmpMap.put("uniqueDataMap", uniqueDataMap);
+		tmpMap.put("tableDatas", linkedList);
+		System.out.println(JSON.toJSONString(tmpMap));
+		
 		boolean result = client.convert2TableWord(filepath, uniqueDataMap, tofilepath, linkedList, 0);
 		if (result) {
 			System.out.println("success!");
@@ -162,7 +182,7 @@ public class DocxTest {
 		uniqueDataMap.put("products", "工作成果");
 		uniqueDataMap.put("team", "团队情况");
 		
-		LinkedList<Map<String, Object>> linkedList1 = new LinkedList<>();
+		ArrayList<Map<String, Object>> linkedList1 = new ArrayList<>();
 		Map<String, Object> dataMap1 = new LinkedHashMap<>();
 		dataMap1.put("work.begin", "2010.04");
 		dataMap1.put("work.end", "2015.06");
@@ -182,7 +202,7 @@ public class DocxTest {
 		dataMap3.put("work.postion", "高级软件工程师");
 		linkedList1.add(dataMap3);
 		
-		LinkedList<Map<String, Object>> linkedList2 = new LinkedList<>();
+		ArrayList<Map<String, Object>> linkedList2 = new ArrayList<>();
 		Map<String, Object> dataMap4 = new LinkedHashMap<>();
 		dataMap4.put("product.name", "采购OA");
 		dataMap4.put("product.no", "20121006AAAAA");
@@ -194,7 +214,7 @@ public class DocxTest {
 		dataMap5.put("product.price", "150W");
 		linkedList2.add(dataMap5);
 		
-		LinkedList<Map<String, Object>> linkedList3 = new LinkedList<>();
+		ArrayList<Map<String, Object>> linkedList3 = new ArrayList<>();
 		Map<String, Object> dataMap6 = new LinkedHashMap<>();
 		dataMap6.put("team.count", "10");
 		dataMap6.put("team.depart", "技术部");
@@ -211,10 +231,16 @@ public class DocxTest {
 		dataMap8.put("team.leader", "赵璐");
 		linkedList3.add(dataMap8);
 		
-		LinkedList<DocxDataVO> linkedList = new LinkedList<>();
+		ArrayList<DocxDataVO> linkedList = new ArrayList<>();
 		linkedList.add(new DocxDataVO(0, linkedList2));
 		linkedList.add(new DocxDataVO(1, linkedList1));
 		linkedList.add(new DocxDataVO(2, linkedList3));
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test4");
+		tmpMap.put("uniqueDataMap", uniqueDataMap);
+		tmpMap.put("tablesDatas", linkedList);
+		System.out.println(JSON.toJSONString(tmpMap));
+		
 		boolean result = client.convert2TablesWord(filepath, uniqueDataMap, tofilepath, linkedList);
 		if (result) {
 			System.out.println("success!");
@@ -397,13 +423,22 @@ public class DocxTest {
 		String filepath = "E:\\home\\pdf\\resources\\data\\test9.docx";
 		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp9.docx";
 		String imageUrl = "E:\\home\\pdf\\resources\\data\\test9.png";
+		String searchText = "插入图片";
 		Map<String, String> dataMap = new LinkedHashMap<>();
 		dataMap.put("name", "张三");
 		dataMap.put("genger", "男");
 		dataMap.put("age", "40");
 		dataMap.put("phone", "18888888888");
 		dataMap.put("workyears", "10");
-		boolean result = client.convert2ImgWord(filepath, dataMap, tofilepath, "插入图片", imageUrl, Boolean.TRUE);
+		
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test9");
+		tmpMap.put("uniqueDataMap", dataMap);
+		tmpMap.put("searchText", searchText);
+		tmpMap.put("imageUrl", imageUrl);
+		System.out.println(JSON.toJSONString(tmpMap));
+		
+		boolean result = client.convert2ImgWord(filepath, dataMap, tofilepath, searchText, imageUrl, Boolean.TRUE);
 		if (result) {
 			System.out.println("success!");
 		} else {
@@ -431,6 +466,13 @@ public class DocxTest {
 		imgInfos.add(new DocxImgVO("插入图片:", imageUrl));
 		imgInfos.add(new DocxImgVO("确认插入图片:", imageUrl));
 		imgInfos.add(new DocxImgVO("再次确认插入图片:", imageUrl));
+		
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test10");
+		tmpMap.put("uniqueDataMap", dataMap);
+		tmpMap.put("imgInfos", imgInfos);
+		System.out.println(JSON.toJSONString(tmpMap));
+		
 		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
 		if (result) {
 			System.out.println("success!");
@@ -446,10 +488,13 @@ public class DocxTest {
 	 */
 	public static void test11() throws Exception {
 		long start = System.currentTimeMillis();
+		String imageDir = "E:\\home\\pdf\\resources\\data\\image";
 		String filepath = "E:\\home\\pdf\\resources\\data\\test11.docx";
 		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp11.docx";
+		String htmlfilepath = "E:\\home\\pdf\\resources\\data\\temp11.html";
 		String targetfilepath = "E:\\home\\pdf\\resources\\data\\temp11.pdf";
-		String imageUrl = "E:\\home\\pdf\\resources\\data\\test9.png";
+		String echartsOptions = "option={title:{text:'折线图堆叠'},tooltip:{trigger:'axis'},legend:{data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']},grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true},toolbox:{feature:{saveAsImage:{}}},xAxis:{type:'category',boundaryGap:false,data:['周一','周二','周三','周四','周五','周六','周日']},yAxis:{type:'value'},series:[{name:'邮件营销',type:'line',stack:'总量',data:[120,132,101,134,90,230,210]},{name:'联盟广告',type:'line',stack:'总量',data:[220,182,191,234,290,330,310]},{name:'视频广告',type:'line',stack:'总量',data:[150,232,201,154,190,330,410]},{name:'直接访问',type:'line',stack:'总量',data:[320,332,301,334,390,330,320]},{name:'搜索引擎',type:'line',stack:'总量',data:[820,932,901,934,1290,1330,1320]}]};";
+		String filePath = PhantomJsUtil.generateImgEChart(phantomjsPath, convetJsPath, "E:\\home\\pdf\\resources\\data\\", echartsOptions, "test11");
 		Map<String, String> dataMap = new LinkedHashMap<>();
 		dataMap.put("name", "张三");
 		dataMap.put("genger", "男");
@@ -457,12 +502,57 @@ public class DocxTest {
 		dataMap.put("phone", "18888888888");
 		dataMap.put("workyears", "10");
 		List<DocxImgVO> imgInfos = new ArrayList<>();
-		imgInfos.add(new DocxImgVO("插入图片:", imageUrl));
-		imgInfos.add(new DocxImgVO("确认插入图片:", imageUrl));
-		imgInfos.add(new DocxImgVO("再次确认插入图片:", imageUrl));
+		imgInfos.add(new DocxImgVO("插入图片:", filePath));
+		
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test11");
+		tmpMap.put("uniqueDataMap", dataMap);
+		tmpMap.put("imageJson", echartsOptions);
+		tmpMap.put("imgInfos", imgInfos);
+		System.out.println(JSON.toJSONString(tmpMap));
+		
 		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
 		if (result) {
-			client.convertDocx2Pdf(tofilepath, targetfilepath);
+			OfficeOperateUtil.docxFile2Files(tofilepath, htmlfilepath, targetfilepath, imageDir, null, null);
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 多图片位置插入.
+	 */
+	public static void test12() throws Exception {
+		long start = System.currentTimeMillis();
+		String imageDir = "E:\\home\\pdf\\resources\\data\\image";
+		String filepath = "E:\\home\\pdf\\resources\\data\\test12.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp12.docx";
+		String htmlfilepath = "E:\\home\\pdf\\resources\\data\\temp12.html";
+		String targetfilepath = "E:\\home\\pdf\\resources\\data\\temp12.pdf";
+		String echartsOptions1 = "option={title:{text:'折线图堆叠'},tooltip:{trigger:'axis'},legend:{data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']},grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true},toolbox:{feature:{saveAsImage:{}}},xAxis:{type:'category',boundaryGap:false,data:['周一','周二','周三','周四','周五','周六','周日']},yAxis:{type:'value'},series:[{name:'邮件营销',type:'line',stack:'总量',data:[120,132,101,134,90,230,210]},{name:'联盟广告',type:'line',stack:'总量',data:[220,182,191,234,290,330,310]},{name:'视频广告',type:'line',stack:'总量',data:[150,232,201,154,190,330,410]},{name:'直接访问',type:'line',stack:'总量',data:[320,332,301,334,390,330,320]},{name:'搜索引擎',type:'line',stack:'总量',data:[820,932,901,934,1290,1330,1320]}]};";
+		String filePath1 = PhantomJsUtil.generateImgEChart(phantomjsPath, convetJsPath, "E:\\home\\pdf\\resources\\data\\", echartsOptions1, "test12-1");
+		String echartsOptions2 = "option={xAxis:{type:'category',data:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},yAxis:{type:'value'},series:[{data:[120,200,150,80,70,110,130],type:'bar',showBackground:true,backgroundStyle:{color:'rgba(220, 220, 220, 0.8)'}}]};";
+		String filePath2 = PhantomJsUtil.generateImgEChart(phantomjsPath, convetJsPath, "E:\\home\\pdf\\resources\\data\\", echartsOptions2, "test12-2");
+		String echartsOptions3 = "option={tooltip:{trigger:'item',formatter:'{a} <br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',left:10,data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']},series:[{name:'访问来源',type:'pie',radius:['50%','70%'],avoidLabelOverlap:false,label:{show:false,position:'center'},emphasis:{label:{show:true,fontSize:'30',fontWeight:'bold'}},labelLine:{show:false},data:[{value:335,name:'直接访问'},{value:310,name:'邮件营销'},{value:234,name:'联盟广告'},{value:135,name:'视频广告'},{value:1548,name:'搜索引擎'}]}]};";
+		String filePath3 = PhantomJsUtil.generateImgEChart(phantomjsPath, convetJsPath, "E:\\home\\pdf\\resources\\data\\", echartsOptions3, "test12-3");
+		
+		Map<String, String> dataMap = new LinkedHashMap<>();
+		dataMap.put("name", "张三");
+		dataMap.put("genger", "男");
+		dataMap.put("age", "40");
+		dataMap.put("phone", "18888888888");
+		dataMap.put("workyears", "10");
+		List<DocxImgVO> imgInfos = new ArrayList<>();
+		imgInfos.add(new DocxImgVO("插入图片:", filePath1));
+		imgInfos.add(new DocxImgVO("确认插入图片:", filePath2));
+		imgInfos.add(new DocxImgVO("再次确认插入图片:", filePath3));
+		
+		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
+		if (result) {
+			OfficeOperateUtil.docxFile2Files(tofilepath, htmlfilepath, targetfilepath, imageDir, null, null);
 			System.out.println("success!");
 		} else {
 			System.out.println("error!");
