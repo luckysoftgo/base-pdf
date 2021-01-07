@@ -1,16 +1,18 @@
 package com.application.base.test;
 
-import com.application.base.docx4j.DocxDataVO;
+import cn.hutool.core.date.DateUtil;
 import com.application.base.docx4j.Placeholder2WordClient;
+import com.application.base.docx4j.vo.DocxDataVO;
+import com.application.base.docx4j.vo.DocxImgVO;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * @author ：admin
  * @date ：2020-12-30
  * @description: 转换测试
+ *
  * @modified By：
  * @version: 1.0.0
  */
@@ -25,9 +27,17 @@ public class DocxTest {
 	 */
 	public static void main(String[] args) throws Exception {
 		//test1();
-		test2();
+		//test2();
 		//test3();
 		//test4();
+		//test5();
+		//test6();
+		//test7();
+		//test8();
+		//test9();
+		//test10();
+		test11();
+		System.exit(1);
 	}
 	
 	/**
@@ -50,7 +60,7 @@ public class DocxTest {
 			System.out.println("error!");
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("转换花费时间为" + (end - start) / 1000 + "秒");
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
 	}
 	
 	/**
@@ -78,7 +88,7 @@ public class DocxTest {
 			System.out.println("error!");
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("转换花费时间为" + (end - start) / 1000 + "秒");
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
 	}
 	
 	/**
@@ -126,7 +136,7 @@ public class DocxTest {
 			System.out.println("error!");
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("转换花费时间为" + (end - start) / 1000 + "秒");
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
 	}
 	
 	
@@ -212,6 +222,252 @@ public class DocxTest {
 			System.out.println("error!");
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("转换花费时间为" + (end - start) / 1000 + "秒");
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	
+	/**
+	 * 测试.
+	 */
+	public static void test5() throws Exception {
+		long start = System.currentTimeMillis();
+		
+		String filepath = "E:\\home\\pdf\\resources\\data\\test5.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp5.docx";
+		
+		Map<String, String> uniqueDataMap = new LinkedHashMap<>();
+		uniqueDataMap.put("date", DateUtil.format(LocalDateTime.now(), "yyyy-MM-dd"));
+		uniqueDataMap.put("client", "张三");
+		uniqueDataMap.put("account-manager", "李四");
+		uniqueDataMap.put("company", "青云科技");
+		uniqueDataMap.put("residence", "高新国际");
+		uniqueDataMap.put("mobilephone", "18888888888");
+		uniqueDataMap.put("email", "test@126.com");
+		uniqueDataMap.put("address", "陕西西安高新四路");
+		uniqueDataMap.put("reationship", "客户关系");
+		uniqueDataMap.put("name", "长安国际");
+		uniqueDataMap.put("insourced", "AAAAA");
+		uniqueDataMap.put("insource", "BBBBB");
+		uniqueDataMap.put("policy-holder", "CCCCC");
+		
+		uniqueDataMap.put("account", "10000.00");
+		uniqueDataMap.put("insourceNo", "2021010508");
+		uniqueDataMap.put("acceptNo", "2021002021");
+		uniqueDataMap.put("e-number", "88888-9999");
+		uniqueDataMap.put("invoceType", "平安车险");
+		uniqueDataMap.put("constName", "长安电子信托系统");
+		
+		boolean result = client.convert2Word(filepath, uniqueDataMap, tofilepath);
+		if (result) {
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 表格类型的模板处理.
+	 */
+	public static void test6() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test6.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp6.docx";
+		Map<String, String> uniqueDataMap = new LinkedHashMap<>();
+		uniqueDataMap.put("point", "49");
+		uniqueDataMap.put("a-num", "√");
+		uniqueDataMap.put("b-num", "");
+		uniqueDataMap.put("c-num", "");
+		uniqueDataMap.put("d-num", "√");
+		uniqueDataMap.put("e-num", "");
+		uniqueDataMap.put("f-num", "");
+		uniqueDataMap.put("name", "长安国际");
+		uniqueDataMap.put("m-sex", "√");
+		uniqueDataMap.put("f-sex", "");
+		uniqueDataMap.put("idcard", "√");
+		uniqueDataMap.put("passport", "");
+		uniqueDataMap.put("bootlet", "");
+		uniqueDataMap.put("idNo", "11111111111111111111");
+		uniqueDataMap.put("email", "test@126.com");
+		uniqueDataMap.put("national", "中华人民共和国");
+		uniqueDataMap.put("address", "陕西西安高新四路");
+		uniqueDataMap.put("mobilephone", "18888888888");
+		uniqueDataMap.put("phone", "029-8756328");
+		
+		uniqueDataMap.put("owner", "√");
+		uniqueDataMap.put("spouse", "");
+		uniqueDataMap.put("parent", "");
+		uniqueDataMap.put("children", "√");
+		uniqueDataMap.put("brother", "");
+		uniqueDataMap.put("account-name", "长安电子信托");
+		uniqueDataMap.put("open-bank", "招商银行陕西分行");
+		uniqueDataMap.put("account-no", "2021001002003");
+		boolean result = client.convert2Word(filepath, uniqueDataMap, tofilepath);
+		if (result) {
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 表格类型的模板处理.
+	 */
+	public static void test7() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test7.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp7.docx";
+		Map<String, String> uniqueDataMap = new LinkedHashMap<>();
+		uniqueDataMap.put("point", "49");
+		uniqueDataMap.put("a-num", "√");
+		uniqueDataMap.put("b-num", "");
+		uniqueDataMap.put("c-num", "");
+		uniqueDataMap.put("d-num", "√");
+		uniqueDataMap.put("e-num", "");
+		uniqueDataMap.put("f-num", "");
+		uniqueDataMap.put("name", "长安国际");
+		uniqueDataMap.put("m-sex", "√");
+		uniqueDataMap.put("f-sex", "");
+		uniqueDataMap.put("idcard", "√");
+		uniqueDataMap.put("passport", "");
+		uniqueDataMap.put("bootlet", "");
+		uniqueDataMap.put("idNo", "11111111111111111111");
+		uniqueDataMap.put("email", "test@126.com");
+		uniqueDataMap.put("national", "中华人民共和国");
+		uniqueDataMap.put("address", "陕西西安高新四路");
+		uniqueDataMap.put("mobilephone", "18888888888");
+		uniqueDataMap.put("phone", "029-8756328");
+		
+		uniqueDataMap.put("owner", "√");
+		uniqueDataMap.put("spouse", "");
+		uniqueDataMap.put("parent", "");
+		uniqueDataMap.put("children", "√");
+		uniqueDataMap.put("brother", "");
+		uniqueDataMap.put("account-name", "长安电子信托");
+		uniqueDataMap.put("open-bank", "招商银行陕西分行");
+		uniqueDataMap.put("account-no", "2021001002003");
+		boolean result = client.convert2Word(filepath, uniqueDataMap, tofilepath);
+		if (result) {
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 测试多页模板的响应速度.
+	 */
+	public static void test8() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test8.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp8.docx";
+		Map<String, String> uniqueDataMap = new LinkedHashMap<>();
+		
+		//67 page
+		uniqueDataMap.put("year", "2021");
+		uniqueDataMap.put("month", "01");
+		uniqueDataMap.put("day", "08");
+		uniqueDataMap.put("clientName", "西伯利亚狼");
+		//61 page
+		uniqueDataMap.put("year1", "2020");
+		uniqueDataMap.put("month1", "01");
+		uniqueDataMap.put("day1", "08");
+		uniqueDataMap.put("clientName1", "西伯利亚狼1");
+		
+		boolean result = client.convert2Word(filepath, uniqueDataMap, tofilepath);
+		if (result) {
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 单个图片插入
+	 */
+	public static void test9() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test9.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp9.docx";
+		String imageUrl = "E:\\home\\pdf\\resources\\data\\test9.png";
+		Map<String, String> dataMap = new LinkedHashMap<>();
+		dataMap.put("name", "张三");
+		dataMap.put("genger", "男");
+		dataMap.put("age", "40");
+		dataMap.put("phone", "18888888888");
+		dataMap.put("workyears", "10");
+		boolean result = client.convert2ImgWord(filepath, dataMap, tofilepath, "插入图片", imageUrl, Boolean.TRUE);
+		if (result) {
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 多图片位置插入.
+	 */
+	public static void test10() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test10.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp10.docx";
+		String imageUrl = "E:\\home\\pdf\\resources\\data\\test9.png";
+		Map<String, String> dataMap = new LinkedHashMap<>();
+		dataMap.put("name", "张三");
+		dataMap.put("genger", "男");
+		dataMap.put("age", "40");
+		dataMap.put("phone", "18888888888");
+		dataMap.put("workyears", "10");
+		List<DocxImgVO> imgInfos = new ArrayList<>();
+		imgInfos.add(new DocxImgVO("插入图片:", imageUrl));
+		imgInfos.add(new DocxImgVO("确认插入图片:", imageUrl));
+		imgInfos.add(new DocxImgVO("再次确认插入图片:", imageUrl));
+		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
+		if (result) {
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 多图片位置插入.
+	 */
+	public static void test11() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test11.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp11.docx";
+		String targetfilepath = "E:\\home\\pdf\\resources\\data\\temp11.pdf";
+		String imageUrl = "E:\\home\\pdf\\resources\\data\\test9.png";
+		Map<String, String> dataMap = new LinkedHashMap<>();
+		dataMap.put("name", "张三");
+		dataMap.put("genger", "男");
+		dataMap.put("age", "40");
+		dataMap.put("phone", "18888888888");
+		dataMap.put("workyears", "10");
+		List<DocxImgVO> imgInfos = new ArrayList<>();
+		imgInfos.add(new DocxImgVO("插入图片:", imageUrl));
+		imgInfos.add(new DocxImgVO("确认插入图片:", imageUrl));
+		imgInfos.add(new DocxImgVO("再次确认插入图片:", imageUrl));
+		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
+		if (result) {
+			client.convertDocx2Pdf(tofilepath, targetfilepath);
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
 	}
 }

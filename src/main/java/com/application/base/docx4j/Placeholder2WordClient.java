@@ -1,23 +1,29 @@
 package com.application.base.docx4j;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.application.base.docx4j.vo.DocxDataVO;
+import com.application.base.docx4j.vo.DocxImgVO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.docx4j.Docx4J;
 import org.docx4j.TraversalUtil;
 import org.docx4j.XmlUtils;
 import org.docx4j.convert.out.HTMLSettings;
+import org.docx4j.dml.wordprocessingDrawing.Inline;
 import org.docx4j.finders.ClassFinder;
+import org.docx4j.jaxb.Context;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.wml.ContentAccessor;
-import org.docx4j.wml.Tbl;
-import org.docx4j.wml.Text;
-import org.docx4j.wml.Tr;
+import org.docx4j.org.apache.poi.util.IOUtils;
+import org.docx4j.wml.*;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,13 +31,13 @@ import java.util.Map;
 
 /**
  * @author ：admin
- * @date ：2020-12-30
  * https://www.docx4java.org/trac/docx4j
  * https://github.com/plutext/docx4j
  * @description: doc4j处理word问题.
  * @modified By：
  * @version: 1.0.0
  */
+@Slf4j
 public class Placeholder2WordClient {
 	
 	/**
@@ -95,7 +101,7 @@ public class Placeholder2WordClient {
 		File templateFile = new File(sourcePath);
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateFile);
 		File outFile = new File(targetPath);
-		Docx4J.toPDF(wordMLPackage, new FileOutputStream(outFile));
+		org.docx4j.Docx4J.toPDF(wordMLPackage, new FileOutputStream(outFile));
 		wordMLPackage.reset();
 	}
 	
@@ -214,6 +220,162 @@ public class Placeholder2WordClient {
 			throw new JAXBException("生成文档失败!");
 		}
 	}
+	
+	
+	/**
+	 * 生成带图片插入的 word
+	 *
+	 * @param docxOrginFile
+	 * @param unqiueDataMap
+	 * @param docxNewFile
+	 * @param searchText:文本替换位置.
+	 * @param imgPath
+	 * @param contains:          true 标识包涵; false 等于
+	 * @return
+	 * @throws JAXBException
+	 */
+	public boolean convert2ImgWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, String searchText, String imgPath, Boolean contains) throws JAXBException {
+		try {
+			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
+				throw new Exception("传入的文件路径为空!");
+			}
+			if (null == unqiueDataMap || unqiueDataMap.isEmpty()) {
+				throw new Exception("传入的数据为空!");
+			}
+			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
+			ObjectFactory factory = Context.getWmlObjectFactory();
+			//得到主段落
+			MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+			//提取正文
+			Document document = documentPart.getContents();
+			//提取所有段落
+			List<Object> paragraphs = document.getBody().getContent();
+			//拿到指定段落,替换图片.
+			insertImgInfo(searchText, imgPath, wordMLPackage, factory, paragraphs, contains);
+			//替换占位符所占有的值.
+			documentPart.variableReplace(unqiueDataMap);
+			//保存文件.
+			Docx4J.save(wordMLPackage, new File(docxNewFile));
+			//释放资源
+			wordMLPackage.reset();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JAXBException("生成文档失败!");
+		}
+	}
+	
+	/**
+	 * 在段落中插入图片
+	 *
+	 * @param searchText
+	 * @param imgPath
+	 * @param wordMLPackage
+	 * @param factory
+	 * @param paragraphs
+	 * @param contains:     true 标识包涵; false 等于
+	 * @throws Exception
+	 */
+	private void insertImgInfo(String searchText, String imgPath, WordprocessingMLPackage wordMLPackage, ObjectFactory factory, List<Object> paragraphs, Boolean contains) throws Exception {
+		P paragraph = new P();
+		for (Object object : paragraphs) {
+			log.info("段落的内容是:" + object.toString());
+			//找到文本位置.
+			if (null == contains || contains.booleanValue() == true) {
+				if (object.toString().contains(searchText)) {
+					paragraph = (P) object;
+					break;
+				}
+			} else if (contains.booleanValue() == false) {
+				if (object.toString().equalsIgnoreCase(searchText)) {
+					paragraph = (P) object;
+					break;
+				}
+			}
+		}
+		//要添加的内容
+		// R对象是匿名的复杂类型
+		R run = factory.createR();
+		// drawing理解为画布？
+		Drawing drawing = getDraw(imgPath, wordMLPackage, factory);
+		//段落设置换行.
+		run.getContent().add(new Br());
+		//将文字和图片按照顺序放入R中
+		run.getContent().add(drawing);
+		//段落中添加图片
+		paragraph.getContent().add(run);
+	}
+	
+	/**
+	 * 生成带图片插入的 word
+	 *
+	 * @param docxOrginFile
+	 * @param unqiueDataMap
+	 * @param docxNewFile
+	 * @param imgInfos:     searchText 要插入的图片的位置;imgPath 图片的绝对位置.
+	 * @param contains:     true 标识包涵; false 等于
+	 * @return
+	 * @throws JAXBException
+	 */
+	public boolean convert2ImgsWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, List<DocxImgVO> imgInfos, Boolean contains) throws JAXBException {
+		try {
+			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
+				throw new Exception("传入的文件路径为空!");
+			}
+			if (null == unqiueDataMap || unqiueDataMap.isEmpty()) {
+				throw new Exception("传入的数据为空!");
+			}
+			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
+			ObjectFactory factory = Context.getWmlObjectFactory();
+			//得到主段落
+			MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+			//提取正文
+			Document document = documentPart.getContents();
+			//提取所有段落
+			List<Object> paragraphs = document.getBody().getContent();
+			//循环查找要替换的图片位置.
+			for (DocxImgVO imgVO : imgInfos) {
+				String searchText = imgVO.getSearchText();
+				String imgPath = imgVO.getImgPath();
+				insertImgInfo(searchText, imgPath, wordMLPackage, factory, paragraphs, contains);
+			}
+			//替换占位符所占的位置值.
+			documentPart.variableReplace(unqiueDataMap);
+			//保存新生成的文件.
+			Docx4J.save(wordMLPackage, new File(docxNewFile));
+			//释放资源
+			wordMLPackage.reset();
+			return true;
+		} catch (Exception e) {
+			throw new JAXBException("生成文档失败!");
+		}
+	}
+	
+	
+	/**
+	 * 创建图片对象.
+	 *
+	 * @param imgPath
+	 * @param mlPackage
+	 * @param factory
+	 * @return
+	 * @throws Exception
+	 */
+	public Drawing getDraw(String imgPath, WordprocessingMLPackage mlPackage, ObjectFactory factory) throws Exception {
+		InputStream is = new FileInputStream(imgPath);
+		byte[] bytes = IOUtils.toByteArray(is);
+		// 创建一个行内图片
+		BinaryPartAbstractImage imagePart = BinaryPartAbstractImage.createImagePart(mlPackage, bytes);
+		//设置图片最大宽度
+		int docPrId = 1;
+		int cNvPrId = 1;
+		Inline inline = imagePart.createImageInline("Filename hint", "Alternative text", docPrId, cNvPrId, false);
+		// drawing理解为画布
+		Drawing drawing = factory.createDrawing();
+		drawing.getAnchorOrInline().add(inline);
+		return drawing;
+	}
+	
 	
 	/**
 	 * 设置最大Text类型节点个数 如果超过此值，在删除占位符时可能会重复计算导致错误

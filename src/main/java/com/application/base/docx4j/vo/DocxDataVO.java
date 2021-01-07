@@ -1,4 +1,4 @@
-package com.application.base.docx4j;
+package com.application.base.docx4j.vo;
 
 import java.util.LinkedList;
 import java.util.Map;
