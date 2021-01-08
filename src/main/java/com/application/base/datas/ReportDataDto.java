@@ -1,7 +1,7 @@
 package com.application.base.datas;
 
 import com.application.base.docx4j.vo.DocxDataVO;
-import com.application.base.docx4j.vo.DocxImgVO;
+import com.application.base.docx4j.vo.DocxImageVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,11 @@ public class ReportDataDto implements java.io.Serializable {
 	private String templeteId;
 	
 	/**
+	 * 项目id.
+	 */
+	private String projectId;
+	
+	/**
 	 * 模板上全局唯一的 key-value 值
 	 */
 	private Map<String, String> uniqueDataMap;
@@ -36,30 +41,28 @@ public class ReportDataDto implements java.io.Serializable {
 	private ArrayList<DocxDataVO> tablesDatas;
 	
 	/**
-	 * 要查找的模板中的文本
+	 * 单个图片信息的传入
 	 */
-	private String searchText;
-	
-	/**
-	 * 要查找的模板中图片的url
-	 */
-	private String imageUrl;
+	private DocxImageVO imageVO;
 	
 	/**
 	 * 多图片的配置信息
 	 */
-	private List<DocxImgVO> imgInfos;
+	private List<DocxImageVO> imageInfos;
 	
-	/**
-	 * 生成图片的 json 串
-	 */
-	private String imageJson;
+	public ReportDataDto() {
 	
-	/**
-	 * 生成图片的 json 串
-	 */
-	private List<String> imagesJsons;
+	}
 	
+	public ReportDataDto(String templeteId, String projectId, Map<String, String> uniqueDataMap, ArrayList<Map<String, Object>> tableDatas, ArrayList<DocxDataVO> tablesDatas, DocxImageVO imageVO, List<DocxImageVO> imageInfos) {
+		this.templeteId = templeteId;
+		this.projectId = projectId;
+		this.uniqueDataMap = uniqueDataMap;
+		this.tableDatas = tableDatas;
+		this.tablesDatas = tablesDatas;
+		this.imageVO = imageVO;
+		this.imageInfos = imageInfos;
+	}
 	
 	public String getTempleteId() {
 		return templeteId;
@@ -67,6 +70,14 @@ public class ReportDataDto implements java.io.Serializable {
 	
 	public void setTempleteId(String templeteId) {
 		this.templeteId = templeteId;
+	}
+	
+	public String getProjectId() {
+		return projectId;
+	}
+	
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 	
 	public Map<String, String> getUniqueDataMap() {
@@ -93,43 +104,19 @@ public class ReportDataDto implements java.io.Serializable {
 		this.tablesDatas = tablesDatas;
 	}
 	
-	public String getSearchText() {
-		return searchText;
+	public DocxImageVO getImageVO() {
+		return imageVO;
 	}
 	
-	public void setSearchText(String searchText) {
-		this.searchText = searchText;
+	public void setImageVO(DocxImageVO imageVO) {
+		this.imageVO = imageVO;
 	}
 	
-	public String getImageUrl() {
-		return imageUrl;
+	public List<DocxImageVO> getImageInfos() {
+		return imageInfos;
 	}
 	
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-	
-	public List<DocxImgVO> getImgInfos() {
-		return imgInfos;
-	}
-	
-	public void setImgInfos(List<DocxImgVO> imgInfos) {
-		this.imgInfos = imgInfos;
-	}
-	
-	public String getImageJson() {
-		return imageJson;
-	}
-	
-	public void setImageJson(String imageJson) {
-		this.imageJson = imageJson;
-	}
-	
-	public List<String> getImagesJsons() {
-		return imagesJsons;
-	}
-	
-	public void setImagesJsons(List<String> imagesJsons) {
-		this.imagesJsons = imagesJsons;
+	public void setImageInfos(List<DocxImageVO> imageInfos) {
+		this.imageInfos = imageInfos;
 	}
 }

@@ -1,7 +1,7 @@
 package com.application.base.service;
 
 import com.application.base.docx4j.vo.DocxDataVO;
-import com.application.base.docx4j.vo.DocxImgVO;
+import com.application.base.docx4j.vo.DocxImageVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +50,10 @@ public interface ConvertService {
 	 *
 	 * @param templeteId    模板id.
 	 * @param uniqueDataMap 数据集合.
-	 * @param searchText    图片开始插入的位置.
-	 * @param imageUrl      图片的绝对路径.
+	 * @param imageVO       图片信息.
 	 * @return
 	 */
-	public Map<String, String> wordImg2files(String templeteId, Map<String, String> uniqueDataMap, String searchText, String imageUrl);
+	public Map<String, String> wordImg2files(String templeteId, Map<String, String> uniqueDataMap, DocxImageVO imageVO);
 	
 	/**
 	 * 文件转换
@@ -64,6 +63,26 @@ public interface ConvertService {
 	 * @param imgInfos      图片信息对.
 	 * @return
 	 */
-	public Map<String, String> wordImgs2files(String templeteId, Map<String, String> uniqueDataMap, List<DocxImgVO> imgInfos);
+	public Map<String, String> wordImgs2files(String templeteId, Map<String, String> uniqueDataMap, List<DocxImageVO> imgInfos);
+	
+	/**
+	 * 文件转换：新生产图片
+	 *
+	 * @param templeteId    模板id.
+	 * @param uniqueDataMap 数据集合.
+	 * @param imgVO         单个图片信息.
+	 * @return
+	 */
+	public Map<String, String> wordAutomaticImg2files(String templeteId, Map<String, String> uniqueDataMap, DocxImageVO imgVO);
+	
+	/**
+	 * 文件转换：新生产图片
+	 *
+	 * @param templeteId    模板id.
+	 * @param uniqueDataMap 数据集合.
+	 * @param imgInfos      图片信息对.
+	 * @return
+	 */
+	public Map<String, String> wordAutomaticImgs2files(String templeteId, Map<String, String> uniqueDataMap, List<DocxImageVO> imgInfos);
 	
 }

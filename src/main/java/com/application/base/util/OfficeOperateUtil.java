@@ -96,6 +96,7 @@ public class OfficeOperateUtil {
 				htmlContent = htmlContent.replaceAll(symbol, "");
 			}
 		}
+		//htmlContent = cssHtmlContent(htmlContent,800,600);
 		boolean result = htmlContentToHtmlFile(htmlContent, htmlPath);
 		result = htmlContentToPdfFile(htmlContent, pdfPath, rectangle);
 		return result;
@@ -339,6 +340,25 @@ public class OfficeOperateUtil {
 			}
 		}
 		return content;
+	}
+	
+	/**
+	 * 添加显示
+	 *
+	 * @param htmlContent html内容
+	 * @return 规范化后的html
+	 */
+	private static String cssHtmlContent(String htmlContent, int width, int height) {
+		if (StringUtils.isBlank(htmlContent)) {
+			log.info("formatHtmlContent:传入的文件内容为空");
+			return "";
+		}
+		htmlContent = htmlContent.replace("<html>", "<!DOCTYPE html><html lang=\"en\">");
+		htmlContent = htmlContent.replace("<head></head>", "<head><meta charset=\"UTF-8\"><title>动态图片</title></head>");
+		//重置图片的宽高
+		htmlContent = htmlContent.replaceAll("(<img[^>]*?)\\s+width\\s*=\\s*\\S+", "$1 width='" + width + "'");
+		htmlContent = htmlContent.replaceAll("(<img[^>]*?)\\s+height\\s*=\\s*\\S+", "$1 height='" + height + "'");
+		return htmlContent;
 	}
 	
 	/**

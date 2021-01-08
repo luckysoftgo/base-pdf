@@ -2,7 +2,7 @@ package com.application.base.docx4j;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.application.base.docx4j.vo.DocxDataVO;
-import com.application.base.docx4j.vo.DocxImgVO;
+import com.application.base.docx4j.vo.DocxImageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.docx4j.Docx4J;
@@ -33,6 +33,7 @@ import java.util.Map;
  * @author ：admin
  * https://www.docx4java.org/trac/docx4j
  * https://github.com/plutext/docx4j
+ * https://blog.csdn.net/qq_38542834/article/details/84303174
  * @description: doc4j处理word问题.
  * @modified By：
  * @version: 1.0.0
@@ -282,7 +283,6 @@ public class Placeholder2WordClient {
 	private void insertImgInfo(String searchText, String imgPath, WordprocessingMLPackage wordMLPackage, ObjectFactory factory, List<Object> paragraphs, Boolean contains) throws Exception {
 		P paragraph = new P();
 		for (Object object : paragraphs) {
-			log.info("段落的内容是:" + object.toString());
 			//找到文本位置.
 			if (null == contains || contains.booleanValue() == true) {
 				if (object.toString().contains(searchText)) {
@@ -309,6 +309,7 @@ public class Placeholder2WordClient {
 		paragraph.getContent().add(run);
 	}
 	
+	
 	/**
 	 * 生成带图片插入的 word
 	 *
@@ -320,7 +321,7 @@ public class Placeholder2WordClient {
 	 * @return
 	 * @throws JAXBException
 	 */
-	public boolean convert2ImgsWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, List<DocxImgVO> imgInfos, Boolean contains) throws JAXBException {
+	public boolean convert2ImgsWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, List<DocxImageVO> imgInfos, Boolean contains) throws JAXBException {
 		try {
 			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 				throw new Exception("传入的文件路径为空!");
@@ -337,9 +338,9 @@ public class Placeholder2WordClient {
 			//提取所有段落
 			List<Object> paragraphs = document.getBody().getContent();
 			//循环查找要替换的图片位置.
-			for (DocxImgVO imgVO : imgInfos) {
+			for (DocxImageVO imgVO : imgInfos) {
 				String searchText = imgVO.getSearchText();
-				String imgPath = imgVO.getImgPath();
+				String imgPath = imgVO.getImagePath();
 				insertImgInfo(searchText, imgPath, wordMLPackage, factory, paragraphs, contains);
 			}
 			//替换占位符所占的位置值.
@@ -371,8 +372,9 @@ public class Placeholder2WordClient {
 		// 创建一个行内图片
 		BinaryPartAbstractImage imagePart = BinaryPartAbstractImage.createImagePart(mlPackage, bytes);
 		//设置图片最大宽度
-		int docPrId = 1;
+		int docPrId = 0;
 		int cNvPrId = 1;
+		//可以有很多的构造函数,具体可以根据构造函数来处理.
 		Inline inline = imagePart.createImageInline("Filename hint", "Alternative text", docPrId, cNvPrId, false);
 		// drawing理解为画布
 		Drawing drawing = factory.createDrawing();

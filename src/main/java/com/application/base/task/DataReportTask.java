@@ -50,10 +50,10 @@ public class DataReportTask {
 	
 	@Scheduled(cron = "${pdf.taskCron}")
 	private void execute() {
-		log.info("总的生成报告任务开始执行!");
+		//log.info("总的生成报告任务开始执行!");
 		//execCreditReport();
 		//execCrAuthReport();
-		log.info("总的生成报告任务执行结束!");
+		//log.info("总的生成报告任务执行结束!");
 	}
 	
 	/**

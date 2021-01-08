@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.application.base.docx4j.Placeholder2WordClient;
 import com.application.base.docx4j.vo.DocxDataVO;
-import com.application.base.docx4j.vo.DocxImgVO;
+import com.application.base.docx4j.vo.DocxImageVO;
 import com.application.base.util.OfficeOperateUtil;
 import com.application.base.util.toolpdf.PhantomJsUtil;
 
@@ -44,8 +44,8 @@ public class DocxTest {
 		//test8();
 		//test9();
 		//test10();
-		//test11();
-		test12();
+		test11();
+		//test12();
 		System.exit(1);
 	}
 	
@@ -434,10 +434,11 @@ public class DocxTest {
 		Map<String, Object> tmpMap = new LinkedHashMap<>();
 		tmpMap.put("templeteId", "test9");
 		tmpMap.put("uniqueDataMap", dataMap);
-		tmpMap.put("searchText", searchText);
-		tmpMap.put("imageUrl", imageUrl);
+		DocxImageVO imageVO = new DocxImageVO();
+		imageVO.setSearchText(searchText);
+		imageVO.setImagePath(imageUrl);
+		tmpMap.put("imageVO", imageVO);
 		System.out.println(JSON.toJSONString(tmpMap));
-		
 		boolean result = client.convert2ImgWord(filepath, dataMap, tofilepath, searchText, imageUrl, Boolean.TRUE);
 		if (result) {
 			System.out.println("success!");
@@ -462,15 +463,15 @@ public class DocxTest {
 		dataMap.put("age", "40");
 		dataMap.put("phone", "18888888888");
 		dataMap.put("workyears", "10");
-		List<DocxImgVO> imgInfos = new ArrayList<>();
-		imgInfos.add(new DocxImgVO("插入图片:", imageUrl));
-		imgInfos.add(new DocxImgVO("确认插入图片:", imageUrl));
-		imgInfos.add(new DocxImgVO("再次确认插入图片:", imageUrl));
+		List<DocxImageVO> imgInfos = new ArrayList<>();
+		imgInfos.add(new DocxImageVO("插入图片:", imageUrl));
+		imgInfos.add(new DocxImageVO("确认插入图片:", imageUrl));
+		imgInfos.add(new DocxImageVO("再次确认插入图片:", imageUrl));
 		
 		Map<String, Object> tmpMap = new LinkedHashMap<>();
 		tmpMap.put("templeteId", "test10");
 		tmpMap.put("uniqueDataMap", dataMap);
-		tmpMap.put("imgInfos", imgInfos);
+		tmpMap.put("imageInfos", imgInfos);
 		System.out.println(JSON.toJSONString(tmpMap));
 		
 		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
@@ -488,6 +489,7 @@ public class DocxTest {
 	 */
 	public static void test11() throws Exception {
 		long start = System.currentTimeMillis();
+		String searchText = "插入图片:";
 		String imageDir = "E:\\home\\pdf\\resources\\data\\image";
 		String filepath = "E:\\home\\pdf\\resources\\data\\test11.docx";
 		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp11.docx";
@@ -501,14 +503,16 @@ public class DocxTest {
 		dataMap.put("age", "40");
 		dataMap.put("phone", "18888888888");
 		dataMap.put("workyears", "10");
-		List<DocxImgVO> imgInfos = new ArrayList<>();
-		imgInfos.add(new DocxImgVO("插入图片:", filePath));
+		List<DocxImageVO> imgInfos = new ArrayList<>();
+		imgInfos.add(new DocxImageVO(searchText, filePath));
 		
 		Map<String, Object> tmpMap = new LinkedHashMap<>();
 		tmpMap.put("templeteId", "test11");
 		tmpMap.put("uniqueDataMap", dataMap);
-		tmpMap.put("imageJson", echartsOptions);
-		tmpMap.put("imgInfos", imgInfos);
+		DocxImageVO imageVO = new DocxImageVO();
+		imageVO.setEchartsOptions(echartsOptions);
+		imageVO.setSearchText(searchText);
+		tmpMap.put("imageVO", imageVO);
 		System.out.println(JSON.toJSONString(tmpMap));
 		
 		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
@@ -545,10 +549,29 @@ public class DocxTest {
 		dataMap.put("age", "40");
 		dataMap.put("phone", "18888888888");
 		dataMap.put("workyears", "10");
-		List<DocxImgVO> imgInfos = new ArrayList<>();
-		imgInfos.add(new DocxImgVO("插入图片:", filePath1));
-		imgInfos.add(new DocxImgVO("确认插入图片:", filePath2));
-		imgInfos.add(new DocxImgVO("再次确认插入图片:", filePath3));
+		List<DocxImageVO> imgInfos = new ArrayList<>();
+		imgInfos.add(new DocxImageVO("插入图片:", filePath1));
+		imgInfos.add(new DocxImageVO("确认插入图片:", filePath2));
+		imgInfos.add(new DocxImageVO("再次确认插入图片:", filePath3));
+		
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test12");
+		tmpMap.put("uniqueDataMap", dataMap);
+		List<DocxImageVO> imageInfos = new ArrayList<>();
+		DocxImageVO imageVO1 = new DocxImageVO();
+		imageVO1.setEchartsOptions(echartsOptions1);
+		imageVO1.setSearchText("插入图片:");
+		DocxImageVO imageVO2 = new DocxImageVO();
+		imageVO2.setEchartsOptions(echartsOptions2);
+		imageVO2.setSearchText("确认插入图片:");
+		DocxImageVO imageVO3 = new DocxImageVO();
+		imageVO3.setEchartsOptions(echartsOptions3);
+		imageVO3.setSearchText("再次确认插入图片:");
+		imageInfos.add(imageVO1);
+		imageInfos.add(imageVO2);
+		imageInfos.add(imageVO3);
+		tmpMap.put("imageInfos", imageInfos);
+		System.out.println(JSON.toJSONString(tmpMap));
 		
 		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
 		if (result) {

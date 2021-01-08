@@ -127,14 +127,14 @@ public class PhantomJsUtil {
 		BufferedReader reader = null;
 		try {
 			File file = new File(imgPath);
-			if(file.exists()){
+			if (file.exists()) {
 				file.delete();
 			}
 			file.createNewFile();
-			String cmd = phantomJsPath+" " + convetJsPath + " -infile " + dataPath + " -outfile " + imgPath;
+			String cmd = phantomJsPath + " " + convetJsPath + " -infile " + dataPath + " -outfile " + imgPath;
 			Process process = Runtime.getRuntime().exec(cmd);
 			is = process.getInputStream();
-			isr = new InputStreamReader(process.getInputStream(),"UTF-8");
+			isr = new InputStreamReader(is, "UTF-8");
 			reader = new BufferedReader(isr);
 			String line = "";
 			while ((line = reader.readLine()) != null) {
