@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.docx4j.TextUtils;
 import org.docx4j.XmlUtils;
 import org.docx4j.dml.wordprocessingDrawing.Inline;
+import org.docx4j.jaxb.Context;
 import org.docx4j.model.properties.table.tr.TrHeight;
 import org.docx4j.openpackaging.packages.OpcPackage;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -36,6 +37,7 @@ import java.util.List;
 /**
  * @author ：孤狼
  * @description: docx4j 常用的工具类
+ *  https://blog.csdn.net/weixin_34295316/article/details/86022702
  * @modified By：
  * @version: 1.0.0
  */
@@ -103,11 +105,12 @@ public class Docx4jUtil {
 	public static List<Object> getAllElementFromObject(Object obj,
 	                                                   Class<?> toSearch) {
 		List<Object> result = new ArrayList<Object>();
-		if (obj instanceof JAXBElement)
+		if (obj instanceof JAXBElement) {
 			obj = ((JAXBElement<?>) obj).getValue();
-		if (obj.getClass().equals(toSearch))
+		}
+		if (obj.getClass().equals(toSearch)) {
 			result.add(obj);
-		else if (obj instanceof ContentAccessor) {
+		} else if (obj instanceof ContentAccessor) {
 			List<?> children = ((ContentAccessor) obj).getContent();
 			for (Object child : children) {
 				result.addAll(getAllElementFromObject(child, toSearch));
@@ -140,8 +143,7 @@ public class Docx4jUtil {
 	 */
 	public WordprocessingMLPackage loadWordprocessingMLPackageWithPwd(
 			String filePath, String password) throws Exception {
-		OpcPackage opcPackage = WordprocessingMLPackage.load(new java.io.File(
-				filePath), password);
+		OpcPackage opcPackage = WordprocessingMLPackage.load(new File(filePath), password);
 		WordprocessingMLPackage wordMLPackage = (WordprocessingMLPackage) opcPackage;
 		return wordMLPackage;
 	}
@@ -163,8 +165,7 @@ public class Docx4jUtil {
 	/**
 	 * @Description: 跨列合并
 	 */
-	public void mergeCellsHorizontalByGridSpan(Tbl tbl, int row, int fromCell,
-	                                           int toCell) {
+	public void mergeCellsHorizontalByGridSpan(Tbl tbl, int row, int fromCell, int toCell) {
 		if (row < 0 || fromCell < 0 || toCell < 0) {
 			return;
 		}
@@ -270,9 +271,9 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:得到所有表格
+	 * @Description: 得到所有表格
 	 */
-	public List<Tbl> getAllTbl(WordprocessingMLPackage wordMLPackage) {
+	public List<Tbl> getAllTbls(WordprocessingMLPackage wordMLPackage) {
 		MainDocumentPart mainDocPart = wordMLPackage.getMainDocumentPart();
 		List<Object> objList = getAllElementFromObject(mainDocPart, Tbl.class);
 		if (objList == null) {
@@ -290,7 +291,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:删除指定位置的表格,删除后表格数量减一
+	 * @Description: 删除指定位置的表格, 删除后表格数量减一
 	 */
 	public boolean removeTableByIndex(WordprocessingMLPackage wordMLPackage,
 	                                  int index) throws Exception {
@@ -343,7 +344,12 @@ public class Docx4jUtil {
 		return resultList;
 	}
 	
-	
+	/**
+	 * 获得表格的属性
+	 *
+	 * @param tbl
+	 * @return
+	 */
 	public TblPr getTblPr(Tbl tbl) {
 		TblPr tblPr = tbl.getTblPr();
 		if (tblPr == null) {
@@ -372,10 +378,9 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:创建表格(默认水平居中,垂直居中)
+	 * @Description: 创建表格(默认水平居中, 垂直居中)
 	 */
-	public Tbl createTable(WordprocessingMLPackage wordPackage, int rowNum,
-	                       int colsNum) throws Exception {
+	public Tbl createTable(WordprocessingMLPackage wordPackage, int rowNum, int colsNum) throws Exception {
 		colsNum = Math.max(1, colsNum);
 		rowNum = Math.max(1, rowNum);
 		int widthTwips = getWritableWidth(wordPackage);
@@ -389,7 +394,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:创建表格(默认水平居中,垂直居中)
+	 * @Description: 创建表格(默认水平居中,垂直居中)
 	 */
 	public Tbl createTable(int rowNum, int colsNum, int[] widthArr)
 			throws Exception {
@@ -401,14 +406,14 @@ public class Docx4jUtil {
 				.append(">");
 		tblSb.append("<w:tblStyle w:val=\"TableGrid\"/>");
 		tblSb.append("<w:tblW w:w=\"0\" w:type=\"auto\"/>");
-// 上边框
+		// 上边框
 		tblSb.append("<w:tblBorders>");
 		tblSb.append("<w:top w:val=\"single\" w:sz=\"1\" w:space=\"0\" w:color=\"auto\"/>");
-// 左边框
+		// 左边框
 		tblSb.append("<w:left w:val=\"single\" w:sz=\"1\" w:space=\"0\" w:color=\"auto\"/>");
-// 下边框
+		// 下边框
 		tblSb.append("<w:bottom w:val=\"single\" w:sz=\"1\" w:space=\"0\" w:color=\"auto\"/>");
-// 右边框
+		// 右边框
 		tblSb.append("<w:right w:val=\"single\" w:sz=\"1\" w:space=\"0\" w:color=\"auto\"/>");
 		tblSb.append("<w:insideH w:val=\"single\" w:sz=\"1\" w:space=\"0\" w:color=\"auto\"/>");
 		tblSb.append("<w:insideV w:val=\"single\" w:sz=\"1\" w:space=\"0\" w:color=\"auto\"/>");
@@ -417,15 +422,11 @@ public class Docx4jUtil {
 		TblPr tblPr = null;
 		tblPr = (TblPr) XmlUtils.unmarshalString(tblSb.toString());
 		Jc jc = new Jc();
-// 单元格居中对齐
+		// 单元格居中对齐
 		jc.setVal(JcEnumeration.CENTER);
 		tblPr.setJc(jc);
-		
-		
 		tbl.setTblPr(tblPr);
-
-
-// 设定各单元格宽度
+		// 设定各单元格宽度
 		TblGrid tblGrid = new TblGrid();
 		tbl.setTblGrid(tblGrid);
 		for (int i = 0; i < colsNum; i++) {
@@ -433,25 +434,21 @@ public class Docx4jUtil {
 			gridCol.setW(BigInteger.valueOf(widthArr[i]));
 			tblGrid.getGridCol().add(gridCol);
 		}
-// 新增行
+		// 新增行
 		for (int j = 0; j < rowNum; j++) {
 			Tr tr = new Tr();
 			tbl.getContent().add(tr);
-// 列
+			// 列
 			for (int i = 0; i < colsNum; i++) {
 				Tc tc = new Tc();
 				tr.getContent().add(tc);
-				
-				
 				TcPr tcPr = new TcPr();
 				TblWidth cellWidth = new TblWidth();
 				cellWidth.setType("dxa");
 				cellWidth.setW(BigInteger.valueOf(widthArr[i]));
 				tcPr.setTcW(cellWidth);
 				tc.setTcPr(tcPr);
-
-
-// 垂直居中
+				// 垂直居中
 				setTcVAlign(tc, STVerticalJc.CENTER);
 				P p = new P();
 				PPr pPr = new PPr();
@@ -467,7 +464,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:表格增加边框 可以设置上下左右四个边框样式以及横竖水平线样式
+	 * @Description: 表格增加边框 可以设置上下左右四个边框样式以及横竖水平线样式
 	 */
 	public void setTblBorders(TblPr tblPr, CTBorder topBorder,
 	                          CTBorder rightBorder, CTBorder bottomBorder, CTBorder leftBorder,
@@ -548,7 +545,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description: 设置单元格Margin
+	 * @Description: 设置单元格 Margin
 	 */
 	public void setTableCellMargin(Tbl tbl, String top, String right,
 	                               String bottom, String left) {
@@ -601,13 +598,11 @@ public class Docx4jUtil {
 			}
 		}
 		return trList;
-		
-		
 	}
 	
 	
 	/**
-	 * @Description:设置tr高度
+	 * @Description: 设置tr高度
 	 */
 	public void setTrHeight(Tr tr, String heigth) {
 		TrPr trPr = getTrPr(tr);
@@ -639,14 +634,14 @@ public class Docx4jUtil {
 				Tc tc = new Tc();
 				setTcWidth(tc, tblGridCol.getW().toString());
 				if (vAlign != null) {
-// 垂直居中
+					// 垂直居中
 					setTcVAlign(tc, vAlign);
 				}
 				P p = new P();
 				if (hAlign != null) {
 					PPr pPr = new PPr();
 					Jc jc = new Jc();
-// 单元格居中对齐
+					// 单元格居中对齐
 					jc.setVal(hAlign);
 					pPr.setJc(jc);
 					p.setPPr(pPr);
@@ -657,20 +652,20 @@ public class Docx4jUtil {
 				tr.getContent().add(tc);
 			}
 		} else {
-// 大部分情况都不会走到这一步
+			// 大部分情况都不会走到这一步
 			Tr firstTr = getTblAllTr(tbl).get(0);
 			int cellSize = getTcCellSizeWithMergeNum(firstTr);
 			for (int i = 0; i < cellSize; i++) {
 				Tc tc = new Tc();
 				if (vAlign != null) {
-// 垂直居中
+					// 垂直居中
 					setTcVAlign(tc, vAlign);
 				}
 				P p = new P();
 				if (hAlign != null) {
 					PPr pPr = new PPr();
 					Jc jc = new Jc();
-// 单元格居中对齐
+					// 单元格居中对齐
 					jc.setVal(hAlign);
 					pPr.setJc(jc);
 					p.setPPr(pPr);
@@ -737,7 +732,12 @@ public class Docx4jUtil {
 		return flag;
 	}
 	
-	
+	/**
+	 * 获得 tr 的属性
+	 *
+	 * @param tr
+	 * @return
+	 */
 	public TrPr getTrPr(Tr tr) {
 		TrPr trPr = tr.getTrPr();
 		if (trPr == null) {
@@ -749,7 +749,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:隐藏行(只对表格中间的部分起作用,不包括首尾行)
+	 * @Description: 隐藏行(只对表格中间的部分起作用,不包括首尾行)
 	 */
 	public void setTrHidden(Tr tr, boolean hidden) {
 		List<Tc> tcList = getTrAllCell(tr);
@@ -798,7 +798,12 @@ public class Docx4jUtil {
 		}
 	}
 	
-	
+	/**
+	 * 获取 TC 上的所有段落
+	 *
+	 * @param tc
+	 * @return
+	 */
 	public List<P> getTcAllP(Tc tc) {
 		List<Object> objList = getAllElementFromObject(tc, P.class);
 		List<P> pList = new ArrayList<P>();
@@ -814,7 +819,12 @@ public class Docx4jUtil {
 		return pList;
 	}
 	
-	
+	/**
+	 * 获取 TC 的属性
+	 *
+	 * @param tc
+	 * @return
+	 */
 	public TcPr getTcPr(Tc tc) {
 		TcPr tcPr = tc.getTcPr();
 		if (tcPr == null) {
@@ -889,7 +899,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:设置单元格内容,content为null则清除单元格内容
+	 * @Description: 设置单元格内容,content为null则清除单元格内容
 	 */
 	public void setTcContent(Tc tc, RPr rpr, String content) {
 		List<Object> pList = tc.getContent();
@@ -906,7 +916,7 @@ public class Docx4jUtil {
 		List<Object> rList = p.getContent();
 		if (rList != null && rList.size() > 0) {
 			for (int i = 0, len = rList.size(); i < len; i++) {
-// 清除内容(所有的r
+				// 清除内容(所有的r
 				p.getContent().remove(0);
 			}
 		}
@@ -919,8 +929,6 @@ public class Docx4jUtil {
 			text.setValue(contentArr[0]);
 			run.setRPr(rpr);
 			run.getContent().add(text);
-			
-			
 			for (int i = 1, len = contentArr.length; i < len; i++) {
 				Br br = new Br();
 				run.getContent().add(br);// 换行
@@ -935,7 +943,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:设置单元格内容,content为null则清除单元格内容
+	 * @Description: 移除 tc 内的内容
 	 */
 	public void removeTcContent(Tc tc) {
 		List<Object> pList = tc.getContent();
@@ -950,7 +958,7 @@ public class Docx4jUtil {
 		List<Object> rList = p.getContent();
 		if (rList != null && rList.size() > 0) {
 			for (int i = 0, len = rList.size(); i < len; i++) {
-// 清除内容(所有的r
+				// 清除内容(所有的r
 				p.getContent().remove(0);
 			}
 		}
@@ -977,7 +985,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description:获取NodeList
+	 * @Description: 获取NodeList
 	 * @deprecated
 	 */
 	public List<Object> getObjectByXpath(WordprocessingMLPackage wordMLPackage,
@@ -993,8 +1001,7 @@ public class Docx4jUtil {
 	/**
 	 * @Description: 只删除单独的段落，不包括表格内或其他内的段落
 	 */
-	public boolean removeParaByIndex(WordprocessingMLPackage wordMLPackage,
-	                                 int index) {
+	public boolean removeParaByIndex(WordprocessingMLPackage wordMLPackage, int index) {
 		boolean flag = false;
 		if (index < 0) {
 			return flag;
@@ -1016,7 +1023,6 @@ public class Docx4jUtil {
 		}
 		return flag;
 	}
-	
 	
 	/**
 	 * @Description: 设置段落水平对齐方式
@@ -1043,7 +1049,7 @@ public class Docx4jUtil {
 		List<Object> rList = p.getContent();
 		if (rList != null && rList.size() > 0) {
 			for (int i = 0, len = rList.size(); i < len; i++) {
-// 清除内容(所有的r
+				// 清除内容(所有的r
 				p.getContent().remove(0);
 			}
 		}
@@ -1056,8 +1062,6 @@ public class Docx4jUtil {
 			text.setValue(contentArr[0]);
 			run.setRPr(runProperties);
 			run.getContent().add(text);
-			
-			
 			for (int i = 1, len = contentArr.length; i < len; i++) {
 				Br br = new Br();
 				run.getContent().add(br);// 换行
@@ -1084,8 +1088,6 @@ public class Docx4jUtil {
 			text.setValue(contentArr[0]);
 			run.setRPr(runProperties);
 			run.getContent().add(text);
-			
-			
 			for (int i = 1, len = contentArr.length; i < len; i++) {
 				Br br = new Br();
 				run.getContent().add(br);// 换行
@@ -1104,8 +1106,7 @@ public class Docx4jUtil {
 	 */
 	public void addImageToPara(WordprocessingMLPackage wordMLPackage,
 	                           ObjectFactory factory, P paragraph, String filePath,
-	                           String content, RPr rpr, String altText, int id1, int id2)
-			throws Exception {
+	                           String content, RPr rpr, String altText, int id1, int id2) throws Exception {
 		R run = factory.createR();
 		if (content != null) {
 			Text text = factory.createText();
@@ -1114,14 +1115,10 @@ public class Docx4jUtil {
 			run.setRPr(rpr);
 			run.getContent().add(text);
 		}
-		
-		
 		InputStream is = new FileInputStream(filePath);
 		byte[] bytes = IOUtils.toByteArray(is);
-		BinaryPartAbstractImage imagePart = BinaryPartAbstractImage
-				.createImagePart(wordMLPackage, bytes);
-		Inline inline = imagePart.createImageInline(filePath, altText, id1,
-				id2, false);
+		BinaryPartAbstractImage imagePart = BinaryPartAbstractImage.createImagePart(wordMLPackage, bytes);
+		Inline inline = imagePart.createImageInline(filePath, altText, id1, id2, false);
 		Drawing drawing = factory.createDrawing();
 		drawing.getAnchorOrInline().add(inline);
 		run.getContent().add(drawing);
@@ -1194,19 +1191,19 @@ public class Docx4jUtil {
 		}
 		if (isSpace) {
 			if (StringUtils.isNotBlank(before)) {
-// 段前磅数
+				// 段前磅数
 				spacing.setBefore(new BigInteger(before));
 			}
 			if (StringUtils.isNotBlank(after)) {
-// 段后磅数
+				// 段后磅数
 				spacing.setAfter(new BigInteger(after));
 			}
 			if (StringUtils.isNotBlank(beforeLines)) {
-// 段前行数
+			// 段前行数
 				spacing.setBeforeLines(new BigInteger(beforeLines));
 			}
 			if (StringUtils.isNotBlank(afterLines)) {
-// 段后行数
+			// 段后行数
 				spacing.setAfterLines(new BigInteger(afterLines));
 			}
 		}
@@ -1277,8 +1274,6 @@ public class Docx4jUtil {
 			ppr.setRPr(parRpr);
 		}
 		return parRpr;
-		
-		
 	}
 	
 	
@@ -1298,8 +1293,7 @@ public class Docx4jUtil {
 	/**
 	 * @Description: 设置段落边框样式
 	 */
-	public void setParagraghBorders(P p, CTBorder topBorder,
-	                                CTBorder bottomBorder, CTBorder leftBorder, CTBorder rightBorder) {
+	public void setParagraghBorders(P p, CTBorder topBorder, CTBorder bottomBorder, CTBorder leftBorder, CTBorder rightBorder) {
 		PPr ppr = getPPr(p);
 		PBdr pBdr = new PBdr();
 		if (topBorder != null) {
@@ -1379,8 +1373,7 @@ public class Docx4jUtil {
 	/**
 	 * @Description: 设置字符边框
 	 */
-	public void addRPrBorderStyle(RPr runProperties, String size,
-	                              STBorder bordType, String space, String color) {
+	public void addRPrBorderStyle(RPr runProperties, String size, STBorder bordType, String space, String color) {
 		CTBorder value = new CTBorder();
 		if (StringUtils.isNotBlank(color)) {
 			value.setColor(color);
@@ -1536,13 +1529,13 @@ public class Docx4jUtil {
 	 */
 	public void addRPrStrikeStyle(RPr runProperties, boolean isStrike,
 	                              boolean isDStrike) {
-// 删除线
+		// 删除线
 		if (isStrike) {
 			BooleanDefaultTrue strike = new BooleanDefaultTrue();
 			strike.setVal(true);
 			runProperties.setStrike(strike);
 		}
-// 双删除线
+		// 双删除线
 		if (isDStrike) {
 			BooleanDefaultTrue dStrike = new BooleanDefaultTrue();
 			dStrike.setVal(true);
@@ -1604,8 +1597,7 @@ public class Docx4jUtil {
 	/**
 	 * @Description: 设置页面背景色
 	 */
-	public void setDocumentBackGround(WordprocessingMLPackage wordPackage,
-	                                  ObjectFactory factory, String color) throws Exception {
+	public void setDocumentBackGround(WordprocessingMLPackage wordPackage, ObjectFactory factory, String color) throws Exception {
 		MainDocumentPart mdp = wordPackage.getMainDocumentPart();
 		CTBackground bkground = mdp.getContents().getBackground();
 		if (StringUtils.isNotBlank(color)) {
@@ -1677,7 +1669,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description：设置页边距
+	 * @Description: 设置页边距
 	 */
 	public void setDocMarginSpace(WordprocessingMLPackage wordPackage,
 	                              ObjectFactory factory, String top, String left, String bottom,
@@ -1737,7 +1729,7 @@ public class Docx4jUtil {
 	
 	
 	/**
-	 * @Description：设置文字方向 tbRl 垂直
+	 * @Description 设置文字方向 tbRl 垂直
 	 */
 	public void setDocTextDirection(WordprocessingMLPackage wordPackage,
 	                                String textDirection) {
@@ -1778,5 +1770,23 @@ public class Docx4jUtil {
 		return wordPackage.getDocumentModel().getSections().get(0)
 				.getPageDimensions().getWritableWidthTwips();
 	}
+	
+	/**
+	 * @Description： 增加段落
+	 */
+	public boolean addParagraph(WordprocessingMLPackage wordPackage, String simpleText) throws Exception {
+		org.docx4j.wml.ObjectFactory factory = Context.getWmlObjectFactory();
+		org.docx4j.wml.P para = factory.createP();
+		if (simpleText != null) {
+			org.docx4j.wml.Text t = factory.createText();
+			t.setValue(simpleText);
+			org.docx4j.wml.R run = factory.createR();
+			run.getContent().add(t);
+			para.getContent().add(run);
+		}
+		wordPackage.getMainDocumentPart().getContent().add(para);
+		return true;
+	}
+	
 	
 }
