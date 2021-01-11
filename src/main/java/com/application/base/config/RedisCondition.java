@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
- * @author ：admin
+ * @author ：孤狼
  * @date ：2020-12-28
  * @description: 是否启用redis
  * @modified By：

@@ -3,7 +3,7 @@ package com.application.base.test;
 import com.application.base.util.toolpdf.PhantomJsUtil;
 
 /**
- * @author ：admin
+ * @author ：孤狼
  * @date ：2021-1-6
  * @description: 图片生成的Test
  * @modified By：

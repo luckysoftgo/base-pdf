@@ -1,7 +1,7 @@
 package com.application.base.docx4j.vo;
 
 /**
- * @author ：admin
+ * @author ：孤狼
  * @description: 图片类型插入word模板
  * https://my.oschina.net/wumiaowang/blog/828293
  * https://blog.csdn.net/qq_40868449/article/details/103541381

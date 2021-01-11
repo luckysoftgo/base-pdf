@@ -1,7 +1,7 @@
 package com.application.base.util;
 
 /**
- * @author ：admin
+ * @author ：孤狼
  * @description: 返回结果对象
  * @modified By：
  * @version: 1.0.0

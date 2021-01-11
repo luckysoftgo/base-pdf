@@ -5,7 +5,7 @@ import com.application.base.util.OfficeOperateUtil;
 import java.util.Arrays;
 
 /**
- * @author ：admin
+ * @author ：孤狼
  * @date ：2021-1-7
  * @description: 类型转换
  * @modified By：
