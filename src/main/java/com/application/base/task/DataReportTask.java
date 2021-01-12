@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class DataReportTask {
 	@Autowired
 	private PdfPropsConfig pdfPropsConfig;
 	
-	@Autowired
+	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
 	
 	@Scheduled(cron = "${pdf.taskCron}")
