@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -160,13 +161,21 @@ public class Placeholder2WordClient {
 		Tr dynamicTr = (Tr) table.getContent().get(1);
 		//获取模板行的xml数据
 		String dynamicTrXml = XmlUtils.marshaltoString(dynamicTr);
+		//动态变更的表
+		LinkedList<Tr> automaticTrs = new LinkedList<>();
 		for (Map<String, Object> dataMap : linkedList) {
 			//填充模板行数据
 			Tr newTr = (Tr) XmlUtils.unmarshallFromTemplate(dynamicTrXml, dataMap);
-			table.getContent().add(newTr);
+			//这种处理处理无法处理末尾行的问题.
+			//table.getContent().add(newTr);
+			if (newTr == null) {
+				automaticTrs.add(newTr);
+			}
 		}
-		//删除模板行的占位行
+		//删除模板行的占位行.
 		table.getContent().remove(1);
+		//在原来位置上进行信息追加.
+		table.getContent().addAll(1, automaticTrs);
 		//设置全局的变量替换
 		wordMLPackage.getMainDocumentPart().variableReplace(unqiueDataMap);
 		Docx4J.save(wordMLPackage, new File(docxNewFile));
@@ -206,13 +215,21 @@ public class Placeholder2WordClient {
 				//获取模板行的xml数据
 				String dynamicTrXml = XmlUtils.marshaltoString(dynamicTr);
 				ArrayList<Map<String, Object>> docxDataList = linkedList.get(i).getDocxDataList();
+				//动态变更的表
+				LinkedList<Tr> automaticTrs = new LinkedList<>();
 				for (Map<String, Object> dataMap : docxDataList) {
 					//填充模板行数据
 					Tr newTr = (Tr) XmlUtils.unmarshallFromTemplate(dynamicTrXml, dataMap);
-					table.getContent().add(newTr);
+					//这种处理处理无法处理末尾行的问题.
+					//table.getContent().add(newTr);
+					if (newTr == null) {
+						automaticTrs.add(newTr);
+					}
 				}
 				//删除模板行的占位行
 				table.getContent().remove(1);
+				//在原来位置上进行信息追加.
+				table.getContent().addAll(1, automaticTrs);
 			}
 			//设置全局的变量替换
 			wordMLPackage.getMainDocumentPart().variableReplace(unqiueDataMap);
