@@ -44,8 +44,9 @@ public class DocxTest {
 		//test8();
 		//test9();
 		//test10();
-		test11();
+		//test11();
 		//test12();
+		test13();
 		System.exit(1);
 	}
 	
@@ -149,7 +150,7 @@ public class DocxTest {
 		tmpMap.put("tableDatas", linkedList);
 		System.out.println(JSON.toJSONString(tmpMap));
 		
-		boolean result = client.convert2TableWord(filepath, uniqueDataMap, tofilepath, linkedList, 0);
+		boolean result = client.convert2TableWord(filepath, uniqueDataMap, tofilepath, linkedList, 0, null);
 		if (result) {
 			System.out.println("success!");
 		} else {
@@ -360,7 +361,7 @@ public class DocxTest {
 		uniqueDataMap.put("idcard", "√");
 		uniqueDataMap.put("passport", "");
 		uniqueDataMap.put("bootlet", "");
-		uniqueDataMap.put("idNo", "11111111111111111111");
+		uniqueDataMap.put("idNo", "111111111111");
 		uniqueDataMap.put("email", "test@126.com");
 		uniqueDataMap.put("national", "中华人民共和国");
 		uniqueDataMap.put("address", "陕西西安高新四路");
@@ -576,6 +577,64 @@ public class DocxTest {
 		boolean result = client.convert2ImgsWord(filepath, dataMap, tofilepath, imgInfos, Boolean.FALSE);
 		if (result) {
 			OfficeOperateUtil.docxFile2Files(tofilepath, htmlfilepath, targetfilepath, imageDir, null, null);
+			System.out.println("success!");
+		} else {
+			System.out.println("error!");
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("转换花费时间为" + (end - start) + "毫秒");
+	}
+	
+	/**
+	 * 测试.
+	 */
+	public static void test13() throws Exception {
+		long start = System.currentTimeMillis();
+		String filepath = "E:\\home\\pdf\\resources\\data\\test13.docx";
+		String tofilepath = "E:\\home\\pdf\\resources\\data\\temp13.docx";
+		Map<String, String> uniqueDataMap = new LinkedHashMap<>();
+		uniqueDataMap.put("title", "个人信息");
+		uniqueDataMap.put("name", "张三");
+		uniqueDataMap.put("genger", "男");
+		uniqueDataMap.put("age", "40");
+		uniqueDataMap.put("phone", "18888888888");
+		uniqueDataMap.put("workyears", "10");
+		uniqueDataMap.put("begin", "2006.09");
+		uniqueDataMap.put("end", "2010.07");
+		uniqueDataMap.put("basic", "基本信息");
+		uniqueDataMap.put("education", "教育信息");
+		uniqueDataMap.put("experience", "工作经历");
+		uniqueDataMap.put("totalAmount", "75000");
+		ArrayList<Map<String, Object>> linkedList = new ArrayList<>();
+		Map<String, Object> dataMap1 = new LinkedHashMap<>();
+		dataMap1.put("work.begin", "2010.04");
+		dataMap1.put("work.end", "2015.06");
+		dataMap1.put("work.company", "中电十五所");
+		dataMap1.put("work.postion", "软件工程师");
+		dataMap1.put("work.salary", "15000");
+		linkedList.add(dataMap1);
+		Map<String, Object> dataMap2 = new LinkedHashMap<>();
+		dataMap2.put("work.begin", "2015.06");
+		dataMap2.put("work.end", "2019.06");
+		dataMap2.put("work.company", "航天科工二院");
+		dataMap2.put("work.postion", "高级软件工程师");
+		dataMap2.put("work.salary", "25000");
+		linkedList.add(dataMap2);
+		Map<String, Object> dataMap3 = new LinkedHashMap<>();
+		dataMap3.put("work.begin", "2019.06");
+		dataMap3.put("work.end", "至今");
+		dataMap3.put("work.company", "中国航天科工集团");
+		dataMap3.put("work.postion", "高级软件工程师");
+		dataMap3.put("work.salary", "35000");
+		linkedList.add(dataMap3);
+		
+		Map<String, Object> tmpMap = new LinkedHashMap<>();
+		tmpMap.put("templeteId", "test13");
+		tmpMap.put("uniqueDataMap", uniqueDataMap);
+		tmpMap.put("tableDatas", linkedList);
+		System.out.println(JSON.toJSONString(tmpMap));
+		boolean result = client.convert2TableWord(filepath, uniqueDataMap, tofilepath, linkedList, 0, null);
+		if (result) {
 			System.out.println("success!");
 		} else {
 			System.out.println("error!");

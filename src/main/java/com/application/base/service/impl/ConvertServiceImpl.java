@@ -25,13 +25,15 @@ import java.util.*;
 @Service
 public class ConvertServiceImpl implements ConvertService {
 	
-	private String basePath = "E:\\home\\pdf\\resources\\data\\";
-	
 	@Autowired
 	private PdfPropsConfig pdfPropsConfig;
 	
 	@Autowired
 	private Placeholder2WordClient wordClient;
+	/**
+	 * 报告路径.
+	 */
+	private String basePath = pdfPropsConfig.getDataPath();
 	
 	@Override
 	public Map<String, String> wordSymbol2files(String templeteId, Map<String, String> mappingMap) {
@@ -66,7 +68,7 @@ public class ConvertServiceImpl implements ConvertService {
 		String imageDir = basePath + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
-			boolean result = wordClient.convert2TableWord(docxOrginFile, uniqueDataMap, docxNewFile, tableDatas, null);
+			boolean result = wordClient.convert2TableWord(docxOrginFile, uniqueDataMap, docxNewFile, tableDatas, null, null);
 			if (result) {
 				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
 			}

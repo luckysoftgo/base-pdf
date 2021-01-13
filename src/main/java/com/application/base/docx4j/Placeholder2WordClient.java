@@ -60,7 +60,7 @@ public class Placeholder2WordClient {
 		String name = sourcePath.substring(len, sourcePath.length()).split("\\.")[0];
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateFile);
 		File outFile = new File(templateFile.getParent() + "/out/", "tmp_" + name + ".xml");
-		org.docx4j.Docx4J.save(wordMLPackage, outFile, Docx4J.FLAG_SAVE_FLAT_XML);
+		Docx4J.save(wordMLPackage, outFile, Docx4J.FLAG_SAVE_FLAT_XML);
 		outFile.renameTo(new File(targetPath));
 		wordMLPackage.reset();
 	}
@@ -86,7 +86,7 @@ public class Placeholder2WordClient {
 		htmlSettings.setImageTargetUri(name + "_files");
 		htmlSettings.setWmlPackage(wordMLPackage);
 		File outFile = new File(folder, name);
-		org.docx4j.Docx4J.toHTML(htmlSettings, new FileOutputStream(outFile), Docx4J.FLAG_NONE);
+		Docx4J.toHTML(htmlSettings, new FileOutputStream(outFile), Docx4J.FLAG_NONE);
 		wordMLPackage.reset();
 	}
 	
@@ -104,7 +104,7 @@ public class Placeholder2WordClient {
 		File templateFile = new File(sourcePath);
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateFile);
 		File outFile = new File(targetPath);
-		org.docx4j.Docx4J.toPDF(wordMLPackage, new FileOutputStream(outFile));
+		Docx4J.toPDF(wordMLPackage, new FileOutputStream(outFile));
 		wordMLPackage.reset();
 	}
 	
@@ -139,12 +139,13 @@ public class Placeholder2WordClient {
 	 * 有一个表格的情况
 	 *
 	 * @param docxOrginFile
-	 * @param unqiueDataMap ：已经存在的全局的 key - value 集合.
-	 * @param linkedList    :单个表单情况下的列表的数据
-	 * @param tableIndex    : word 中表格的下标,从0开始: 0,1,2,3,4,5
+	 * @param unqiueDataMap    ：已经存在的全局的 key - value 集合.
+	 * @param linkedList       :单个表单情况下的列表的数据
+	 * @param tableIndex       : word 中表格的下标,从0开始: 0,1,2,3,4,5
+	 * @param replaceRowIndex: word 中要替换的表格的下标,从0开始: 0,1,2,3,4,5
 	 * @return
 	 */
-	public boolean convert2TableWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, ArrayList<Map<String, Object>> linkedList, Integer tableIndex) throws Exception {
+	public boolean convert2TableWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, ArrayList<Map<String, Object>> linkedList, Integer tableIndex, Integer replaceRowIndex) throws Exception {
 		if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 			throw new Exception("传入的文件路径为空!");
 		}
@@ -157,8 +158,10 @@ public class Placeholder2WordClient {
 		int index = tableIndex == null ? 0 : tableIndex.intValue();
 		//第几个表.
 		Tbl table = (Tbl) find.results.get(index);
+		//开始要替换的行
+		int tableRowIndex = replaceRowIndex == null ? 1 : replaceRowIndex;
 		//第二行约定为模板${}
-		Tr dynamicTr = (Tr) table.getContent().get(1);
+		Tr dynamicTr = (Tr) table.getContent().get(tableRowIndex);
 		//获取模板行的xml数据
 		String dynamicTrXml = XmlUtils.marshaltoString(dynamicTr);
 		//动态变更的表
@@ -168,14 +171,14 @@ public class Placeholder2WordClient {
 			Tr newTr = (Tr) XmlUtils.unmarshallFromTemplate(dynamicTrXml, dataMap);
 			//这种处理处理无法处理末尾行的问题.
 			//table.getContent().add(newTr);
-			if (newTr == null) {
+			if (newTr != null) {
 				automaticTrs.add(newTr);
 			}
 		}
 		//删除模板行的占位行.
-		table.getContent().remove(1);
+		table.getContent().remove(tableRowIndex);
 		//在原来位置上进行信息追加.
-		table.getContent().addAll(1, automaticTrs);
+		table.getContent().addAll(tableRowIndex, automaticTrs);
 		//设置全局的变量替换
 		wordMLPackage.getMainDocumentPart().variableReplace(unqiueDataMap);
 		Docx4J.save(wordMLPackage, new File(docxNewFile));
@@ -210,8 +213,10 @@ public class Placeholder2WordClient {
 				//第文档中对应的第几个表.
 				int tableIndex = dataVO.getTableIndex() == null ? i : dataVO.getTableIndex();
 				Tbl table = (Tbl) find.results.get(tableIndex);
+				//开始要替换的行
+				int tableRowIndex = dataVO.getReplaceRowIndex() == null ? 1 : dataVO.getReplaceRowIndex();
 				//第二行约定为模板${}
-				Tr dynamicTr = (Tr) table.getContent().get(1);
+				Tr dynamicTr = (Tr) table.getContent().get(tableRowIndex);
 				//获取模板行的xml数据
 				String dynamicTrXml = XmlUtils.marshaltoString(dynamicTr);
 				ArrayList<Map<String, Object>> docxDataList = linkedList.get(i).getDocxDataList();
@@ -222,14 +227,14 @@ public class Placeholder2WordClient {
 					Tr newTr = (Tr) XmlUtils.unmarshallFromTemplate(dynamicTrXml, dataMap);
 					//这种处理处理无法处理末尾行的问题.
 					//table.getContent().add(newTr);
-					if (newTr == null) {
+					if (newTr != null) {
 						automaticTrs.add(newTr);
 					}
 				}
 				//删除模板行的占位行
-				table.getContent().remove(1);
+				table.getContent().remove(tableRowIndex);
 				//在原来位置上进行信息追加.
-				table.getContent().addAll(1, automaticTrs);
+				table.getContent().addAll(tableRowIndex, automaticTrs);
 			}
 			//设置全局的变量替换
 			wordMLPackage.getMainDocumentPart().variableReplace(unqiueDataMap);

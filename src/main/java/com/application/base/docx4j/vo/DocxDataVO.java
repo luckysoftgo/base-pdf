@@ -25,6 +25,11 @@ public class DocxDataVO {
 	private String moduleKey;
 	
 	/**
+	 * 要替换的table表格中行的index 索引 (索引从 "0" 开始)
+	 */
+	private Integer replaceRowIndex;
+	
+	/**
 	 * 数据集合
 	 */
 	private ArrayList<Map<String, Object>> docxDataList;
@@ -42,6 +47,13 @@ public class DocxDataVO {
 		this.docxDataList = docxDataList;
 	}
 	
+	public DocxDataVO(Integer tableIndex, String moduleKey, Integer replaceRowIndex, ArrayList<Map<String, Object>> docxDataList) {
+		this.tableIndex = tableIndex;
+		this.moduleKey = moduleKey;
+		this.replaceRowIndex = replaceRowIndex;
+		this.docxDataList = docxDataList;
+	}
+	
 	public Integer getTableIndex() {
 		return tableIndex;
 	}
@@ -56,6 +68,14 @@ public class DocxDataVO {
 	
 	public void setModuleKey(String moduleKey) {
 		this.moduleKey = moduleKey;
+	}
+	
+	public Integer getReplaceRowIndex() {
+		return replaceRowIndex;
+	}
+	
+	public void setReplaceRowIndex(Integer replaceRowIndex) {
+		this.replaceRowIndex = replaceRowIndex;
 	}
 	
 	public ArrayList<Map<String, Object>> getDocxDataList() {
