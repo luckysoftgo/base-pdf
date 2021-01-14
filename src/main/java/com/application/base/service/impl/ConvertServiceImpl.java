@@ -30,18 +30,15 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Autowired
 	private Placeholder2WordClient wordClient;
-	/**
-	 * 报告路径.
-	 */
-	private String basePath = pdfPropsConfig.getDataPath();
+
 	
 	@Override
 	public Map<String, String> wordSymbol2files(String templeteId, Map<String, String> mappingMap) {
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
 			boolean result = wordClient.convert2Word(docxOrginFile, mappingMap, docxNewFile);
@@ -61,11 +58,11 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordTable2files(String templeteId, Map<String, String> uniqueDataMap, ArrayList<Map<String, Object>> tableDatas) {
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
 			boolean result = wordClient.convert2TableWord(docxOrginFile, uniqueDataMap, docxNewFile, tableDatas, null, null);
@@ -85,11 +82,11 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordTables2files(String templeteId, Map<String, String> uniqueuniqueDataMap, ArrayList<DocxDataVO> tablesDatas) {
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
 			boolean result = wordClient.convert2TablesWord(docxOrginFile, uniqueuniqueDataMap, docxNewFile, tablesDatas);
@@ -109,11 +106,11 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordImg2files(String templeteId, Map<String, String> uniqueDataMap, DocxImageVO imageVO) {
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
 			boolean result = wordClient.convert2ImgWord(docxOrginFile, uniqueDataMap, docxNewFile, imageVO.getSearchText(), imageVO.getImagePath(), Boolean.TRUE);
@@ -133,11 +130,11 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordImgs2files(String templeteId, Map<String, String> uniqueDataMap, List<DocxImageVO> imgInfos) {
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
 			boolean result = wordClient.convert2ImgsWord(docxOrginFile, uniqueDataMap, docxNewFile, imgInfos, Boolean.FALSE);
@@ -162,11 +159,11 @@ public class ConvertServiceImpl implements ConvertService {
 		String searchText = imageVO.getSearchText();
 		String imagePath = PhantomJsUtil.generateImgEChart(pdfPropsConfig.getPhantomjsPath(), pdfPropsConfig.getConvetJsPath(), "E:\\home\\pdf\\resources\\data\\", imageJson, imageName);
 		log.info("文件路径的地址是:" + imagePath);
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		Map<String, String> resutMap = new HashMap<>();
 		try {
 			boolean result = wordClient.convert2ImgWord(docxOrginFile, uniqueDataMap, docxNewFile, searchText, imagePath, Boolean.FALSE);
@@ -186,11 +183,11 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordAutomaticImgs2files(String templeteId, Map<String, String> uniqueDataMap, List<DocxImageVO> imgInfos) {
-		String docxOrginFile = basePath + templeteId + ".docx";
-		String docxNewFile = basePath + "temp_" + templeteId + ".docx";
-		String pdfPath = basePath + "temp_" + templeteId + ".pdf";
-		String htmlPath = basePath + "temp_" + templeteId + ".html";
-		String imageDir = basePath + "image\\";
+		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
+		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
+		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
+		String htmlPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".html";
+		String imageDir = pdfPropsConfig.getDataPath() + "image\\";
 		List<DocxImageVO> finalImgInfos = new ArrayList<>();
 		for (DocxImageVO imageVO : imgInfos) {
 			DocxImageVO tmpVO = new DocxImageVO();
