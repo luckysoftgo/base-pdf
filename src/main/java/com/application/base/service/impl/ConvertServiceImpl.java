@@ -59,6 +59,7 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordTable2files(String templeteId, Map<String, String> uniqueDataMap, ArrayList<Map<String, Object>> tableDatas) {
+		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
@@ -83,6 +84,7 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordTables2files(String templeteId, Map<String, String> uniqueuniqueDataMap, ArrayList<DocxDataVO> tablesDatas) {
+		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
@@ -107,6 +109,7 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordImg2files(String templeteId, Map<String, String> uniqueDataMap, DocxImageVO imageVO) {
+		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
