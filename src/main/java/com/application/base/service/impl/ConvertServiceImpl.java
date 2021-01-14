@@ -34,6 +34,7 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordSymbol2files(String templeteId, Map<String, String> mappingMap) {
+		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
