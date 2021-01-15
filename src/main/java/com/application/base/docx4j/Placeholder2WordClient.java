@@ -11,6 +11,9 @@ import org.docx4j.XmlUtils;
 import org.docx4j.convert.out.HTMLSettings;
 import org.docx4j.dml.wordprocessingDrawing.Inline;
 import org.docx4j.finders.ClassFinder;
+import org.docx4j.fonts.IdentityPlusMapper;
+import org.docx4j.fonts.Mapper;
+import org.docx4j.fonts.PhysicalFonts;
 import org.docx4j.jaxb.Context;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
@@ -21,14 +24,15 @@ import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author ：孤狼
@@ -42,6 +46,32 @@ import java.util.Map;
 @Slf4j
 @Component
 public class Placeholder2WordClient {
+	
+	/**
+	 * 设置字体
+	 *
+	 * @param mlPackage
+	 * @throws Exception
+	 */
+	private void setFontMapper(WordprocessingMLPackage mlPackage) throws Exception {
+		Mapper fontMapper = new IdentityPlusMapper();
+		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
+		fontMapper.put("宋体", PhysicalFonts.get("SimSun"));
+		fontMapper.put("微软雅黑", PhysicalFonts.get("Microsoft Yahei"));
+		fontMapper.put("黑体", PhysicalFonts.get("SimHei"));
+		fontMapper.put("楷体", PhysicalFonts.get("KaiTi"));
+		fontMapper.put("新宋体", PhysicalFonts.get("NSimSun"));
+		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
+		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
+		fontMapper.put("宋体扩展", PhysicalFonts.get("simsun-extB"));
+		fontMapper.put("仿宋", PhysicalFonts.get("FangSong"));
+		fontMapper.put("仿宋_GB2312", PhysicalFonts.get("FangSong_GB2312"));
+		fontMapper.put("幼圆", PhysicalFonts.get("YouYuan"));
+		fontMapper.put("华文宋体", PhysicalFonts.get("STSong"));
+		fontMapper.put("华文中宋", PhysicalFonts.get("STZhongsong"));
+		//设置字体
+		mlPackage.setFontMapper(fontMapper);
+	}
 	
 	/**
 	 * docx 文档转换成 doc 文档.
@@ -92,7 +122,7 @@ public class Placeholder2WordClient {
 	
 	/**
 	 * Word转换成 Pdf
-	 *
+	 * 效率低下
 	 * @param sourcePath:绝对路径
 	 * @param targetPath:绝对路径.
 	 * @throws Exception
@@ -404,6 +434,71 @@ public class Placeholder2WordClient {
 		return drawing;
 	}
 	
+	
+	/**
+	 * 如果从数据库查出来的是不同对象集合，那么该方法直接把对象的属性和值直接存为Map
+	 * 比如示例中可以是两个对象，ClassInfo(className,total,male,female)、student(name,sex,...)
+	 * 前提是模板中的占位符一定要和对象的属性名一一对应
+	 *
+	 * @param objlist
+	 * @return
+	 * @throws Exception
+	 */
+	public HashMap<String, String> toMap(List<Object> objlist) throws Exception {
+		HashMap<String, String> variables = new HashMap<>();
+		String value = "";
+		if (objlist == null && objlist.isEmpty()) {
+			return null;
+		} else {
+			for (Object obj : objlist) {
+				Field[] fields = null;
+				fields = obj.getClass().getDeclaredFields();
+				//删除字段数组里的serialVersionUID
+				for (int i = 0; i < fields.length; i++) {
+					fields[i].setAccessible(true);
+					if (fields[i].getName().equals("serialVersionUID")) {
+						fields[i] = fields[fields.length - 1];
+						fields = Arrays.copyOf(fields, fields.length - 1);
+						break;
+					}
+				}
+				//遍历数组，获取属性名及属性值
+				for (Field field : fields) {
+					field.setAccessible(true);
+					String fieldName = field.getName();
+					//如果属性类型是Date
+					if (field.getGenericType().toString().equals("class java.util.Date")) {
+						PropertyDescriptor pd = new PropertyDescriptor(fieldName, obj.getClass());
+						Method getMethod = pd.getReadMethod();
+						Date date = (Date) getMethod.invoke(obj);
+						value = (date == null) ? "" : new SimpleDateFormat("yyyy-MM-dd").format(date);
+					} else if (field.getGenericType().toString().equals("class java.lang.Integer")) {
+						//如果属性类型是Integer
+						PropertyDescriptor pd = new PropertyDescriptor(fieldName, obj.getClass());
+						Method getMethod = pd.getReadMethod();
+						Object object = getMethod.invoke(obj);
+						value = (object == null) ? String.valueOf(0) : object.toString();
+						
+					} else if (field.getGenericType().toString().equals("class java.lang.Double")) {
+						//如果属性类型是Double
+						PropertyDescriptor pd = new PropertyDescriptor(fieldName, obj.getClass());
+						Method getMethod = pd.getReadMethod();
+						Object object = getMethod.invoke(obj);
+						value = (object == null) ? String.valueOf(0.0) : object.toString();
+						
+					} else {
+						PropertyDescriptor pd = new PropertyDescriptor(fieldName, obj.getClass());
+						Method getMethod = pd.getReadMethod();
+						Object object = getMethod.invoke(obj);
+						value = (object == null) ? "  " : object.toString();
+						
+					}
+					variables.put(fieldName, value);
+				}
+			}
+			return variables;
+		}
+	}
 	
 	/**
 	 * 设置最大Text类型节点个数 如果超过此值，在删除占位符时可能会重复计算导致错误

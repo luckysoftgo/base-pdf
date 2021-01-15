@@ -315,6 +315,7 @@ public class OfficeOperateUtil {
 			in = new FileInputStream(new File(docxPath));
 			XWPFDocument document = new XWPFDocument(in);
 			// 2> 解析XHTML配置（这里设置IURIResolver来设置图片存放的目录）
+			// XHTMLOptions options = XHTMLOptions.create().indent(4);
 			XHTMLOptions options = XHTMLOptions.create();
 			// 存放word中图片的目录
 			options.setExtractor(new FileImageExtractor(new File(imageDir)));

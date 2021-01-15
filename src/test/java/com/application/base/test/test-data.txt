@@ -3,14 +3,15 @@ test1:
     http://localhost:8666//bootpdf/convert/wordSymbol2files
   params:
     {"templeteId":"test1","uniqueDataMap":{"name":"张三","genger":"男","age":"40","phone":"18888888888","workyears":"10"}}
-
+    {"templeteId":"test4","uniqueDataMap":{"title":"个人信息","name":"张三","genger":"男","age":"40","phone":"18888888888","workyears":"10","begin":"2006.09","end":"2010.07","basic":"基本信息","education":"教育信息","experience":"工作经历","products":"工作成果","team":"团队情况"},"tablesDatas":[{"docxDataList":[{"product.name":"采购OA","product.no":"20121006AAAAA","product.price":"100W"},{"product.name":"供应链系统","product.no":"20160908BBBBB","product.price":"150W"}],"tableIndex":0},{"docxDataList":[{"work.begin":"2010.04","work.end":"2015.06","work.company":"中电十五所","work.postion":"软件工程师"},{"work.begin":"2015.06","work.end":"2019.06","work.company":"航天科工二院","work.postion":"高级软件工程师"},{"work.begin":"2019.06","work.end":"至今","work.company":"中国航天科工集团","work.postion":"高级软件工程师"}],"tableIndex":1},{"docxDataList":[{"team.count":"10","team.depart":"技术部","team.leader":"王五"},{"team.count":"15","team.depart":"信息部","team.leader":"李四"},{"team.count":"20","team.depart":"信息技术部","team.leader":"赵璐"}],"tableIndex":2}]}
+    {"templeteId":"test7","uniqueDataMap":{"point":"49","a-num":"√","b-num":"","c-num":"","d-num":"√","e-num":"","f-num":"","name":"长安国际","m-sex":"√","f-sex":"","idcard":"√","passport":"","bootlet":"","idNo":"111111111111","email":"test@126.com","national":"中华人民共和国","address":"陕西西安高新四路","mobilephone":"18888888888","phone":"029-8756328","owner":"√","spouse":"","parent":"","children":"√","brother":"","account-name":"长安电子信托","open-bank":"招商银行陕西分行","account-no":"2021001002003"}}
 
 test3:
   url:
     http://localhost:8666//bootpdf/convert/wordTable2files
   params:
     {"templeteId":"test3","uniqueDataMap":{"title":"个人信息","name":"张三","genger":"男","age":"40","phone":"18888888888","workyears":"10","begin":"2006.09","end":"2010.07","basic":"基本信息","education":"教育信息","experience":"工作经历"},"tableDatas":[{"work.begin":"2010.04","work.end":"2015.06","work.company":"中电十五所","work.postion":"软件工程师"},{"work.begin":"2015.06","work.end":"2019.06","work.company":"航天科工二院","work.postion":"高级软件工程师"},{"work.begin":"2019.06","work.end":"至今","work.company":"中国航天科工集团","work.postion":"高级软件工程师"}]}
-
+    {"templeteId":"test5","uniqueDataMap":{"date":"2021-01-15","client":"张三","account-manager":"李四","company":"青云科技","residence":"高新国际","mobilephone":"18888888888","email":"test@126.com","address":"陕西西安高新四路","reationship":"客户关系","name":"长安国际","insourced":"AAAAA","insource":"BBBBB","policy-holder":"CCCCC","account":"10000.00","insourceNo":"2021010508","acceptNo":"2021002021","e-number":"88888-9999","invoceType":"平安车险","constName":"长安电子信托系统"}}
 
 test4:
   url:

@@ -1,6 +1,7 @@
 package com.application.base.service.impl;
 
 import cn.hutool.crypto.digest.MD5;
+import com.application.base.asponse.AsponseClient;
 import com.application.base.config.PdfPropsConfig;
 import com.application.base.docx4j.Placeholder2WordClient;
 import com.application.base.docx4j.vo.DocxDataVO;
@@ -30,11 +31,12 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Autowired
 	private Placeholder2WordClient wordClient;
-
+	
+	@Autowired
+	private AsponseClient asponseClient;
 	
 	@Override
 	public Map<String, String> wordSymbol2files(String templeteId, Map<String, String> mappingMap) {
-		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
@@ -44,7 +46,8 @@ public class ConvertServiceImpl implements ConvertService {
 		try {
 			boolean result = wordClient.convert2Word(docxOrginFile, mappingMap, docxNewFile);
 			if (result) {
-				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				//result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				result = asponseClient.docxFile2Files(docxNewFile, htmlPath, pdfPath);
 			}
 			if (result) {
 				resutMap.put("pdfPath", pdfPath);
@@ -59,7 +62,6 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordTable2files(String templeteId, Map<String, String> uniqueDataMap, ArrayList<Map<String, Object>> tableDatas) {
-		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
@@ -84,7 +86,6 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordTables2files(String templeteId, Map<String, String> uniqueuniqueDataMap, ArrayList<DocxDataVO> tablesDatas) {
-		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
@@ -94,7 +95,8 @@ public class ConvertServiceImpl implements ConvertService {
 		try {
 			boolean result = wordClient.convert2TablesWord(docxOrginFile, uniqueuniqueDataMap, docxNewFile, tablesDatas);
 			if (result) {
-				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				//result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				result = asponseClient.docxFile2Files(docxNewFile, htmlPath, pdfPath);
 			}
 			if (result) {
 				resutMap.put("pdfPath", pdfPath);
@@ -109,7 +111,6 @@ public class ConvertServiceImpl implements ConvertService {
 	
 	@Override
 	public Map<String, String> wordImg2files(String templeteId, Map<String, String> uniqueDataMap, DocxImageVO imageVO) {
-		//模板地址.
 		String docxOrginFile = pdfPropsConfig.getDataPath() + templeteId + ".docx";
 		String docxNewFile = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".docx";
 		String pdfPath = pdfPropsConfig.getDataPath() + "temp_" + templeteId + ".pdf";
@@ -119,7 +120,8 @@ public class ConvertServiceImpl implements ConvertService {
 		try {
 			boolean result = wordClient.convert2ImgWord(docxOrginFile, uniqueDataMap, docxNewFile, imageVO.getSearchText(), imageVO.getImagePath(), Boolean.TRUE);
 			if (result) {
-				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				//result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				result = asponseClient.docxFile2Files(docxNewFile, htmlPath, pdfPath);
 			}
 			if (result) {
 				resutMap.put("pdfPath", pdfPath);
@@ -143,7 +145,8 @@ public class ConvertServiceImpl implements ConvertService {
 		try {
 			boolean result = wordClient.convert2ImgsWord(docxOrginFile, uniqueDataMap, docxNewFile, imgInfos, Boolean.FALSE);
 			if (result) {
-				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				//result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				result = asponseClient.docxFile2Files(docxNewFile, htmlPath, pdfPath);
 			}
 			if (result) {
 				resutMap.put("pdfPath", pdfPath);
@@ -172,7 +175,8 @@ public class ConvertServiceImpl implements ConvertService {
 		try {
 			boolean result = wordClient.convert2ImgWord(docxOrginFile, uniqueDataMap, docxNewFile, searchText, imagePath, Boolean.FALSE);
 			if (result) {
-				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				//result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				result = asponseClient.docxFile2Files(docxNewFile, htmlPath, pdfPath);
 			}
 			if (result) {
 				resutMap.put("pdfPath", pdfPath);
@@ -207,7 +211,8 @@ public class ConvertServiceImpl implements ConvertService {
 		try {
 			boolean result = wordClient.convert2ImgsWord(docxOrginFile, uniqueDataMap, docxNewFile, finalImgInfos, Boolean.FALSE);
 			if (result) {
-				result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				//result = OfficeOperateUtil.docxFile2Files(docxNewFile, htmlPath, pdfPath, imageDir, null, Arrays.asList(new String[]{"<p><br /></p>"}));
+				result = asponseClient.docxFile2Files(docxNewFile, htmlPath, pdfPath);
 			}
 			if (result) {
 				resutMap.put("pdfPath", pdfPath);
@@ -219,4 +224,5 @@ public class ConvertServiceImpl implements ConvertService {
 		}
 		return resutMap;
 	}
+	
 }
