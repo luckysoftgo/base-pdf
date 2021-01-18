@@ -1,5 +1,6 @@
 package com.application.base.datas;
 
+
 import com.application.base.docx4j.vo.DocxDataVO;
 import com.application.base.docx4j.vo.DocxImageVO;
 
@@ -19,6 +20,11 @@ public class ReportDataDto implements java.io.Serializable {
 	 * 模板id.
 	 */
 	private String templeteId;
+	
+	/**
+	 * 系统id.
+	 */
+	private String systemId;
 	
 	/**
 	 * 项目id.
@@ -54,8 +60,9 @@ public class ReportDataDto implements java.io.Serializable {
 	
 	}
 	
-	public ReportDataDto(String templeteId, String projectId, Map<String, String> uniqueDataMap, ArrayList<Map<String, Object>> tableDatas, ArrayList<DocxDataVO> tablesDatas, DocxImageVO imageVO, List<DocxImageVO> imageInfos) {
+	public ReportDataDto(String templeteId, String systemId, String projectId, Map<String, String> uniqueDataMap, ArrayList<Map<String, Object>> tableDatas, ArrayList<DocxDataVO> tablesDatas, DocxImageVO imageVO, List<DocxImageVO> imageInfos) {
 		this.templeteId = templeteId;
+		this.systemId = systemId;
 		this.projectId = projectId;
 		this.uniqueDataMap = uniqueDataMap;
 		this.tableDatas = tableDatas;
@@ -70,6 +77,14 @@ public class ReportDataDto implements java.io.Serializable {
 	
 	public void setTempleteId(String templeteId) {
 		this.templeteId = templeteId;
+	}
+	
+	public String getSystemId() {
+		return systemId;
+	}
+	
+	public void setSystemId(String systemId) {
+		this.systemId = systemId;
 	}
 	
 	public String getProjectId() {
