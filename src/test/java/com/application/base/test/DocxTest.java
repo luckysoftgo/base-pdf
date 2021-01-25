@@ -9,7 +9,6 @@ import com.application.base.util.OfficeOperateUtil;
 import com.application.base.util.toolpdf.PhantomJsUtil;
 import com.itextpdf.text.PageSize;
 import org.docx4j.Docx4J;
-import org.docx4j.convert.out.HTMLSettings;
 import org.docx4j.fonts.IdentityPlusMapper;
 import org.docx4j.fonts.Mapper;
 import org.docx4j.fonts.PhysicalFonts;
@@ -50,7 +49,7 @@ public class DocxTest {
 		//test5();
 		//test6();
 		//test7();
-		test8();
+		//test8();
 		//test9();
 		//test10();
 		//test11();
@@ -59,7 +58,7 @@ public class DocxTest {
 		//test131();
 		//test132();
 		//test14();
-		//test15();
+		test15();
 		System.exit(1);
 	}
 	
@@ -859,18 +858,18 @@ public class DocxTest {
 	public static void test15() throws Exception {
 		long start = System.currentTimeMillis();
 		String filepath = "E:\\home\\pdf\\resources\\data\\temp14.docx";
+		String pdfpath = "E:\\home\\pdf\\resources\\data\\pdf14.pdf";
 		String imageDirPath = "E:\\home\\pdf\\resources\\data\\html14.html";
 		
 		//docx 2 pdf
-		/*
 		File templateFile = new File(filepath);
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateFile);
-		File outFile = new File(tofilepath);
+		File outFile = new File(pdfpath);
 		setFontMapper(wordMLPackage);
-		org.docx4j.Docx4J.toPDF(wordMLPackage, new FileOutputStream(outFile));
+		Docx4J.toPDF(wordMLPackage, new FileOutputStream(outFile));
 		wordMLPackage.reset();
-		*/
 		
+		/*
 		//docx 2 html
 		File templateFile = new File(filepath);
 		int len = filepath.lastIndexOf("\\/") + 1;
@@ -885,6 +884,7 @@ public class DocxTest {
 		File outFile = new File(imageDirPath);
 		Docx4J.toHTML(htmlSettings, new FileOutputStream(outFile), Docx4J.FLAG_NONE);
 		wordMLPackage.reset();
+		*/
 		
 		/*
 		XWPFDocument document;

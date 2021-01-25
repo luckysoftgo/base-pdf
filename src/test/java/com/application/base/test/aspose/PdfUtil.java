@@ -18,20 +18,34 @@ import java.io.InputStream;
 public class PdfUtil {
 	
 	public static void main(String[] args) throws Exception {
-		
+		AsponseClient client = new AsponseClient();
 		//doc2file("E:\\home\\pdf\\resources\\data\\temp_test5.docx","E:\\home\\pdf\\resources\\data\\temp_test51.pdf",SaveFormat.PDF);
-		
+		long start = System.currentTimeMillis();
 		String filepath = "E:\\home\\pdf\\resources\\data\\temp7.docx";
+		String docpath = "E:\\home\\pdf\\resources\\data\\temp7.doc";
 		String pdfpath = "E:\\home\\pdf\\resources\\data\\7pdf.pdf";
 		String htmlpath = "E:\\home\\pdf\\resources\\data\\7pdf.html";
 		String pngpath = "E:\\home\\pdf\\resources\\data\\7pdf.png";
+		/*
+		boolean result = client.convertDocx2Doc(filepath, docpath);
+		if (result){
+			client.convertDocx2Pdf(docpath, pdfpath);
+		}
+		*/
+		client.docxFile2Files(filepath, htmlpath, pdfpath);
+		
+		filepath = "E:\\home\\pdf\\resources\\data\\temp14.docx";
+		pdfpath = "E:\\home\\pdf\\resources\\data\\14pdf.pdf";
+		
 		//doc2file(filepath,pdfpath,SaveFormat.PDF);
 		//doc2file(filepath,pngpath,SaveFormat.PNG);
-		AsponseClient client = new AsponseClient();
+		//client.convertDocx2Pdf(filepath, pdfpath);
+		/*
 		client.convertDocx2Html(filepath, htmlpath);
-		client.convertDocx2Pdf(filepath, pdfpath);
 		client.convertDocx2Png(filepath, pngpath);
-		System.out.println("完成操作...");
+		*/
+		long time = (System.currentTimeMillis() - start) / 1000;
+		System.out.println("完成操作,操作时间是: " + time + "秒");
 	}
 	
 	

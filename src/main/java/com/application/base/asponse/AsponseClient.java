@@ -10,6 +10,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author ：admin
@@ -27,11 +29,11 @@ public class AsponseClient {
 	 */
 	static {
 		try {
-			InputStream is = AsponseClient.class.getClassLoader().getResourceAsStream("license.xml");
+			InputStream stream = AsponseClient.class.getClassLoader().getResourceAsStream("license.xml");
 			License aposeLic = new License();
-			aposeLic.setLicense(is);
+			aposeLic.setLicense(stream);
 		} catch (Exception e) {
-			log.info("加载license的信息失败了");
+			log.info("加载license的信息失败了,失败信息是:{}", e.getMessage());
 		}
 	}
 	
@@ -44,9 +46,107 @@ public class AsponseClient {
 	 * @throws Exception
 	 */
 	public boolean docxFile2Files(String docxPath, String htmlPath, String pdfPath) throws Exception {
-		convertDocx2Html(docxPath, htmlPath);
-		convertDocx2Pdf(docxPath, pdfPath);
+		if (StringUtils.isBlank(docxPath)) {
+			log.info("AsponseClient.docxFile2Files 传入的docx文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(htmlPath)) {
+			log.info("AsponseClient.docxFile2Files 传入的html文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(pdfPath)) {
+			log.info("AsponseClient.docxFile2Files 传入的pdf文档的路径为空!");
+			return false;
+		}
+		createFile(htmlPath, Boolean.TRUE);
+		createFile(pdfPath, Boolean.TRUE);
+		// Specify LoadFormat of input word document
+		LoadOptions options = new LoadOptions();
+		options.setEncoding(StandardCharsets.UTF_8);
+		options.setAllowTrailingWhitespaceForListItems(false);
+		Document doc = new Document(docxPath, options);
+		//可以设置其类型.
+		HtmlSaveOptions htmlOptions = new HtmlSaveOptions();
+		htmlOptions.setSaveFormat(SaveFormat.HTML);
+		htmlOptions.setEncoding(StandardCharsets.UTF_8);
+		//图片以 Base64 的方式展现.
+		htmlOptions.setExportImagesAsBase64(true);
+		doc.save(htmlPath, htmlOptions);
+		
+		//可以设置其类型.
+		PdfSaveOptions pdfOpts = new PdfSaveOptions();
+		pdfOpts.setSaveFormat(SaveFormat.PDF);
+		//图片以 Base64 的方式展现.
+		doc.save(pdfPath, pdfOpts);
 		return true;
+	}
+	
+	/**
+	 * doc 转成 docx
+	 *
+	 * @param docPath
+	 * @param docxPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDoc2Docx(String docPath, String docxPath) {
+		if (StringUtils.isBlank(docxPath)) {
+			log.info("AsponseClient.convertDoc2Docx 传入的docx文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(docPath)) {
+			log.info("AsponseClient.convertDoc2Docx 传入的doc文档的路径为空!");
+			return false;
+		}
+		try {
+			// Specify LoadFormat of input word document
+			LoadOptions options = new LoadOptions();
+			options.setLoadFormat(LoadFormat.DOC);
+			options.setEncoding(StandardCharsets.UTF_8);
+			options.setAllowTrailingWhitespaceForListItems(false);
+			// Load source DOCX file
+			Document document = new Document(docPath, options);
+			// Convert DOCX to DOC file
+			document.save(docxPath, SaveFormat.DOCX);
+			return true;
+		} catch (Exception e) {
+			log.error("AsponseClient.convertDoc2Docx 中 DOC 转 DOCX 失败了,信息是:{}", e.getMessage());
+			return false;
+		}
+	}
+	
+	/**
+	 * docx 转成 doc
+	 *
+	 * @param docxPath
+	 * @param docPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Doc(String docxPath, String docPath) {
+		if (StringUtils.isBlank(docxPath)) {
+			log.info("AsponseClient.convertDocx2Doc 传入的docx文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(docPath)) {
+			log.info("AsponseClient.convertDocx2Doc 传入的doc文档的路径为空!");
+			return false;
+		}
+		try {
+			// Specify LoadFormat of input word document
+			LoadOptions options = new LoadOptions();
+			options.setLoadFormat(LoadFormat.DOCX);
+			options.setEncoding(StandardCharsets.UTF_8);
+			options.setAllowTrailingWhitespaceForListItems(false);
+			// Load source DOCX file
+			Document document = new Document(docxPath, options);
+			// Convert DOCX to DOC file
+			document.save(docPath, SaveFormat.DOC);
+			return true;
+		} catch (Exception e) {
+			log.error("AsponseClient.convertDocx2Doc 中 DOCX 转 DOC 失败了,信息是:{}", e.getMessage());
+			return false;
+		}
 	}
 	
 	/**
@@ -67,11 +167,93 @@ public class AsponseClient {
 			return false;
 		}
 		createFile(pdfPath, Boolean.TRUE);
-		Document doc = new Document(docxPath);
-		//水印的偏移位置
-		Shape watermark = new Shape(doc, ShapeType.TEXT_PLAIN_TEXT);
-		// Text will be directed from the bottom-left to the top-right corner.
-		watermark.setRotation(-40);
+		// Specify LoadFormat of input word document
+		LoadOptions options = new LoadOptions();
+		options.setEncoding(StandardCharsets.UTF_8);
+		options.setAllowTrailingWhitespaceForListItems(false);
+		Document doc = new Document(docxPath, options);
+		
+		//可以设置其类型.
+		PdfSaveOptions opts = new PdfSaveOptions();
+		opts.setSaveFormat(SaveFormat.PDF);
+		//图片以 Base64 的方式展现.
+		doc.save(pdfPath, opts);
+		return true;
+	}
+	
+	
+	/**
+	 * word 转成 pdf
+	 *
+	 * @param docxPath
+	 * @param pdfPath
+	 * @param dataMap
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Pdf(String docxPath, String pdfPath, Map<String, String> dataMap) throws Exception {
+		if (StringUtils.isBlank(docxPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的docx文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(pdfPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的pdf文档的路径为空!");
+			return false;
+		}
+		createFile(pdfPath, Boolean.TRUE);
+		// Specify LoadFormat of input word document
+		LoadOptions options = new LoadOptions();
+		options.setEncoding(StandardCharsets.UTF_8);
+		options.setAllowTrailingWhitespaceForListItems(false);
+		Document doc = new Document(docxPath, options);
+		if (dataMap != null && dataMap.size() > 0) {
+			for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				doc.getRange().replace(key, value, true, false);
+			}
+		}
+		//可以设置其类型.
+		PdfSaveOptions opts = new PdfSaveOptions();
+		opts.setSaveFormat(SaveFormat.PDF);
+		//图片以 Base64 的方式展现.
+		doc.save(pdfPath, opts);
+		return true;
+	}
+	
+	/**
+	 * word 转成 pdf
+	 *
+	 * @param docxPath
+	 * @param pdfPath
+	 * @param listMap
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Pdf(String docxPath, String pdfPath, List<Map<String, String>> listMap) throws Exception {
+		if (StringUtils.isBlank(docxPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的docx文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(pdfPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的pdf文档的路径为空!");
+			return false;
+		}
+		createFile(pdfPath, Boolean.TRUE);
+		// Specify LoadFormat of input word document
+		LoadOptions options = new LoadOptions();
+		options.setEncoding(StandardCharsets.UTF_8);
+		options.setAllowTrailingWhitespaceForListItems(false);
+		Document doc = new Document(docxPath, options);
+		if (listMap != null && listMap.size() > 0) {
+			for (Map<String, String> dataMap : listMap) {
+				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+					String key = entry.getKey();
+					String value = entry.getValue();
+					doc.getRange().replace(key, value, true, false);
+				}
+			}
+		}
 		//可以设置其类型.
 		PdfSaveOptions opts = new PdfSaveOptions();
 		opts.setSaveFormat(SaveFormat.PDF);
@@ -98,7 +280,11 @@ public class AsponseClient {
 			return false;
 		}
 		createFile(htmlPath, Boolean.TRUE);
-		Document doc = new Document(docxPath);
+		// Specify LoadFormat of input word document
+		LoadOptions options = new LoadOptions();
+		options.setEncoding(StandardCharsets.UTF_8);
+		options.setAllowTrailingWhitespaceForListItems(false);
+		Document doc = new Document(docxPath, options);
 		//可以设置其类型.
 		HtmlSaveOptions opts = new HtmlSaveOptions();
 		opts.setSaveFormat(SaveFormat.HTML);
@@ -127,14 +313,18 @@ public class AsponseClient {
 			return false;
 		}
 		createFile(pngPath, Boolean.TRUE);
-		Document doc = new Document(docxPath);
+		// Specify LoadFormat of input word document
+		LoadOptions options = new LoadOptions();
+		options.setEncoding(StandardCharsets.UTF_8);
+		options.setAllowTrailingWhitespaceForListItems(false);
+		Document doc = new Document(docxPath, options);
 		//可以设置其类型.
 		ImageSaveOptions opts = new ImageSaveOptions(SaveFormat.PNG);
 		opts.setPrettyFormat(true);
 		opts.setUseAntiAliasing(true);
 		opts.setJpegQuality(80);
 		opts.setSaveFormat(SaveFormat.PNG);
-		opts.setPageCount(doc.getPageCount());
+		//opts.setPageCount(doc.getPageCount());
 		opts.setResolution(200);
 		//图片以 Base64 的方式展现.
 		doc.save(pngPath, opts);
