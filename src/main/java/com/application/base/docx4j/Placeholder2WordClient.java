@@ -20,6 +20,7 @@ import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.org.apache.poi.util.IOUtils;
 import org.docx4j.wml.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBElement;
@@ -46,6 +47,9 @@ import java.util.*;
 @Slf4j
 @Component
 public class Placeholder2WordClient {
+	
+	@Autowired
+	private DocxVariableClearClient clearClient;
 	
 	/**
 	 * 设置字体
@@ -156,6 +160,11 @@ public class Placeholder2WordClient {
 		}
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
 		MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+		try {
+			//清除样式20210125.
+			clearClient.cleanDocumentPart(documentPart);
+		} catch (Exception e) {
+		}
 		documentPart.variableReplace(dataMap);
 		Docx4J.save(wordMLPackage, new File(docxNewFile));
 		//释放资源
@@ -183,6 +192,12 @@ public class Placeholder2WordClient {
 			throw new Exception("传入的数据为空!");
 		}
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
+		MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+		try {
+			//清除样式20210125.
+			clearClient.cleanDocumentPart(documentPart);
+		} catch (Exception e) {
+		}
 		ClassFinder find = new ClassFinder(Tbl.class);
 		new TraversalUtil(wordMLPackage.getMainDocumentPart().getContent(), find);
 		int index = tableIndex == null ? 0 : tableIndex.intValue();
@@ -210,7 +225,7 @@ public class Placeholder2WordClient {
 		//在原来位置上进行信息追加.
 		table.getContent().addAll(tableRowIndex, automaticTrs);
 		//设置全局的变量替换
-		wordMLPackage.getMainDocumentPart().variableReplace(unqiueDataMap);
+		documentPart.variableReplace(unqiueDataMap);
 		Docx4J.save(wordMLPackage, new File(docxNewFile));
 		//释放资源
 		wordMLPackage.reset();
@@ -236,6 +251,13 @@ public class Placeholder2WordClient {
 				throw new Exception("传入的数据为空!");
 			}
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
+			MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+			try {
+				//清除样式20210125.
+				clearClient.cleanDocumentPart(documentPart);
+			} catch (Exception e) {
+			}
+			//循环获取值.
 			for (int i = 0; i < linkedList.size(); i++) {
 				DocxDataVO dataVO = linkedList.get(i);
 				ClassFinder find = new ClassFinder(Tbl.class);
@@ -267,7 +289,7 @@ public class Placeholder2WordClient {
 				table.getContent().addAll(tableRowIndex, automaticTrs);
 			}
 			//设置全局的变量替换
-			wordMLPackage.getMainDocumentPart().variableReplace(unqiueDataMap);
+			documentPart.variableReplace(unqiueDataMap);
 			Docx4J.save(wordMLPackage, new File(docxNewFile));
 			//释放资源
 			wordMLPackage.reset();
@@ -302,6 +324,12 @@ public class Placeholder2WordClient {
 			ObjectFactory factory = Context.getWmlObjectFactory();
 			//得到主段落
 			MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+			try {
+				//清除样式20210125.
+				clearClient.cleanDocumentPart(documentPart);
+			} catch (Exception e) {
+			}
+			
 			//提取正文
 			Document document = documentPart.getContents();
 			//提取所有段落
@@ -385,6 +413,12 @@ public class Placeholder2WordClient {
 			ObjectFactory factory = Context.getWmlObjectFactory();
 			//得到主段落
 			MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+			try {
+				//清除样式20210125.
+				clearClient.cleanDocumentPart(documentPart);
+			} catch (Exception e) {
+			}
+			
 			//提取正文
 			Document document = documentPart.getContents();
 			//提取所有段落

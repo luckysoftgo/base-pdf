@@ -149,13 +149,8 @@ public class Docx4jUtils {
 	 * 清扫 docx4j 模板变量字符,通常以${variable}形式
 	 * <p>
 	 * XXX: 主要在上传模板时处理一下, 后续
-	 *
-	 * @author liliang
-	 * @since 2018-11-07
 	 */
 	private static class DocxVariableClearUtils {
-		
-		
 		/**
 		 * 去任意XML标签
 		 */
