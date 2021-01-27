@@ -150,6 +150,40 @@ public class AsponseClient {
 	}
 	
 	/**
+	 * docx 转成 docx
+	 *
+	 * @param sourceDocxPath
+	 * @param targetDocxPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Docx(String sourceDocxPath, String targetDocxPath) {
+		if (StringUtils.isBlank(sourceDocxPath)) {
+			log.info("AsponseClient.convertDocx2Docx 传入的源docx文档的路径为空!");
+			return false;
+		}
+		if (StringUtils.isBlank(targetDocxPath)) {
+			log.info("AsponseClient.convertDocx2Docx 传入的目的docx文档的路径为空!");
+			return false;
+		}
+		try {
+			// Specify LoadFormat of input word document
+			LoadOptions options = new LoadOptions();
+			options.setLoadFormat(LoadFormat.DOCX);
+			options.setEncoding(StandardCharsets.UTF_8);
+			options.setAllowTrailingWhitespaceForListItems(false);
+			// Load source DOCX file
+			Document document = new Document(sourceDocxPath, options);
+			// Convert DOCX to DOCX file
+			document.save(targetDocxPath, SaveFormat.DOCX);
+			return true;
+		} catch (Exception e) {
+			log.error("AsponseClient.convertDocx2Docx 中 DOCX 转 DOCX 失败了,信息是:{}", e.getMessage());
+			return false;
+		}
+	}
+	
+	/**
 	 * word 转成 pdf
 	 *
 	 * @param docxPath

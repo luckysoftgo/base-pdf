@@ -1,5 +1,6 @@
 package com.application.base.test.poi;
 
+import com.application.base.poi.LocalTextFontRegistry;
 import org.apache.poi.xwpf.converter.pdf.PdfConverter;
 import org.apache.poi.xwpf.converter.pdf.PdfOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -15,13 +16,15 @@ public class WordPdfTool {
 		long start = System.currentTimeMillis();
 		String filepath = "E:\\home\\pdf\\resources\\data\\result_test14.docx";
 		String outpath = "E:\\home\\pdf\\resources\\data\\result_test141.pdf";
-		filepath = "E:\\home\\pdf\\resources\\data\\result_test8.docx";
-		outpath = "E:\\home\\pdf\\resources\\data\\result_test81.pdf";
+		filepath = "C:\\Users\\sunshine\\Desktop\\result_test8.docx";
+		outpath = "E:\\home\\pdf\\resources\\data\\test8.pdf";
 		
 		XWPFDocument document;
 		InputStream doc = new FileInputStream(filepath);
 		document = new XWPFDocument(doc);
 		PdfOptions options = PdfOptions.create();
+		LocalTextFontRegistry fontRegistry = new LocalTextFontRegistry(null);
+		options.fontProvider(fontRegistry);
 		OutputStream out = new FileOutputStream(outpath);
 		PdfConverter.getInstance().convert(document, out, options);
 		
