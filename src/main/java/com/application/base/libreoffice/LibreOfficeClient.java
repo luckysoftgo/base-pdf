@@ -10,6 +10,8 @@ import java.io.InputStream;
 /**
  * @author ：admin
  * @description: 利用LibreOffice处理报告
+ * https://blog.csdn.net/qq_43420083/article/details/103409512
+ * https://segmentfault.com/a/1190000015129654
  * @modified By：
  * @version: 1.0.0
  */
@@ -73,6 +75,38 @@ public class LibreOfficeClient {
 		String officeHome = officeConfig.getLibreofficeHome() == null ? "D:\\installer\\libreoffice\\program\\soffice.exe" : officeConfig.getLibreofficeHome();
 		//执行的命令:
 		String command = officeHome + " " + execCommand + " " + docxPath + " --outdir " + convertPath;
+		//执行结果
+		return execCommand(command);
+	}
+	
+	/**
+	 * 执行转换
+	 *
+	 * @param docxPath:源   word 的绝对路径.
+	 * @param convertPath: 转换后的文件的存储路径.
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean execConvertDocx(String docxPath, String convertPath) throws Exception {
+		String officeHome = officeConfig.getLibreofficeHome() == null ? "D:\\installer\\libreoffice\\program\\soffice.exe" : officeConfig.getLibreofficeHome();
+		//执行的命令:
+		String command = officeHome + officeConfig.getExecWordCommand() + docxPath + " --outdir " + convertPath;
+		//执行结果
+		return execCommand(command);
+	}
+	
+	/**
+	 * 执行转换
+	 *
+	 * @param docxPath:源   word 的绝对路径.
+	 * @param convertPath: 转换后的文件的存储路径.
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean execConvertHtml(String docxPath, String convertPath) throws Exception {
+		String officeHome = officeConfig.getLibreofficeHome() == null ? "D:\\installer\\libreoffice\\program\\soffice.exe" : officeConfig.getLibreofficeHome();
+		//执行的命令:
+		String command = officeHome + officeConfig.getExecHtmlCommand() + docxPath + " --outdir " + convertPath;
 		//执行结果
 		return execCommand(command);
 	}

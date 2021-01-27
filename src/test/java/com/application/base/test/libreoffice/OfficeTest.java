@@ -21,13 +21,21 @@ public class OfficeTest {
 	public static void main(String[] args) throws NullPointerException {
 		long start = System.currentTimeMillis();
 		String srcPath = "E:\\home\\pdf\\resources\\data\\result_test8.docx";
-		String desPath = "E:\\home\\pdf\\resources\\data\\";
+		String desPath = "E:\\home\\pdf\\resources\\data\\tmp\\";
 		srcPath = "E:\\home\\pdf\\resources\\data\\result_test14.docx";
+		
 		//执行的命令:
-		String command = officeHome() + " --headless --convert-to pdf:writer_pdf_Export " + srcPath + " --outdir " + desPath;
+		String command = officeHome() + " --headless --invisible --convert-to docx " + srcPath + " --outdir " + desPath;
 		exec(command);
+		
+		//执行的命令:
+		/*
+		command = officeHome() + " --headless --convert-to pdf:writer_pdf_Export " + srcPath + " --outdir " + desPath;
+		exec(command);
+		
 		command = officeHome() + " --headless --invisible --convert-to html " + srcPath + " --outdir " + desPath;
 		exec(command);
+		*/
 		
 		long end = System.currentTimeMillis();
 		System.out.println("用时:" + (end - start) / 1000 + " s");

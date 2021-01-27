@@ -50,4 +50,9 @@ public class LibreOfficeConfig {
 	 */
 	private String execHtmlCommand = " --headless --invisible --convert-to html ";
 	
+	/**
+	 * 执行pdf转换的命令
+	 */
+	private String execWordCommand = " --headless --invisible --convert-to docx ";
+	
 }
