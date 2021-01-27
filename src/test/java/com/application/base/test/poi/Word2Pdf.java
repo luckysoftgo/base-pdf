@@ -1,10 +1,5 @@
 package com.application.base.test.poi;
 
-import fr.opensagres.xdocreport.itext.extension.font.IFontProvider;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-
-import java.io.FileInputStream;
-
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.BaseFont;
 import fr.opensagres.xdocreport.itext.extension.font.IFontProvider;
@@ -26,8 +21,8 @@ import java.util.Map;
  * @version: 1.0.0
  */
 public class Word2Pdf {
-	private final static String DOC_X = "D:\\test.docx";
-	private final static String PDF = "D:\\test.pdf";
+	private final static String DOC_X = "E:\\home\\pdf\\resources\\data\\result_test14.docx";
+	private final static String PDF = "E:\\home\\pdf\\resources\\data\\result_test141.pdf";
 	
 	public static void main(String[] args) {
 		try {

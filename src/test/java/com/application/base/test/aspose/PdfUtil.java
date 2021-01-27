@@ -32,7 +32,8 @@ public class PdfUtil {
 			client.convertDocx2Pdf(docpath, pdfpath);
 		}
 		*/
-		client.docxFile2Files(filepath, htmlpath, pdfpath);
+		client.convertDocx2Pdf(docpath, pdfpath);
+		//client.docxFile2Files(filepath, htmlpath, pdfpath);
 		
 		filepath = "E:\\home\\pdf\\resources\\data\\temp14.docx";
 		pdfpath = "E:\\home\\pdf\\resources\\data\\14pdf.pdf";

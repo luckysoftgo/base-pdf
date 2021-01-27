@@ -42,22 +42,22 @@ public class DocxTest {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		//test1();
-		//test2();
-		//test3();
-		//test4();
-		//test5();
-		//test6();
-		//test7();
-		//test8();
-		//test9();
-		//test10();
-		//test11();
-		//test12();
-		//test13();
-		//test131();
-		//test132();
-		//test14();
+		test1();
+		test2();
+		test3();
+		test4();
+		test5();
+		test6();
+		test7();
+		test8();
+		test9();
+		test10();
+		test11();
+		test12();
+		test13();
+		test131();
+		test132();
+		test14();
 		test15();
 		System.exit(1);
 	}

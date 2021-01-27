@@ -240,6 +240,39 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/libs/aspose-words-15.8.0-jdk16.jar</systemPath>
 		</dependency>
+
+		<!-- 使用 libreoffice 做word转pdf的操作 -->
+		<dependency>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-core</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-local</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-spring-boot-starter</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.libreoffice</groupId>
+			<artifactId>ridl</artifactId>
+			<version>7.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.20</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>fontbox</artifactId>
+			<version>2.0.20</version>
+		</dependency>
+
 	</dependencies>
 	
 	
