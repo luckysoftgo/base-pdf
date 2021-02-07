@@ -1,8 +1,6 @@
 package com.application.base.web;
 
-import com.application.base.datas.ReportDataDto;
-import com.application.base.docx4j.vo.DocxDataVO;
-import com.application.base.docx4j.vo.DocxImageVO;
+import com.application.base.datas.ReportDataInfo;
 import com.application.base.service.ConvertService;
 import com.application.base.util.GenericVO;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,150 +28,47 @@ public class ConvertController {
 	 */
 	@PostMapping(value = "/wordSymbol2files")
 	@ResponseBody
-	public GenericVO wordSymbol2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		Map<String, String> resultMap = convertService.wordSymbol2files(templeteId, mappingMap);
+	public GenericVO wordSymbol2files(@RequestBody ReportDataInfo dataDto) {
+		boolean result = convertService.buildReportCheck(dataDto.getReportHeader());
 		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
+		if (!result) {
+			genericVO.setCode(10000);
+			genericVO.setMsg("未认证到报告中心,请完成报告中心的注册认证流程");
 		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
-		}
-		return genericVO;
-	}
-	
-	
-	/**
-	 * 服务生成报告-test3
-	 */
-	@PostMapping(value = "/wordTable2files")
-	@ResponseBody
-	public GenericVO wordTable2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		ArrayList<Map<String, Object>> tableDatas = dataDto.getTableDatas();
-		Map<String, String> resultMap = convertService.wordTable2files(templeteId, mappingMap, tableDatas);
-		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
-		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
+			Map<String, String> resultMap = convertService.wordSymbol2files(dataDto.getReportBody());
+			if (resultMap.size() > 0) {
+				genericVO.setCode(HttpStatus.OK.value());
+				genericVO.setMsg("处理成功");
+				genericVO.setData(resultMap);
+			} else {
+				genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+				genericVO.setMsg("处理失败");
+			}
 		}
 		return genericVO;
 	}
 	
 	/**
-	 * 服务生成报告-test4
+	 * 动态数据生成报告
 	 */
-	@PostMapping(value = "/wordTables2files")
+	@PostMapping(value = "/automaticInfo2files")
 	@ResponseBody
-	public GenericVO wordTables2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		ArrayList<DocxDataVO> tablesDatas = dataDto.getTablesDatas();
-		Map<String, String> resultMap = convertService.wordTables2files(templeteId, mappingMap, tablesDatas);
+	public GenericVO automaticInfo2files(@RequestBody ReportDataInfo dataDto) {
+		boolean result = convertService.buildReportCheck(dataDto.getReportHeader());
 		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
+		if (!result) {
+			genericVO.setCode(10000);
+			genericVO.setMsg("未认证到报告中心,请完成报告中心的注册认证流程");
 		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
-		}
-		return genericVO;
-	}
-	
-	/**
-	 * 服务生成报告-test9
-	 */
-	@PostMapping(value = "/wordImg2files")
-	@ResponseBody
-	public GenericVO wordImg2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		Map<String, String> resultMap = convertService.wordImg2files(templeteId, mappingMap, dataDto.getImageVO());
-		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
-		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
-		}
-		return genericVO;
-	}
-	
-	/**
-	 * 服务生成报告-test10
-	 */
-	@PostMapping(value = "/wordImgs2files")
-	@ResponseBody
-	public GenericVO wordImgs2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		List<DocxImageVO> imageInfos = dataDto.getImageInfos();
-		Map<String, String> resultMap = convertService.wordImgs2files(templeteId, mappingMap, imageInfos);
-		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
-		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
-		}
-		return genericVO;
-	}
-	
-	/**
-	 * 服务生成报告-test11 - wordAutomaticImg2files
-	 */
-	@PostMapping(value = "/wordAutomaticImg2files")
-	@ResponseBody
-	public GenericVO wordAutomaticImg2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		DocxImageVO imgVO = dataDto.getImageVO();
-		Map<String, String> resultMap = convertService.wordAutomaticImg2files(templeteId, mappingMap, imgVO);
-		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
-		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
-		}
-		return genericVO;
-	}
-	
-	/**
-	 * 服务生成报告-test12 - wordAutomaticImgs2files
-	 */
-	@PostMapping(value = "/wordAutomaticImgs2files")
-	@ResponseBody
-	public GenericVO wordAutomaticImgs2files(@RequestBody ReportDataDto dataDto) {
-		String templeteId = dataDto.getTempleteId();
-		Map<String, String> mappingMap = dataDto.getUniqueDataMap();
-		List<DocxImageVO> imgInfos = dataDto.getImageInfos();
-		Map<String, String> resultMap = convertService.wordAutomaticImgs2files(templeteId, mappingMap, imgInfos);
-		GenericVO genericVO = new GenericVO();
-		if (resultMap.size() > 0) {
-			genericVO.setCode(HttpStatus.OK.value());
-			genericVO.setMsg("处理成功");
-			genericVO.setData(resultMap);
-		} else {
-			genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			genericVO.setMsg("处理失败");
+			Map<String, String> resultMap = convertService.automaticInfo2files(dataDto.getReportBody());
+			if (resultMap.size() > 0) {
+				genericVO.setCode(HttpStatus.OK.value());
+				genericVO.setMsg("处理成功");
+				genericVO.setData(resultMap);
+			} else {
+				genericVO.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+				genericVO.setMsg("处理失败");
+			}
 		}
 		return genericVO;
 	}

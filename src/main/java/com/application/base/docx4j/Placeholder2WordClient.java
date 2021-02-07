@@ -178,17 +178,17 @@ public class Placeholder2WordClient {
 	 * 有一个表格的情况
 	 *
 	 * @param docxOrginFile
-	 * @param unqiueDataMap    ：已经存在的全局的 key - value 集合.
+	 * @param uniqueDataMap    ：已经存在的全局的 key - value 集合.
 	 * @param linkedList       :单个表单情况下的列表的数据
 	 * @param tableIndex       : word 中表格的下标,从0开始: 0,1,2,3,4,5
 	 * @param replaceRowIndex: word 中要替换的表格的下标,从0开始: 0,1,2,3,4,5
 	 * @return
 	 */
-	public boolean convert2TableWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, ArrayList<Map<String, Object>> linkedList, Integer tableIndex, Integer replaceRowIndex) throws Exception {
+	public boolean convert2TableWord(String docxOrginFile, Map<String, String> uniqueDataMap, String docxNewFile, ArrayList<Map<String, Object>> linkedList, Integer tableIndex, Integer replaceRowIndex) throws Exception {
 		if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 			throw new Exception("传入的文件路径为空!");
 		}
-		if (null == unqiueDataMap || unqiueDataMap.isEmpty() || null == linkedList || linkedList.isEmpty()) {
+		if (null == uniqueDataMap || uniqueDataMap.isEmpty() || null == linkedList || linkedList.isEmpty()) {
 			throw new Exception("传入的数据为空!");
 		}
 		WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
@@ -225,7 +225,7 @@ public class Placeholder2WordClient {
 		//在原来位置上进行信息追加.
 		table.getContent().addAll(tableRowIndex, automaticTrs);
 		//设置全局的变量替换
-		documentPart.variableReplace(unqiueDataMap);
+		documentPart.variableReplace(uniqueDataMap);
 		Docx4J.save(wordMLPackage, new File(docxNewFile));
 		//释放资源
 		wordMLPackage.reset();
@@ -238,16 +238,16 @@ public class Placeholder2WordClient {
 	 * 存放数据的顺序,就是对应的表格上要填充的数据.
 	 *
 	 * @param docxOrginFile
-	 * @param unqiueDataMap ：已经存在的全局的 key - value 集合.
+	 * @param uniqueDataMap ：已经存在的全局的 key - value 集合.
 	 * @param linkedList    :单个表单情况下的列表的数据
 	 * @return
 	 */
-	public boolean convert2TablesWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, ArrayList<DocxDataVO> linkedList) throws JAXBException {
+	public boolean convert2TablesWord(String docxOrginFile, Map<String, String> uniqueDataMap, String docxNewFile, ArrayList<DocxDataVO> linkedList) throws JAXBException {
 		try {
 			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 				throw new Exception("传入的文件路径为空!");
 			}
-			if (null == unqiueDataMap || unqiueDataMap.isEmpty() || null == linkedList || linkedList.isEmpty()) {
+			if (null == uniqueDataMap || uniqueDataMap.isEmpty() || null == linkedList || linkedList.isEmpty()) {
 				throw new Exception("传入的数据为空!");
 			}
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
@@ -289,7 +289,7 @@ public class Placeholder2WordClient {
 				table.getContent().addAll(tableRowIndex, automaticTrs);
 			}
 			//设置全局的变量替换
-			documentPart.variableReplace(unqiueDataMap);
+			documentPart.variableReplace(uniqueDataMap);
 			Docx4J.save(wordMLPackage, new File(docxNewFile));
 			//释放资源
 			wordMLPackage.reset();
@@ -304,7 +304,7 @@ public class Placeholder2WordClient {
 	 * 生成带图片插入的 word
 	 *
 	 * @param docxOrginFile
-	 * @param unqiueDataMap
+	 * @param uniqueDataMap
 	 * @param docxNewFile
 	 * @param searchText:文本替换位置.
 	 * @param imgPath
@@ -312,12 +312,12 @@ public class Placeholder2WordClient {
 	 * @return
 	 * @throws JAXBException
 	 */
-	public boolean convert2ImgWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, String searchText, String imgPath, Boolean contains) throws JAXBException {
+	public boolean convert2ImgWord(String docxOrginFile, Map<String, String> uniqueDataMap, String docxNewFile, String searchText, String imgPath, Boolean contains) throws JAXBException {
 		try {
 			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 				throw new Exception("传入的文件路径为空!");
 			}
-			if (null == unqiueDataMap || unqiueDataMap.isEmpty()) {
+			if (null == uniqueDataMap || uniqueDataMap.isEmpty()) {
 				throw new Exception("传入的数据为空!");
 			}
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
@@ -337,7 +337,7 @@ public class Placeholder2WordClient {
 			//拿到指定段落,替换图片.
 			insertImgInfo(searchText, imgPath, wordMLPackage, factory, paragraphs, contains);
 			//替换占位符所占有的值.
-			documentPart.variableReplace(unqiueDataMap);
+			documentPart.variableReplace(uniqueDataMap);
 			//保存文件.
 			Docx4J.save(wordMLPackage, new File(docxNewFile));
 			//释放资源
@@ -394,19 +394,19 @@ public class Placeholder2WordClient {
 	 * 生成带图片插入的 word
 	 *
 	 * @param docxOrginFile
-	 * @param unqiueDataMap
+	 * @param uniqueDataMap
 	 * @param docxNewFile
 	 * @param imgInfos:     searchText 要插入的图片的位置;imgPath 图片的绝对位置.
 	 * @param contains:     true 标识包涵; false 等于
 	 * @return
 	 * @throws JAXBException
 	 */
-	public boolean convert2ImgsWord(String docxOrginFile, Map<String, String> unqiueDataMap, String docxNewFile, List<DocxImageVO> imgInfos, Boolean contains) throws JAXBException {
+	public boolean convert2ImgsWord(String docxOrginFile, Map<String, String> uniqueDataMap, String docxNewFile, List<DocxImageVO> imgInfos, Boolean contains) throws JAXBException {
 		try {
 			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
 				throw new Exception("传入的文件路径为空!");
 			}
-			if (null == unqiueDataMap || unqiueDataMap.isEmpty()) {
+			if (null == uniqueDataMap || uniqueDataMap.isEmpty()) {
 				throw new Exception("传入的数据为空!");
 			}
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
@@ -430,7 +430,7 @@ public class Placeholder2WordClient {
 				insertImgInfo(searchText, imgPath, wordMLPackage, factory, paragraphs, contains);
 			}
 			//替换占位符所占的位置值.
-			documentPart.variableReplace(unqiueDataMap);
+			documentPart.variableReplace(uniqueDataMap);
 			//保存新生成的文件.
 			Docx4J.save(wordMLPackage, new File(docxNewFile));
 			//释放资源
@@ -441,6 +441,95 @@ public class Placeholder2WordClient {
 			throw new JAXBException("生成文档失败!");
 		}
 	}
+	
+	/**
+	 * 动态生成通过模板生成报告
+	 *
+	 * @param docxOrginFile：原始的模板文件.
+	 * @param docxNewFile：新生成的文件.
+	 * @param uniqueDataMap:         唯一变量数据集.
+	 * @param tablesDatas:           表格数据集.
+	 * @param imageInfos:图片数据集合.
+	 * @param contains:是否包含
+	 * @return
+	 * @throws JAXBException
+	 */
+	public boolean automaticInfo2files(String docxOrginFile, String docxNewFile, Map<String, String> uniqueDataMap, ArrayList<DocxDataVO> tablesDatas, List<DocxImageVO> imageInfos, Boolean contains) throws JAXBException {
+		try {
+			if (StringUtils.isBlank(docxOrginFile) || StringUtils.isBlank(docxNewFile)) {
+				throw new Exception("传入的文件路径为空!");
+			}
+			if (null == uniqueDataMap || uniqueDataMap.isEmpty()) {
+				throw new Exception("传入的数据为空!");
+			}
+			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(new File(docxOrginFile));
+			ObjectFactory factory = Context.getWmlObjectFactory();
+			//得到主段落
+			MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
+			try {
+				//清除样式20210125.
+				clearClient.cleanDocumentPart(documentPart);
+			} catch (Exception e) {
+			}
+			//表格数据渲染
+			if (tablesDatas != null && tablesDatas.size() > 0) {
+				for (int i = 0; i < tablesDatas.size(); i++) {
+					DocxDataVO dataVO = tablesDatas.get(i);
+					ClassFinder find = new ClassFinder(Tbl.class);
+					new TraversalUtil(wordMLPackage.getMainDocumentPart().getContent(), find);
+					//第文档中对应的第几个表.
+					int tableIndex = dataVO.getTableIndex() == null ? i : dataVO.getTableIndex();
+					Tbl table = (Tbl) find.results.get(tableIndex);
+					//开始要替换的行
+					int tableRowIndex = dataVO.getReplaceRowIndex() == null ? 1 : dataVO.getReplaceRowIndex();
+					//第二行约定为模板${}
+					Tr dynamicTr = (Tr) table.getContent().get(tableRowIndex);
+					//获取模板行的xml数据
+					String dynamicTrXml = XmlUtils.marshaltoString(dynamicTr);
+					ArrayList<Map<String, Object>> docxDataList = tablesDatas.get(i).getDocxDataList();
+					//动态变更的表
+					LinkedList<Tr> automaticTrs = new LinkedList<>();
+					for (Map<String, Object> dataMap : docxDataList) {
+						//填充模板行数据
+						Tr newTr = (Tr) XmlUtils.unmarshallFromTemplate(dynamicTrXml, dataMap);
+						//这种处理处理无法处理末尾行的问题.
+						//table.getContent().add(newTr);
+						if (newTr != null) {
+							automaticTrs.add(newTr);
+						}
+					}
+					//删除模板行的占位行
+					table.getContent().remove(tableRowIndex);
+					//在原来位置上进行信息追加.
+					table.getContent().addAll(tableRowIndex, automaticTrs);
+				}
+			}
+			//图片渲染
+			if (imageInfos != null && imageInfos.size() > 0) {
+				//提取正文
+				Document document = documentPart.getContents();
+				//提取所有段落
+				List<Object> paragraphs = document.getBody().getContent();
+				//循环查找要替换的图片位置.
+				for (DocxImageVO imgVO : imageInfos) {
+					String searchText = imgVO.getSearchText();
+					String imgPath = imgVO.getImagePath();
+					insertImgInfo(searchText, imgPath, wordMLPackage, factory, paragraphs, contains);
+				}
+			}
+			//替换占位符所占的位置值.
+			documentPart.variableReplace(uniqueDataMap);
+			//保存新生成的文件.
+			Docx4J.save(wordMLPackage, new File(docxNewFile));
+			//释放资源
+			wordMLPackage.reset();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JAXBException("生成文档失败!");
+		}
+	}
+	
 	
 	
 	/**
