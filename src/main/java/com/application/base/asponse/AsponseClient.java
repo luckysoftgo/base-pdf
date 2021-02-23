@@ -40,6 +40,21 @@ public class AsponseClient {
 	/**
 	 * word 转成 pdf
 	 *
+	 * @param doc
+	 * @param htmlPath
+	 * @param pdfPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean docxFile2Files(Document doc, String htmlPath, String pdfPath) throws Exception {
+		convertDocx2Pdf(doc, pdfPath);
+		convertDocx2Html(doc, htmlPath);
+		return true;
+	}
+	
+	/**
+	 * word 转成 pdf
+	 *
 	 * @param docxPath
 	 * @param pdfPath
 	 * @return
@@ -186,6 +201,28 @@ public class AsponseClient {
 	/**
 	 * word 转成 pdf
 	 *
+	 * @param doc
+	 * @param pdfPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Pdf(Document doc, String pdfPath) throws Exception {
+		if (StringUtils.isBlank(pdfPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的pdf文档的路径为空!");
+			return false;
+		}
+		createFile(pdfPath, Boolean.TRUE);
+		//可以设置其类型.
+		PdfSaveOptions opts = new PdfSaveOptions();
+		opts.setSaveFormat(SaveFormat.PDF);
+		//图片以 Base64 的方式展现.
+		doc.save(pdfPath, opts);
+		return true;
+	}
+	
+	/**
+	 * word 转成 pdf
+	 *
 	 * @param docxPath
 	 * @param pdfPath
 	 * @return
@@ -215,6 +252,35 @@ public class AsponseClient {
 		return true;
 	}
 	
+	/**
+	 * word 转成 pdf
+	 *
+	 * @param doc
+	 * @param pdfPath
+	 * @param dataMap
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Pdf(Document doc, String pdfPath, Map<String, String> dataMap) throws Exception {
+		if (StringUtils.isBlank(pdfPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的pdf文档的路径为空!");
+			return false;
+		}
+		createFile(pdfPath, Boolean.TRUE);
+		if (dataMap != null && dataMap.size() > 0) {
+			for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				doc.getRange().replace(key, value, true, false);
+			}
+		}
+		//可以设置其类型.
+		PdfSaveOptions opts = new PdfSaveOptions();
+		opts.setSaveFormat(SaveFormat.PDF);
+		//图片以 Base64 的方式展现.
+		doc.save(pdfPath, opts);
+		return true;
+	}
 	
 	/**
 	 * word 转成 pdf
@@ -245,6 +311,38 @@ public class AsponseClient {
 				String key = entry.getKey();
 				String value = entry.getValue();
 				doc.getRange().replace(key, value, true, false);
+			}
+		}
+		//可以设置其类型.
+		PdfSaveOptions opts = new PdfSaveOptions();
+		opts.setSaveFormat(SaveFormat.PDF);
+		//图片以 Base64 的方式展现.
+		doc.save(pdfPath, opts);
+		return true;
+	}
+	
+	/**
+	 * word 转成 pdf
+	 *
+	 * @param doc
+	 * @param pdfPath
+	 * @param listMap
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Pdf(Document doc, String pdfPath, List<Map<String, String>> listMap) throws Exception {
+		if (StringUtils.isBlank(pdfPath)) {
+			log.info("AsponseClient.convertDocx2Pdf 传入的pdf文档的路径为空!");
+			return false;
+		}
+		createFile(pdfPath, Boolean.TRUE);
+		if (listMap != null && listMap.size() > 0) {
+			for (Map<String, String> dataMap : listMap) {
+				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+					String key = entry.getKey();
+					String value = entry.getValue();
+					doc.getRange().replace(key, value, true, false);
+				}
 			}
 		}
 		//可以设置其类型.
@@ -299,6 +397,30 @@ public class AsponseClient {
 	/**
 	 * word 转成 html
 	 *
+	 * @param doc
+	 * @param htmlPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Html(Document doc, String htmlPath) throws Exception {
+		if (StringUtils.isBlank(htmlPath)) {
+			log.info("AsponseClient.convertDocx2Html 传入的html文档的路径为空!");
+			return false;
+		}
+		createFile(htmlPath, Boolean.TRUE);
+		//可以设置其类型.
+		HtmlSaveOptions opts = new HtmlSaveOptions();
+		opts.setSaveFormat(SaveFormat.HTML);
+		opts.setEncoding(StandardCharsets.UTF_8);
+		//图片以 Base64 的方式展现.
+		opts.setExportImagesAsBase64(true);
+		doc.save(htmlPath, opts);
+		return true;
+	}
+	
+	/**
+	 * word 转成 html
+	 *
 	 * @param docxPath
 	 * @param htmlPath
 	 * @return
@@ -326,6 +448,33 @@ public class AsponseClient {
 		//图片以 Base64 的方式展现.
 		opts.setExportImagesAsBase64(true);
 		doc.save(htmlPath, opts);
+		return true;
+	}
+	
+	/**
+	 * word 转成 png
+	 *
+	 * @param doc
+	 * @param pngPath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean convertDocx2Png(Document doc, String pngPath) throws Exception {
+		if (StringUtils.isBlank(pngPath)) {
+			log.info("AsponseClient.convertDocx2Png 传入的png文档的路径为空!");
+			return false;
+		}
+		createFile(pngPath, Boolean.TRUE);
+		//可以设置其类型.
+		ImageSaveOptions opts = new ImageSaveOptions(SaveFormat.PNG);
+		opts.setPrettyFormat(true);
+		opts.setUseAntiAliasing(true);
+		opts.setJpegQuality(80);
+		opts.setSaveFormat(SaveFormat.PNG);
+		//opts.setPageCount(doc.getPageCount());
+		opts.setResolution(200);
+		//图片以 Base64 的方式展现.
+		doc.save(pngPath, opts);
 		return true;
 	}
 	
